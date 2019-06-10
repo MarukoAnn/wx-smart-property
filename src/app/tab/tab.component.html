@@ -1,0 +1,23 @@
+<div class="tab">
+  <weui-tabbar>
+    <weui-tab
+      style="height: 100%" heading="首页"
+      [active]="tabActive === 'home'"
+      [icon]="'<img src=./assets/images/home-ac.png>'"
+      (select)="onSelect('home', $event)"
+      (deselect)="onDeselect($event)"
+    >
+      <app-tab-home></app-tab-home>
+    </weui-tab>
+    <weui-tab
+      style="height: 100%" heading="我的"
+      [active]="tabActive === 'mine'"
+      [icon]="'<img src=./assets/images/mine-ac.png>'"
+      (select)="onSelect('mine', $event)"
+      (deselect)="onDeselect($event)"
+    >
+      <app-tab-mine></app-tab-mine>
+    </weui-tab>
+  </weui-tabbar>
+</div>
+

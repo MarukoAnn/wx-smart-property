@@ -1,0 +1,63 @@
+.reg-referrer{
+  height: 100vh;
+  background: #F5F5F5;
+  position: relative;
+  overflow: hidden;
+  .reg-referrer-input{
+    margin-top: 15px;
+    position: relative;
+    ::placeholder{
+      color: #D5D5D5;
+    }
+    .weui-input {
+      height: 50px;
+      background: white;
+      color: #17A2B8;
+      text-indent: 15px;
+    }
+    .icon{
+      position: absolute;
+      top: 0;
+      right: 10px;
+      height: 100%;
+      width: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #EF6665;
+    }
+  }
+  .reg-referrer-scan{
+    .weui-mask{
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .weui-actionsheet{
+      background-color: transparent;
+      .weui-actionsheet__cell{
+        font-size: 1rem;
+        &:before{
+          border-top:1px solid #F3F3F3;
+        }
+      }
+      .weui-actionsheet__menu{
+        border-radius: 3% 3% 0 0;
+      }
+      .weui-actionsheet__action{
+        border-top: 1px solid #F3F3F3;
+        margin-top: 0;
+      }
+    }
+  }
+  .reg-referrer-footer{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    .weui-btn_primary{
+      width: 90%;
+      background: linear-gradient(to right,#F19270,#F478A1);
+      color: #fff;
+    }
+  }
+}
+@weuiBtnPrimaryBg: hsla(50, 33%, 25%, 0.75);
+

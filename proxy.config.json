@@ -1,0 +1,6 @@
+{
+  "/cgi-bin": {
+    "target": "https://api.weixin.qq.com",
+    "secure": "false"
+  }
+}
