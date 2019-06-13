@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabComponent } from './tab.component';
 import {TabRoutingModule} from './tab-routing.module';
-import {WeUiModule} from 'ngx-weui';
+import {InfiniteLoaderModule, WeUiModule} from 'ngx-weui';
 import { TabMineComponent } from './tab-mine/tab-mine.component';
 import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
@@ -30,7 +30,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     HeaderModule,
     FormsModule,
     LoadingModule,
-    SwiperModule
+    SwiperModule,
+    InfiniteLoaderModule
   ],
   providers: [
     {

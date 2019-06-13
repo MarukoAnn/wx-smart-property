@@ -1,25 +1,77 @@
 <div class="reg-referrer">
-  <div class="reg-referrer-input">
-    <input #workId class="weui-input"
-       type="text"  name="workId"
-       placeholder="请填写推荐人工号"
-       [(ngModel)]="referrerNumber.workId">
-    <div class="icon" (click)="actionSheetShow('ios', photo)">
-      <i class="icon iconfont icon-saoyisao" style="font-size: 1.3rem;" aria-hidden="true"></i>
+  <div class="reg-referrer-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+
+  <!--<div class="reg-referrer-input">-->
+    <!--&lt;!&ndash;<input #workId class="weui-input"&ndash;&gt;-->
+       <!--&lt;!&ndash;type="text"  name="workId"&ndash;&gt;-->
+       <!--&lt;!&ndash;placeholder="请输入姓名"&ndash;&gt;-->
+       <!--&lt;!&ndash;[(ngModel)]="referrerNumber.workId">&ndash;&gt;-->
+    <!--<div class="icon" (click)="actionSheetShow('ios', photo)">-->
+      <!--<i class="icon iconfont icon-saoyisao" style="font-size: 1.3rem;" ></i>-->
+    <!--</div>-->
+
+  <!--</div>-->
+  <div class="weui-cell" [ngStyle]="{'margin-top':'45px'}">
+    <div class="weui-cell__hd"><label class="weui-label"  style="color: #353535">姓名</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="qq" placeholder="请输入姓名"
+             weui-input="qq" weui-required>
     </div>
   </div>
-  <div class="reg-referrer-scan">
-    <weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet"></weui-actionsheet>
+  <div class="weui-cell weui-cell_vcode">
+    <div class="weui-cell__hd">
+      <label class="weui-label"  style="color: #353535">手机号</label>
+    </div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="mobile" placeholder="请输入手机号"
+             weui-input="mobile" weui-required>
+    </div>
+    <div class="weui-cell__ft">
+      <button class="weui-vcode-btn"
+              [weui-vcode]="onSendCode"
+              weui-seconds="60"
+              weui-tpl="${num}s"
+              weui-error="重新发送">获取验证码</button>
+    </div>
   </div>
-  <!--camera-->
-  <div class="reg-referrer-camera">
-    <input #photo type="file" accept="image/*" style="display: none" (change)="referrerUpImg($event)">
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label" style="color: #353535">验证码</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="password" placeholder="请输入验证码"
+             weui-input="qq" weui-required>
+    </div>
   </div>
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label" style="color: #353535">设置密码</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="password" placeholder="请输入密码"
+             weui-input="qq" weui-required>
+    </div>
+  </div>
+  <div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label"  style="color: #353535">确认密码</label></div>
+    <div class="weui-cell__bd">
+      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="surepassword" placeholder="请确认密码"
+             weui-input="qq" weui-required>
+    </div>
+  </div>
+  <div class="weui-cell"></div>
+
+
+  <!--<div class="reg-referrer-scan">-->
+    <!--<weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet"></weui-actionsheet>-->
+  <!--</div>-->
+  <!--&lt;!&ndash;camera&ndash;&gt;-->
+  <!--<div class="reg-referrer-camera">-->
+    <!--<input #photo type="file" accept="image/*" style="display: none" (change)="referrerUpImg($event)">-->
+  <!--</div>-->
   <footer class="reg-referrer-footer">
-    <button #referrerBtn class="weui-btn weui-btn_primary" [disabled]="!referrerNumber.workId" (click)="referrerClick()">下一步</button>
+    <button #referrerBtn class="weui-btn weui-btn_primary" (click)="referrerClick()">下一步</button>
   </footer>
-  <div class="reg-referrer-dialog">
-    <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
-  </div>
+  <!--<div class="reg-referrer-dialog">-->
+    <!--<weui-dialog #iosDialog [config]="configDialog"></weui-dialog>-->
+  <!--</div>-->
 </div>
 <app-loading *ngIf="loading_show"></app-loading>

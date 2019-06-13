@@ -1,3 +1,26 @@
 <div class="tab-mine">
-<h1>我的</h1>
+
+  <app-header [option]="headerOption"></app-header>
+  <div class="tab-mine-header" [ngStyle]="{'margin-top':'1px'}">
+      <div class="tab-mine-header-content">
+        <img  class="tab-minen-header-imageTitle" src="assets/images/ic_header.png" alt="">
+        <div>Moonshine</div>
+        <div>
+          <i class="fa fa-mobile" style="font-size: 1rem;margin-right: 1vw"></i>
+          <span>18483320348</span>
+        </div>
+      </div>
+    </div>
+  <div class="tab-mine-content">
+    <div class="tab-mine-content-line">
+      <div class="weui-cell weui-cell_access" *ngFor="let item of owerItemList" (click)="owerItemClick(item)">
+        <div class="weui-cell__bd">
+          <span style="vertical-align: middle">{{item.label}}</span>
+          <!--<span class="weui-badge" style="margin-left: 5px;"></span>-->
+        </div>
+        <!--<div class="weui-cell__ft"></div>-->
+        <div class="weui-cell__ft">{{item.note}}</div>
+      </div>
+    </div>
+  </div>
 </div>

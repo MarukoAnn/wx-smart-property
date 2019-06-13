@@ -1,3 +1,56 @@
 <div class="tab-home">
-  <h1>首页</h1>
+  <app-header [option]="headerOption"></app-header>
+  <weui-ptr (refresh)="onRefresh($event)"  style="height: 87vh; background: #ECECEC;margin-top: 2px">
+    <div class="weui-flex" *ngFor="let item of HouseItem">
+      <div class="weui-flex__item">
+        <div class="placeholder">
+          <div class="tab-home-item">
+            <img [src]="item.imgUrl" alt="">
+            <div class="tab-home-item-text">
+              <div class="weui-flex" *ngFor=" let i of item.Content">
+                <div >
+                  <div class="placeholder">
+                    <span>{{i.label}}:</span>
+                  </div>
+                </div>
+                <div >
+                  <div class="placeholder">
+                    <span style="color: #fff">123</span>
+                  </div>
+                </div>
+                <div class="weui-flex__item">
+                  <div class="placeholder">
+                    <span [ngStyle]="{'color': i.color}">{{i.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-home-item-btn">
+              <div class="weui-flex">
+                <div>
+                  <div class="placeholder"><span style="color: #FFFFFF">Q</span></div>
+                </div>
+                <div class="weui-flex__item">
+                  <div class="placeholder">
+                    <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#A450DA,#F00639);">缴费</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="placeholder"><span style="color: #FFFFFF">QWE</span></div>
+                </div>
+                <div class="weui-flex__item">
+                  <div class="placeholder">
+                    <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#86E4FD,#9D57F6);"> 详情</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="placeholder"><span style="color: #FFFFFF">Q</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </weui-ptr>
 </div>
