@@ -1,0 +1,28 @@
+<div class="pay-way">
+  <app-header [option]="headerOption"></app-header>
+
+  <div class="weui-cell weui-cell_access pay-way-text" *ngFor="let item of payDetailDta">
+    <div class="weui-cell__bd">
+      <span style="vertical-align: middle">{{item.label}}：</span>
+      <!--<span class="weui-badge" style="margin-left: 5px;">8</span>-->
+    </div>
+    <div class="weui-cell__left"><span *ngIf="item.symbol === 1">￥</span>{{item.value}}</div>
+  </div>
+  <!--<div class="weui-cell weui-cell_access pay-way-text" *ngFor="let item of payDetailDta.slice(payDetailDta.length-1,payDetailDta.length)">-->
+    <!--<div class="weui-cell__bd">-->
+      <!--<span style="vertical-align: middle">{{item.label}}：</span>-->
+      <!--&lt;!&ndash;<span class="weui-badge" style="margin-left: 5px;">8</span>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="weui-cell__left" style="font-size: 1.5rem;color: green"><span *ngIf="item.symbol === 1">￥</span>{{item.value}}</div>-->
+  <!--</div>-->
+  <!--<div class="weui-cell"></div>-->
+  <!--<div class="weui-dialog-pay">-->
+    <!--<app-dialog-pay-->
+      <!--*ngIf="dialogPayShow"-->
+      <!--[config]="dialogPayConfig"-->
+      <!--(dialogPayOnchange)="onDialogPayClick($event)"-->
+      <!--(dialogPayDestroy)="onDialogPayClick($event)">-->
+    <!--</app-dialog-pay>-->
+  <!--</div>-->
+  <button weui-button (click)="payMoneyClick()">支 付</button>
+</div>

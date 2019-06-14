@@ -62,4 +62,16 @@ export class TabHomeComponent implements OnInit {
       ptr.setFinished();
     });
   }
+  // room payment
+  public  tabPaymentClick(e): void {
+    console.log(e);
+    this.router.navigate(['/chargepay/itemdetail']);
+
+  }
+
+  // room detaiL
+  public  tabRoomDetailClick(e): void {
+      console.log(e);
+      this.router.navigate(['/chargepay/roominfo']);
+  }
 }

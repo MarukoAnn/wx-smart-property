@@ -1,0 +1,17 @@
+<div class="charge-item-detail">
+  <app-header [option]="headerOption"></app-header>
+  <div class="weui-cell weui-cell_access charge-item-detail-list" *ngFor="let item of chargeItemList" (click)="chargepayItemClick(item)">
+    <div class="weui-cell__bd">
+      <span style="vertical-align: middle">缴费类型：{{item.label}}</span>
+      <!--<span class="weui-badge" style="margin-left: 5px;"></span>-->
+    </div>
+    <!--<div class="weui-cell__ft"></div>-->
+    <div class="weui-cell__ft" >
+      <span [ngStyle]="{'color': item.color,'margin-right':'1vw'}">{{item.note}}</span>
+      <span>￥</span>
+      <span *ngIf="item.note === '欠费'">-</span>
+      <span>{{item.Amount}}</span>
+    </div>
+  </div>
+  <!--<div class="weui-cell weui-cell_access"></div>-->
+</div>
