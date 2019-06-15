@@ -19,6 +19,18 @@ export class ChargepayRoomInfoComponent implements OnInit {
       icon: ''
     }
   };
+  public basicData = [
+    {label: '项目名', value: '未来城一期'},
+    {label: '地块', value: 'A区'},
+    {label: '单元', value: 'A3单元'},
+    {label: '面积', value: '234平米'},
+    {label: '花园面积', value: '无'},
+    {label: '业主', value: '张三'},
+    {label: '电话', value: '18284823242'},
+    {label: '物业费下次缴费时间', value: '2019.6.17'},
+    {label: '停车费下次缴费时间', value: '2019.6.17'},
+    {label: '二次加压费下次缴费时间', value: '2019.6.17'},
+  ];
   constructor(
     private route: Router,
   ) { }
@@ -26,4 +38,14 @@ export class ChargepayRoomInfoComponent implements OnInit {
   ngOnInit() {
   }
 
+  public  chargepaylistClick(e): void {
+    console.log(e);
+  }
+  public  tenantClick(): void {
+      this.route.navigate(['/chargepay/tenant']);
+  }
+  public  deputeyClick(): void {
+    this.route.navigate(['/chargepay/deputey']);
+
+  }
 }

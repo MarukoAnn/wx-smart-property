@@ -10,6 +10,9 @@ import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
 import {LoadingModule} from '../common/components/loading/loading.module';
 import {WeUiModule} from 'ngx-weui';
+import { ChargepayRoomTenantComponent } from './chargepay-room-tenant/chargepay-room-tenant.component';
+import { ChargepayRoomDeputeyComponent } from './chargepay-room-deputey/chargepay-room-deputey.component';
+import {ListModule} from '../common/components/list/list.module';
 
 
 @NgModule({
@@ -17,13 +20,16 @@ import {WeUiModule} from 'ngx-weui';
     ChargepayRoomInfoComponent,
     ChargepayUserInfoComponent,
     ChargepayItemDetailComponent,
-    ChargepayMonthComponent],
+    ChargepayMonthComponent,
+    ChargepayRoomTenantComponent,
+    ChargepayRoomDeputeyComponent],
   imports: [
     CommonModule,
     ChargepayRoutingModule,
     HeaderModule,
     FormsModule,
     LoadingModule,
+    ListModule,
     WeUiModule.forRoot(),
   ]
 })

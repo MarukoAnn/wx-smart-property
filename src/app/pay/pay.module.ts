@@ -8,7 +8,7 @@ import { PayDetailComponent } from './pay-detail/pay-detail.component';
 import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
 import {LoadingModule} from '../common/components/loading/loading.module';
-import {DialogModule, WeUiModule} from 'ngx-weui';
+import {WeUiModule} from 'ngx-weui';
 import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
 
 @NgModule({

@@ -1,25 +1,29 @@
 <div class="chargepay-roomInfo">
-  <app-header [option]="headerOption"></app-header>
-  <div class="weui-flex">
-    <div class="weui-flex__item">
-      <div class="placeholder">
-        项目名
-       </div>
-    </div>
-    <div class="weui-flex__item">
-      <div class="placeholder">
-         未来城一期
-       </div>
-    </div>
-    <div class="weui-flex__item">
-      <div class="placeholder">
-        未来城一期
+  <app-header [option]="headerOption" (headerRightClick)="chargepaylistClick($event)"></app-header>
+  <!--<div class="weui-cell weui-cell_access" style="margin-top: 2px"></div>-->
+  <div class="chargepay-roomInfo-basic">
+    <div class="weui-cells" style="margin-top: 2px">
+      <div class="weui-cell weui-cell_access" *ngFor="let item of basicData">
+        <div class="weui-cell__bd">
+          <p>{{item.label}}</p>
+        </div>
+        <div class="weui-cell__left" >{{item.value}}</div>
       </div>
     </div>
-    <div class="weui-flex__item">
-      <div class="placeholder">
-        未来城一期
-      </div>
+    <div class="weui-cells">
+      <a class="weui-cell weui-cell_access" (click)="deputeyClick()">
+        <div class="weui-cell__bd">
+          <p>副业主信息</p>
+        </div>
+        <div class="weui-cell__ft"></div>
+      </a>
+      <a class="weui-cell weui-cell_access"  (click)="tenantClick()">
+        <div class="weui-cell__bd">
+          <p>租客信息</p>
+        </div>
+        <div class="weui-cell__ft"></div>
+      </a>
     </div>
+    <div class="weui-cell weui-cell_access"></div>
   </div>
 </div>

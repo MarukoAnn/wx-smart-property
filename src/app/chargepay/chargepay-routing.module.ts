@@ -4,12 +4,16 @@ import {ChargepayMonthComponent} from './chargepay-month/chargepay-month.compone
 import {ChargepayItemDetailComponent} from './chargepay-item-detail/chargepay-item-detail.component';
 import {ChargepayRoomInfoComponent} from './chargepay-room-info/chargepay-room-info.component';
 import {ChargepayUserInfoComponent} from './chargepay-user-info/chargepay-user-info.component';
+import {ChargepayRoomTenantComponent} from './chargepay-room-tenant/chargepay-room-tenant.component';
+import {ChargepayRoomDeputeyComponent} from './chargepay-room-deputey/chargepay-room-deputey.component';
 
 const routes: Routes = [
   {path: 'itemdetail', component: ChargepayItemDetailComponent},
   {path: 'month', component: ChargepayMonthComponent},
   {path: 'userinfo', component: ChargepayUserInfoComponent},
-  {path: 'roominfo', component: ChargepayRoomInfoComponent}
+  {path: 'roominfo', component: ChargepayRoomInfoComponent},
+  {path: 'tenant', component: ChargepayRoomTenantComponent},
+  {path: 'deputey', component: ChargepayRoomDeputeyComponent},
 ];
 
 @NgModule({
