@@ -2,7 +2,7 @@
   <app-header [option]="headerOption" (headerRightClick)="chargepaylistClick($event)"></app-header>
   <!--<div class="weui-cell weui-cell_access" style="margin-top: 2px"></div>-->
   <div class="chargepay-roomInfo-basic">
-    <div class="weui-cells" style="margin-top: 2px">
+    <div class="weui-cells" style="margin-top: 2px; font-size: 0.9rem">
       <div class="weui-cell weui-cell_access" *ngFor="let item of basicData">
         <div class="weui-cell__bd">
           <p>{{item.label}}</p>
@@ -10,7 +10,15 @@
         <div class="weui-cell__left" >{{item.value}}</div>
       </div>
     </div>
-    <div class="weui-cells">
+    <!--<div class="weui-flex" *ngFor=" let i of basicData">-->
+      <!--<div class="weui-flex__item" *ngFor="let item of i.item" style="margin-left: 5vw;margin-bottom: 1vh;margin-top: 1vh">-->
+        <!--<div class="placeholder">-->
+          <!--<span>{{item.label}}：</span>-->
+          <!--<span>{{item.value}}</span>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="weui-cells" style="margin-top: 0;font-size: 0.9rem">
       <a class="weui-cell weui-cell_access" (click)="deputeyClick()">
         <div class="weui-cell__bd">
           <p>副业主信息</p>
@@ -24,6 +32,5 @@
         <div class="weui-cell__ft"></div>
       </a>
     </div>
-    <div class="weui-cell weui-cell_access"></div>
   </div>
 </div>

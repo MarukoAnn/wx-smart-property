@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 
 @Component({
-  selector: 'app-mine-modify-phone',
-  templateUrl: './mine-modify-phone.component.html',
-  styleUrls: ['./mine-modify-phone.component.less']
+  selector: 'app-mine-chage-password',
+  templateUrl: './mine-change-password.component.html',
+  styleUrls: ['./mine-change-password.component.less']
 })
-export class MineModifyPhoneComponent implements OnInit {
+export class MineChangePasswordComponent implements OnInit {
   public headerOption: HeaderContent = {
-    title: '修改手机号',
+    title: '重置密码',
     leftContent: {
       icon: 'icon iconfont icon-fanhui'
     },
@@ -18,12 +18,14 @@ export class MineModifyPhoneComponent implements OnInit {
       icon: ''
     }
   };
-  public iphone: any;
+  public pswData = {
+    oldpsw: '',
+    newpsw: '',
+    surepsw: '',
+  };
   constructor() { }
 
   ngOnInit() {
   }
-  public  onSendCode(): void {
-    console.log(123);
-  }
+
 }

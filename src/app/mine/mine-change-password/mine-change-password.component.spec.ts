@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MineChagePasswordComponent } from './mine-chage-password.component';
+import { MineChangePasswordComponent } from './mine-change-password.component';
 
-describe('MineChagePasswordComponent', () => {
-  let component: MineChagePasswordComponent;
-  let fixture: ComponentFixture<MineChagePasswordComponent>;
+describe('MineChangePasswordComponent', () => {
+  let component: MineChangePasswordComponent;
+  let fixture: ComponentFixture<MineChangePasswordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MineChagePasswordComponent ]
+      declarations: [ MineChangePasswordComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MineChagePasswordComponent);
+    fixture = TestBed.createComponent(MineChangePasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
