@@ -1,9 +1,9 @@
-<div class="mine-deputy-change-info">
+<div class="mine-tenant-modify">
   <app-header [option]="headerOption"></app-header>
   <!--<div class="jasmine-d"></div>-->
-  <div class="mine-deputy-change-info-content">
+  <div class="mine-tenant-modify-content">
     <!--副业主信息-->
-    <div class="weui-cell" style="padding: 0;margin-top: 10px;"></div>
+    <div class="weui-cell" style="padding: 0;"></div>
     <div class="weui-cell">
       <div class="weui-cell__hd">
         <label for="name" class="weui-label" style="color: #000">姓名</label>
@@ -18,10 +18,10 @@
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
-          <select class="weui-select"  [(ngModel)]="duputyData.sex" name="sex">
-            <option value="男">男</option>
-            <option value="女">女</option>
-          </select>
+        <select class="weui-select"  [(ngModel)]="duputyData.sex" name="sex">
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
       </div>
     </div>
     <div class="weui-cell">
@@ -41,34 +41,36 @@
       </div>
     </div>
     <!--<div class="weui-cells">-->
-      <!--<div class="weui-cell" style="text-align: center">-->
-        <!--<div class="weui-cell__hd">-->
-          <!--房间信息-->
-        <!--</div>-->
-      <!--</div>-->
+    <!--<div class="weui-cell" style="text-align: center">-->
+    <!--<div class="weui-cell__hd">-->
+    <!--房间信息-->
+    <!--</div>-->
+    <!--</div>-->
     <!--</div>-->
     <!--// 选择的房间-->
     <!--<div class="weui-cells">-->
-      <div class="weui-cell weui-cell__access" *ngFor="let item of houseSelectData;let i = index">
-         <div class="weui-cell__hd">
-            <span>房间号：</span>
-         </div>
-        <div class="weui-cell__hd">
-          <span>{{item.text}}</span>
-        </div>
-        <div class="weui-cell__hd">
-          <button weui-button  [weui-type]="'warn'" style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 2vw" (click)="houseDelectClick(i)">删除</button>
-        </div>
-        <div class="weui-cell__hd">
-          <button weui-button style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 3vw" (click)="houseModifyClick(item.text)">修改</button>
-        </div>
+    <div class="weui-cell weui-cell__access" *ngFor="let item of houseSelectData;let i = index">
+      <div class="weui-cell__hd">
+        <span>房间号：</span>
       </div>
+      <div class="weui-cell__hd">
+        <span>{{item.text}}</span>
+      </div>
+      <div class="weui-cell__hd">
+        <button weui-button  [weui-type]="'warn'" style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 2vw" (click)="houseDelectClick(i)">删除</button>
+      </div>
+      <div class="weui-cell__hd">
+        <button weui-button style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 3vw" (click)="houseModifyClick(item.text)">修改</button>
+      </div>
+    </div>
     <!--</div>-->
   </div>
   <div class="min-deputy-add-footer">
     <div class="weui-cell">
-      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineDeputyModifySureClick()">提交</button>
+      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantModifySureClick()">提交</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>
+
+  <weui-toptips #toptips></weui-toptips>
 </div>

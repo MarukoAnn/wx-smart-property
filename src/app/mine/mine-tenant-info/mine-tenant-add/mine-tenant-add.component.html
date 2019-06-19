@@ -1,6 +1,6 @@
-<div class="min-deputy-add">
+<div class="mine-tenant-add">
   <app-header [option]="headerOption"></app-header>
-  <div class="min-deputy-add-content">
+  <div class="mine-tenant-add-content">
     <!--副业主信息-->
     <div class="weui-cell" style="padding: 0;margin-top: 2px;"></div>
     <div class="weui-cell">
@@ -8,7 +8,7 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="duputyData.name" value="" placeholder="请输入姓名"
+        <input id="name" class="weui-input" [(ngModel)]="tenantData.name" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
-        <select class="weui-select" name="select" [(ngModel)]="duputyData.sex" name="sex">
+        <select class="weui-select" name="select" [(ngModel)]="tenantData.sex" name="sex">
           <option value="1">请选择性别</option>
           <option value="男">男</option>
           <option value="女">女</option>
@@ -29,7 +29,7 @@
         <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.phone" value="" placeholder="请输入手机号"
+        <input id="newpsw" class="weui-input" [(ngModel)]="tenantData.phone" value="" placeholder="请输入手机号"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -51,10 +51,11 @@
     </div>
     <div class="weui-cell" style="padding: 0;"></div>
   </div>
-  <div class="min-deputy-add-footer">
+  <div class="mine-tenant-add-footer">
     <div class="weui-cell">
-        <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineDeputyAddSureClick()">提交</button>
+      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantAddSureClick()">提交</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>
+  <weui-toptips #toptips></weui-toptips>
 </div>

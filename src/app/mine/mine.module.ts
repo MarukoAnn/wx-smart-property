@@ -16,6 +16,9 @@ import { MinePersionChangeUsernameComponent } from './mine-personal-info/mine-pe
 import { MineDeputyChangeInfoComponent } from './mine-deputy-ower-info/mine-deputy-change-info/mine-deputy-change-info.component';
 import { MineDeputyDetailComponent } from './mine-deputy-ower-info/mine-deputy-detail/mine-deputy-detail.component';
 import { MineDeputyAddComponent } from './mine-deputy-ower-info/mine-deputy-add/mine-deputy-add.component';
+import { MineTenantDetailComponent } from './mine-tenant-info/mine-tenant-detail/mine-tenant-detail.component';
+import { MineTenantModifyComponent } from './mine-tenant-info/mine-tenant-modify/mine-tenant-modify.component';
+import { MineTenantAddComponent } from './mine-tenant-info/mine-tenant-add/mine-tenant-add.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { MineDeputyAddComponent } from './mine-deputy-ower-info/mine-deputy-add/
   MinePersionChangeUsernameComponent,
   MineDeputyChangeInfoComponent,
   MineDeputyDetailComponent,
-  MineDeputyAddComponent],
+  MineDeputyAddComponent,
+  MineTenantDetailComponent,
+  MineTenantModifyComponent,
+  MineTenantAddComponent],
   imports: [
     CommonModule,
     MineRoutingModule,

@@ -11,6 +11,9 @@ import {MinePersionChangeUsernameComponent} from './mine-personal-info/mine-pers
 import {MineDeputyChangeInfoComponent} from './mine-deputy-ower-info/mine-deputy-change-info/mine-deputy-change-info.component';
 import {MineDeputyDetailComponent} from './mine-deputy-ower-info/mine-deputy-detail/mine-deputy-detail.component';
 import {MineDeputyAddComponent} from './mine-deputy-ower-info/mine-deputy-add/mine-deputy-add.component';
+import {MineTenantAddComponent} from './mine-tenant-info/mine-tenant-add/mine-tenant-add.component';
+import {MineTenantModifyComponent} from './mine-tenant-info/mine-tenant-modify/mine-tenant-modify.component';
+import {MineTenantDetailComponent} from './mine-tenant-info/mine-tenant-detail/mine-tenant-detail.component';
 
 const routes: Routes = [
   {path: 'owerinfo', component: MineOwerPayInfoComponent},
@@ -25,6 +28,9 @@ const routes: Routes = [
   {path: 'changedeputy', component: MineDeputyChangeInfoComponent},
   {path: 'deputyDetail', component: MineDeputyDetailComponent},
   {path: 'deputyadd', component: MineDeputyAddComponent},
+  {path: 'tenantadd', component: MineTenantAddComponent},
+  {path: 'tenantmodify', component: MineTenantModifyComponent},
+  {path: 'tenantDetail', component: MineTenantDetailComponent},
   // {path: 'deputyadd', component: MineDeputyAddComponent},
 ];
 

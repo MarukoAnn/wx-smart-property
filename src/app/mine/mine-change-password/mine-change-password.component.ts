@@ -28,4 +28,7 @@ export class MineChangePasswordComponent implements OnInit {
   ngOnInit() {
   }
 
+  public  mineChangePswSureClick(): void {
+      console.log(123);
+  }
 }

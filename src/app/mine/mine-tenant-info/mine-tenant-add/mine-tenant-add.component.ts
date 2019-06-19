@@ -1,17 +1,19 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {DialogComponent, DialogConfig, ToptipsComponent, ToptipsService} from 'ngx-weui';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {DialogComponent, DialogConfig} from 'ngx-weui';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-mine-deputy-add',
-  templateUrl: './mine-deputy-add.component.html',
-  styleUrls: ['./mine-deputy-add.component.less']
+  selector: 'app-mine-tenant-add',
+  templateUrl: './mine-tenant-add.component.html',
+  styleUrls: ['./mine-tenant-add.component.less']
 })
-export class MineDeputyAddComponent implements OnInit {
+export class MineTenantAddComponent implements OnInit {
   @ViewChild('auto') autoAS: DialogComponent;
+  @ViewChild('toptips') toptips: ToptipsComponent;
+
   public headerOption: HeaderContent = {
-    title: '副业主添加',
+    title: '租客添加',
     leftContent: {
       icon: 'icon iconfont icon-fanhui'
     },
@@ -19,21 +21,24 @@ export class MineDeputyAddComponent implements OnInit {
       icon: ''
     }
   };
-  public duputyData = {
+  public tenantData = {
     name: '',
     sex: '1',
     phone: '',
   };
   config: DialogConfig = {};
   public houseSelectData: any[] = [];
+  public addHouseData: any[] = [];
   constructor(
     private getRouter: ActivatedRoute,
+    private router: Router,
+    private toptipSrv: ToptipsService
   ) { }
 
   ngOnInit() {
     this.getRouter.queryParams.subscribe((value) => {
       console.log(value);
-      this.duputyData.name = value.value;
+      this.tenantData.name = value.value;
     });
   }
   // public houseModifyClick(e) {
@@ -85,7 +90,7 @@ export class MineDeputyAddComponent implements OnInit {
       title: '请选择房间号',
       confirm: '确认',
       cancel: '取消',
-      input: 'checkbox',
+      input: 'radio',
       // inputValue: e,
       backdrop: true,
       inputOptions: [
@@ -97,8 +102,14 @@ export class MineDeputyAddComponent implements OnInit {
     setTimeout(() => {
       (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
         console.log(res.result);
-        if (res.text === '确认') {
-          this.houseSelectData = res.result;
+        if (res.result === '') {
+          this.onShow('warn', '请选择房屋');
+        } else {
+          if (res.text === '确认') {
+            this.addHouseData = res.result;
+            // this.houseSelectData = res.result;
+            this.houseSetDate('开始');
+          }
         }
         // this.autoAS.hide();
         // (<DialogComponent>this[`autoAS`]).
@@ -119,8 +130,53 @@ export class MineDeputyAddComponent implements OnInit {
     }, 10);
     return false;
   }
+  // house setDate
+  public  houseSetDate(e) {
+    this.config = Object.assign({}, <DialogConfig>{
+      skin: 'auto',
+      type: 'prompt',
+      title: '请输入租赁' + e + '时间',
+      confirm: '确认',
+      cancel: '取消',
+      input: 'text',
+      inputPlaceholder: '必填项    列如：(1995-04-05)',
+      inputValue: '',
+      backdrop: true,
+    });
+    setTimeout(() => {
+      (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
+        console.log(res);
+        if (res.result === '') {
+          this.onShow('warn', '请输入租赁' + e + '日期');
+        } else {
+          if (res.text === '确认') {
+            if (e === '开始') {
+              this.houseSetDate('截止');
+
+            } else {
+              console.log('结束');
+              console.log(this.addHouseData);
+              this.houseSelectData.push(this.addHouseData);
+              // this.houseSelectData = this.addHouseData;
+
+            }
+            // this.houseSelectData = res.result;
+          }
+        }
+      });
+    }, 10);
+    return false;
+  }
   // deputy add submit
-  public  mineDeputyAddSureClick(): void {
-      console.log(123);
+  public  mineTenantAddSureClick(): void {
+    console.log(123);
+    setTimeout(() => {
+      this.onShow('primary', '提交成功');
+      this.router.navigate(['/mine/tenantinfo']);
+    }, 1000);
+  }
+  // toast
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {ActivatedRoute} from '@angular/router';
+import {ToptipsService} from 'ngx-weui';
+import set = Reflect.set;
 
 @Component({
   selector: 'app-mine-persion-change-phone',
@@ -21,7 +23,9 @@ export class MinePersionChangePhoneComponent implements OnInit {
   };
   public iphone: any;
   constructor(
-    private getRouter : ActivatedRoute,
+    private getRouter: ActivatedRoute,
+    private toptipSrv: ToptipsService
+
     // private router: Router,
   ) { }
 
@@ -29,5 +33,16 @@ export class MinePersionChangePhoneComponent implements OnInit {
   }
   public  onSendCode(): void {
     console.log(123);
+  }
+  // submit change phone
+  public  mineChangePhoneClick(): void {
+    setTimeout( () => {
+      this.onShow('success', '提交成功');
+
+    }, 1000);
+  }
+  // toast
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

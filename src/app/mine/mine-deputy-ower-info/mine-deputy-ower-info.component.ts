@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class MineDeputyOwerInfoComponent implements OnInit {
   public headerOption: HeaderContent = {
-    title: '副业为主信息',
+    title: '副业主信息',
     leftContent: {
       icon: 'icon iconfont icon-fanhui'
     },

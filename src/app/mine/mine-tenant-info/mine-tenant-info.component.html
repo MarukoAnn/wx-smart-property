@@ -1,3 +1,60 @@
-<p>
-  mine-tenant-info works!
-</p>
+<div class="mine-tenant-info">
+  <app-header [option]="headerOption"></app-header>
+  <div class="mine-tenant-info-content">
+    <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">
+      <div class="weui-flex" *ngFor="let item of deputyInfo; let index = index">
+        <div class="weui-flex__item">
+          <div class="placeholder">
+            <div class="mine-tenant-info-item" (click)="mineTenantDetailClick(item)">
+              <div class="mine-tenant-info-text">
+                <div class="weui-flex" *ngFor=" let i of item.data">
+                  <div class="placeholder">
+                    <span>{{i.label}}:</span>
+                  </div>
+                  <div >
+                    <div class="placeholder">
+                      <span style="color: #fff">123</span>
+                    </div>
+                  </div>
+                  <div class="weui-flex__item">
+                    <div class="placeholder">
+                      <span >{{i.value}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mine-tenant-info-btn">
+                <div class="weui-flex">
+                  <div>
+                    <div class="placeholder"></div>
+                  </div>
+                  <div class="weui-flex__item">
+                    <div class="placeholder">
+                      <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#2CA2EA,#0564B7 );height: 6vh;text-align: center;font-size: 1.1rem;line-height: 6vh" (click)="mineTenantModifyClick(item)">修改</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="placeholder"><span style="color: #FFFFFF">QWE</span></div>
+                  </div>
+                  <div class="weui-flex__item">
+                    <div class="placeholder">
+                      <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#F22C8B,#E64340);height: 6vh;text-align: center;font-size: 1.1rem;line-height: 6vh" (click)="mineTenantDeleteClick(index)">删除</button>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="placeholder"><span style="color: #FFFFFF">Q</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </weui-ptr>
+  </div>
+  <!--<div class="weui-cell" >-->
+  <!--</div>-->
+  <div class="mine-tenant-info-footer">
+    <button weui-button style="border-radius: 20px; height: 6vh;text-align: center;font-size: 1rem;line-height: 6vh" (click)="mineTenantAddClick()">新增租客</button>
+  </div>
+</div>
