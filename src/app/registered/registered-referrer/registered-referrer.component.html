@@ -2,22 +2,10 @@
   <div class="reg-referrer-header">
     <app-header [option]="headerOption"></app-header>
   </div>
-
-  <!--<div class="reg-referrer-input">-->
-    <!--&lt;!&ndash;<input #workId class="weui-input"&ndash;&gt;-->
-       <!--&lt;!&ndash;type="text"  name="workId"&ndash;&gt;-->
-       <!--&lt;!&ndash;placeholder="请输入姓名"&ndash;&gt;-->
-       <!--&lt;!&ndash;[(ngModel)]="referrerNumber.workId">&ndash;&gt;-->
-    <!--<div class="icon" (click)="actionSheetShow('ios', photo)">-->
-      <!--<i class="icon iconfont icon-saoyisao" style="font-size: 1.3rem;" ></i>-->
-    <!--</div>-->
-
-  <!--</div>-->
   <div class="weui-cell" [ngStyle]="{'margin-top':'45px'}">
     <div class="weui-cell__hd"><label class="weui-label"  style="color: #353535">姓名</label></div>
     <div class="weui-cell__bd">
-      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="qq" placeholder="请输入姓名"
-             weui-input="qq" weui-required>
+      <input class="weui-input" type="text" [(ngModel)]="referrerData.userName" placeholder="请输入姓名" weui-required>
     </div>
   </div>
   <div class="weui-cell weui-cell_vcode">
@@ -25,8 +13,8 @@
       <label class="weui-label"  style="color: #353535">手机号</label>
     </div>
     <div class="weui-cell__bd">
-      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="mobile" placeholder="请输入手机号"
-             weui-input="mobile" weui-required>
+      <input class="weui-input" [(ngModel)]="referrerData.mobilePhone" name="tel" placeholder="请输入手机号"
+             weui-input="tel" weui-required>
     </div>
     <div class="weui-cell__ft">
       <button class="weui-vcode-btn"
@@ -39,21 +27,21 @@
   <div class="weui-cell">
     <div class="weui-cell__hd"><label class="weui-label" style="color: #353535">验证码</label></div>
     <div class="weui-cell__bd">
-      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="password" placeholder="请输入验证码"
-             weui-input="qq" weui-required>
+      <input class="weui-input"  [(ngModel)]="verificationCode" name="password" placeholder="请输入验证码"
+             weui-input="idcard" weui-required>
     </div>
   </div>
   <div class="weui-cell">
     <div class="weui-cell__hd"><label class="weui-label" style="color: #353535">设置密码</label></div>
     <div class="weui-cell__bd">
-      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="password" placeholder="请输入密码"
-             weui-input="qq" weui-required>
+      <input class="weui-input" type="password" [(ngModel)]="referrerData.password" name="password" placeholder="请输入密码"
+             weui-required>
     </div>
   </div>
   <div class="weui-cell">
     <div class="weui-cell__hd"><label class="weui-label"  style="color: #353535">确认密码</label></div>
     <div class="weui-cell__bd">
-      <input class="weui-input" type="tel" [(ngModel)]="iphone" name="surepassword" placeholder="请确认密码"
+      <input class="weui-input" type="password" [(ngModel)]="surePsw" name="surepassword" placeholder="请确认密码"
              weui-input="qq" weui-required>
     </div>
   </div>
@@ -68,7 +56,7 @@
     <!--<input #photo type="file" accept="image/*" style="display: none" (change)="referrerUpImg($event)">-->
   <!--</div>-->
   <footer class="reg-referrer-footer">
-    <button #referrerBtn class="weui-btn weui-btn_primary" (click)="referrerClick()">下一步</button>
+    <button  class="weui-btn weui-btn_primary" (click)="bindingClick()">下一步</button>
   </footer>
   <!--<div class="reg-referrer-dialog">-->
     <!--<weui-dialog #iosDialog [config]="configDialog"></weui-dialog>-->

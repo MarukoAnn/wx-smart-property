@@ -58,115 +58,115 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     this.srv.destroyAll();
   }
   // send code
-  public codeBtnClick() {
-    this.regSrv.regSendSMS({phone: this.regSubmit.username}).subscribe(
-      (val) => {
-        console.log(val);
-         if (val.status === 200) {
-           this.topSrv['primary'](val.message);
-           return;
-         }
-        this.topSrv['warn'](val.message);
-      }
-    );
-  }
+  // public codeBtnClick() {
+  //   this.regSrv.regSendSMS({phone: this.regSubmit.username}).subscribe(
+  //     (val) => {
+  //       console.log(val);
+  //        if (val.status === 200) {
+  //          this.topSrv['primary'](val.message);
+  //          return;
+  //        }
+  //       this.topSrv['warn'](val.message);
+  //     }
+  //   );
+  // }
   // reg submit
-  public onsubmit(): void {
-    this.toastService['loading']('请求中...');
-    this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
-      mergeMap((val) => {
-        if (val.status === 200) {
-          this.regSubmit.smsKey = val.backString;
-          return this.regSrv.regGetWxUserInfo({
-            access_token: this.globalSrv.wxSessionGetObject('access_token'),
-            openid: this.globalSrv.wxSessionGetObject('openid')
-          });
-        } else {
-          this.codeError = true;
-          return EMPTY;
-        }
-      })
-    )
-    .subscribe(
-      (val) => {
-        this.toastService.hide();
-        if (val.status === 200) {
-          this.regSubmit.nikeName = val.nickname;
-          this.regSubmit.headImage = val.headimgurl;
-          this.regSubmit.sex = val.sex;
-          this.regSubmit.address = val.country;
-          this.dialogPayShow = true;
-          return;
-        }
-        this.topSrv['warn']('获取微信信息失败');
-      }
-    );
-  }
+  // public onsubmit(): void {
+  //   this.toastService['loading']('请求中...');
+  //   this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
+  //     mergeMap((val) => {
+  //       if (val.status === 200) {
+  //         this.regSubmit.smsKey = val.backString;
+  //         return this.regSrv.regGetWxUserInfo({
+  //           access_token: this.globalSrv.wxSessionGetObject('access_token'),
+  //           openid: this.globalSrv.wxSessionGetObject('openid')
+  //         });
+  //       } else {
+  //         this.codeError = true;
+  //         return EMPTY;
+  //       }
+  //     })
+  //   )
+  //   .subscribe(
+  //     (val) => {
+  //       this.toastService.hide();
+  //       if (val.status === 200) {
+  //         this.regSubmit.nikeName = val.nickname;
+  //         this.regSubmit.headImage = val.headimgurl;
+  //         this.regSubmit.sex = val.sex;
+  //         this.regSubmit.address = val.country;
+  //         this.dialogPayShow = true;
+  //         return;
+  //       }
+  //       this.topSrv['warn']('获取微信信息失败');
+  //     }
+  //   );
+  // }
   // reg agree
-  public dialogAgreeShow(type: SkinType) {
-    this.configAgreeDialog = Object.assign({}, <DialogConfig>{
-      cancel: null,
-      confirm: '同意',
-      content: '都会发生记得发货时间快点恢复数据返回数据' +
-        '收到附件是风景还是看花费时间客户反馈撒旦解放和' +
-        '技术开发会尽快答复函数的积分和捷克首都和封建时代' +
-        '回复精神科大夫'
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`${type}AgreeDialog`]).show().subscribe((res: any) => {
-        console.log('type', res);
-      });
-    }, 10);
-    return false;
-  }
+  // public dialogAgreeShow(type: SkinType) {
+  //   this.configAgreeDialog = Object.assign({}, <DialogConfig>{
+  //     cancel: null,
+  //     confirm: '同意',
+  //     content: '都会发生记得发货时间快点恢复数据返回数据' +
+  //       '收到附件是风景还是看花费时间客户反馈撒旦解放和' +
+  //       '技术开发会尽快答复函数的积分和捷克首都和封建时代' +
+  //       '回复精神科大夫'
+  //   });
+  //   setTimeout(() => {
+  //     (<DialogComponent>this[`${type}AgreeDialog`]).show().subscribe((res: any) => {
+  //       console.log('type', res);
+  //     });
+  //   }, 10);
+  //   return false;
+  // }
   // set Pay Pwd
-  public onDialogPayClick(event): void {
-    this.dialogPayShow = event.show;
-    if (event.password === 'destroy') {
-      return;
-    }
-    this.regSubmit.payPwd = event.password;
-    console.log(this.regSubmit);
-    this.regSrv.regRegister(this.regSubmit).pipe(
-      mergeMap((res) => {
-        if (res.status === 200) {
-          this.workId = res.data.workId;
-          return this.regSrv.regLanding({wxid: res.data.wxid});
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: '注册失败！',
-              url: null,
-              btn: '请重试',
-            }});
-        }
-      })
-    ).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.globalSrv.wxSessionSetObject('token', val.token);
-          this.router.navigate(['/registered/success'], {
-            queryParams: {
-              workId: `${this.workId}`,
-            }
-          });
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: 'token认证失败，请重新登陆！',
-              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
-              btn: '点击登陆'
-            }});
-        }
-      }
-    );
-  }
+  // public onDialogPayClick(event): void {
+  //   this.dialogPayShow = event.show;
+  //   if (event.password === 'destroy') {
+  //     return;
+  //   }
+  //   this.regSubmit.payPwd = event.password;
+  //   console.log(this.regSubmit);
+  //   this.regSrv.regRegister(this.regSubmit).pipe(
+  //     mergeMap((res) => {
+  //       if (res.status === 200) {
+  //         this.workId = res.data.workId;
+  //         return this.regSrv.regLanding({wxid: res.data.wxid});
+  //       } else {
+  //         this.router.navigate(['/error'], {
+  //           queryParams: {
+  //             msg: '注册失败！',
+  //             url: null,
+  //             btn: '请重试',
+  //           }});
+  //       }
+  //     })
+  //   ).subscribe(
+  //     (val) => {
+  //       if (val.status === 200) {
+  //         this.globalSrv.wxSessionSetObject('token', val.token);
+  //         this.router.navigate(['/registered/success'], {
+  //           queryParams: {
+  //             workId: `${this.workId}`,
+  //           }
+  //         });
+  //       } else {
+  //         this.router.navigate(['/error'], {
+  //           queryParams: {
+  //             msg: 'token认证失败，请重新登陆！',
+  //             url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+  //             btn: '点击登陆'
+  //           }});
+  //       }
+  //     }
+  //   );
+  // }
   // btn
-  public onSendCode(): Observable<boolean> {
-    that.codeBtnClick();
-    return timer(1000).pipe(map((v, i) => {
-      console.log(v);
-      return true;
-    }));
-  }
+  // public onSendCode(): Observable<boolean> {
+  //   that.codeBtnClick();
+  //   return timer(1000).pipe(map((v, i) => {
+  //     console.log(v);
+  //     return true;
+  //   }));
+  // }
 }

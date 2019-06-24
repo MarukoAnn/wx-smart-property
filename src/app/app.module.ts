@@ -7,11 +7,13 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './common/services/auth.interceptor';
 import { ErrorRemindComponent } from './error-remind/error-remind.component';
 import {LoadingModule} from './common/components/loading/loading.module';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ErrorRemindComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

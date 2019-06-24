@@ -18,48 +18,47 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.debug_http(req, next);
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.indexOf('imageFileUpload') >= 0) {
+    if (req.url === '/login') {
       this.clonedRequest = req.clone({
-        url: environment.dev_test_url + req.url,
+        url:  req.url,
         // url: 'http://192.168.1.88' + req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json; charset=UTF-8')
+        // .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1OTcwNTczMX0.viyBP5R4uuo5FivuM6lH1JZDUo_vKRSB1tu7W3XqKqK5d-_GlhnqBDJJ01qbrkVaL_9gywRvLLXbLiXrw3NP5Q')
       });
-      return next.handle(this.clonedRequest).pipe(
-        mergeMap((event: any) => {
-          if (event.status === 200) {
+    } else {
+      console.log(req.url);
+
+      this.clonedRequest = req.clone({
+        url:  req.url,
+        // url: 'http://192.168.1.88' + req.url,
+        headers: req.headers
+         .set('Content-type', 'application/json; charset=UTF-8')
+         .set('appkey', environment.dev_test_appkey)
+      });
+
+    }
+    return next.handle(this.clonedRequest).pipe(
+      mergeMap((event: any) => {
+        if (event.status === 200) {
+          // console.log(event.body.errcode );
+          if (event.body.code === '1000' || event.body.errcode === undefined) {
             return of(event);
-          }
-          return EMPTY;
-        }),
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 0) {
+          } else {
             this.router.navigate(['/error'], {
               queryParams: {
-                msg: '连接服务器失败，请检查网络！',
+                msg: event.body.msg,
                 url: null,
                 btn: '请重试'
               }
             });
           }
-          return EMPTY;
-        })
-      );
-    }
-    this.clonedRequest = req.clone({
-      url: environment.dev_test_url + req.url,
-      // url: 'http://192.168.1.88' + req.url,
-      headers: req.headers
-        .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1OTcwNTczMX0.viyBP5R4uuo5FivuM6lH1JZDUo_vKRSB1tu7W3XqKqK5d-_GlhnqBDJJ01qbrkVaL_9gywRvLLXbLiXrw3NP5Q')
-    });
-    return next.handle(this.clonedRequest).pipe(
-      mergeMap((event: any) => {
-        if (event.status === 200) {
-          return of(event);
         }
         return EMPTY;
       }),
       catchError((err: HttpErrorResponse) => {
         if (err.status === 0) {
+          // console.log(err);
           this.router.navigate(['/error'], {
             queryParams: {
               msg: '连接服务器失败，请检查网络！',
@@ -72,103 +71,103 @@ export class AuthInterceptor implements HttpInterceptor {
       })
     );
   }
-  public prod_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.indexOf('imageFileUpload') >= 0) {
-      this.clonedRequest = req.clone({
-        url: environment.dev_test_url + req.url,
-      });
-      return next.handle(this.clonedRequest).pipe(
-        mergeMap((event: any) => {
-          if (event.status === 200) {
-            return of(event);
-          }
-          return EMPTY;
-        }),
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 0) {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: '连接服务器失败，请检查网络！',
-                url: null,
-                btn: '请重试'
-              }
-            });
-          }
-          if (err.status === 500) {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: '图片上传失败，请重试！',
-                url: null,
-                btn: '请重试'
-              }
-            });
-          }
-          return EMPTY;
-        })
-      );
-    }
-    if (this.globalService.wxSessionGetObject('token')) {
-      this.clonedRequest = req.clone({
-        url: environment.dev_test_url + req.url,
-        headers: req.headers
-          .set('Content-type', 'application/json; charset=UTF-8')
-          .set('token', this.globalService.wxSessionGetObject('token'))
-      });
-      return next.handle(this.clonedRequest).pipe(
-        mergeMap((event: any, ) => {
-          if (event) {
-            return of(event);
-          }
-        }),
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 0) {
-            this.router.navigate(['/error']);
-          }
-          return Observable.create(observer => observer.next(err));
-        })
-      );
-    }
-    this.clonedRequest = req.clone({
-      url: environment.dev_test_url + req.url,
-      headers: req.headers
-        .set('Content-type', 'application/json; charset=UTF-8')
-    });
-    return next.handle(this.clonedRequest).pipe(
-      mergeMap((event: any) => {
-        if (event.status === 200) {
-          return of(event);
-        }
-        return EMPTY;
-      }),
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 0) {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: '连接服务器失败，请检查网络！',
-              url: null,
-              btn: '请重试',
-            }});
-        }
-        if (err.status === 403) {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: 'token认证失败，请重新登陆！',
-              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
-              btn: '点击登陆'
-            }});
-        }
-        if (err.status === 400) {
-          return of(err);
-        }
-        if (err.status === 500) {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: '服务器处理失败！请联系管理员',
-              url: null,
-              btn: '请重试',
-            }});
-        }
-      })
-    );
-  }
+  // public prod_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  //   if (req.url.indexOf('imageFileUpload') >= 0) {
+  //     this.clonedRequest = req.clone({
+  //       url: environment.dev_test_url + req.url,
+  //     });
+  //     return next.handle(this.clonedRequest).pipe(
+  //       mergeMap((event: any) => {
+  //         if (event.status === 200) {
+  //           return of(event);
+  //         }
+  //         return EMPTY;
+  //       }),
+  //       catchError((err: HttpErrorResponse) => {
+  //         if (err.status === 0) {
+  //           this.router.navigate(['/error'], {
+  //             queryParams: {
+  //               msg: '连接服务器失败，请检查网络！',
+  //               url: null,
+  //               btn: '请重试'
+  //             }
+  //           });
+  //         }
+  //         if (err.status === 500) {
+  //           this.router.navigate(['/error'], {
+  //             queryParams: {
+  //               msg: '图片上传失败，请重试！',
+  //               url: null,
+  //               btn: '请重试'
+  //             }
+  //           });
+  //         }
+  //         return EMPTY;
+  //       })
+  //     );
+  //   }
+  //   if (this.globalService.wxSessionGetObject('token')) {
+  //     this.clonedRequest = req.clone({
+  //       url: environment.dev_test_url + req.url,
+  //       headers: req.headers
+  //         .set('Content-type', 'application/json; charset=UTF-8')
+  //         .set('token', this.globalService.wxSessionGetObject('token'))
+  //     });
+  //     return next.handle(this.clonedRequest).pipe(
+  //       mergeMap((event: any, ) => {
+  //         if (event) {
+  //           return of(event);
+  //         }
+  //       }),
+  //       catchError((err: HttpErrorResponse) => {
+  //         if (err.status === 0) {
+  //           this.router.navigate(['/error']);
+  //         }
+  //         return Observable.create(observer => observer.next(err));
+  //       })
+  //     );
+  //   }
+  //   this.clonedRequest = req.clone({
+  //     url: environment.dev_test_url + req.url,
+  //     headers: req.headers
+  //       .set('Content-type', 'application/json; charset=UTF-8')
+  //   });
+  //   return next.handle(this.clonedRequest).pipe(
+  //     mergeMap((event: any) => {
+  //       if (event.status === 200) {
+  //         return of(event);
+  //       }
+  //       return EMPTY;
+  //     }),
+  //     catchError((err: HttpErrorResponse) => {
+  //       if (err.status === 0) {
+  //         this.router.navigate(['/error'], {
+  //           queryParams: {
+  //             msg: '连接服务器失败，请检查网络！',
+  //             url: null,
+  //             btn: '请重试',
+  //           }});
+  //       }
+  //       if (err.status === 403) {
+  //         this.router.navigate(['/error'], {
+  //           queryParams: {
+  //             msg: 'token认证失败，请重新登陆！',
+  //             url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+  //             btn: '点击登陆'
+  //           }});
+  //       }
+  //       if (err.status === 400) {
+  //         return of(err);
+  //       }
+  //       if (err.status === 500) {
+  //         this.router.navigate(['/error'], {
+  //           queryParams: {
+  //             msg: '服务器处理失败！请联系管理员',
+  //             url: null,
+  //             btn: '请重试',
+  //           }});
+  //       }
+  //     })
+  //   );
+  // }
 }

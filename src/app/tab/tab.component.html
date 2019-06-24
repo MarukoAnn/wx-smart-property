@@ -1,7 +1,7 @@
 <div class="tab">
   <weui-tabbar>
     <weui-tab
-      style="height: 100%" heading="首页"
+      style="height: 100%;line-height: 100%" heading="首页"
       [active]="tabActive === 'home'"
       [icon]="'<img src=./assets/images/home-ac.png>'"
       (select)="onSelect('home', $event)"
@@ -11,7 +11,7 @@
 
     </weui-tab>
     <weui-tab
-      style="height: 100%" heading="我的"
+      style="height: 100%;line-height: 100%" heading="我的"
       [active]="tabActive === 'mine'"
       [icon]="'<img src=./assets/images/mine-ac.png>'"
       (select)="onSelect('mine', $event)"

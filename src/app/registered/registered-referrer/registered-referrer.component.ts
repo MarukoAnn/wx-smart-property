@@ -12,6 +12,7 @@ import {
   noHeaderBase64DataToBlob,
 } from '../../common/tools/readBlobAsDataURL';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {RegisteredReferrerModel} from '../../common/model/registered-referrer.model';
 declare const qrcode: any;
 declare const wx: any;
 @Component({
@@ -22,30 +23,31 @@ declare const wx: any;
 })
 export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   // ActionSheet
-  @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
-  public actionSheetMenus: any[] = [
-    { text: '扫描二维码', value: 'camera'},
-    { text: '从手机相册选择', value: 'photo'},
-  ];
-  public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
-  // Dialog
-  @ViewChild('iosDialog') iosDialog: DialogComponent;
-  // workId
-  @ViewChild('workId') workId: ElementRef;
-  // workId
-  @ViewChild('referrerBtn') referrerBtn: ElementRef;
-  public configDialog: DialogConfig = {};
-  // data
-  public referrerNumber: any = {
-    workId: null,
-    openid: null
-  };
-  public iphone: any;
+  // @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
+  // public actionSheetMenus: any[] = [
+  //   { text: '扫描二维码', value: 'camera'},
+  //   { text: '从手机相册选择', value: 'photo'},
+  // ];
+  // public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
+  // // Dialog
+  // @ViewChild('iosDialog') iosDialog: DialogComponent;
+  // // workId
+  // @ViewChild('workId') workId: ElementRef;
+  // // workId
+  // @ViewChild('referrerBtn') referrerBtn: ElementRef;
+  // public configDialog: DialogConfig = {};
+  // // data
+  // public referrerNumber: any = {
+  //   workId: null,
+  //   openid: null
+  // };
+  // public surePsw: any;
+  // public verificationCode: any;
   public loading_show = false;
   public headerOption: HeaderContent = {
     title: '用户绑定',
     leftContent: {
-      icon: 'icon iconfont icon-fanhui'
+      // icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       // title: '筛选',
@@ -53,20 +55,21 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       icon: ''
     }
   };
+  public referrerData: RegisteredReferrerModel = new RegisteredReferrerModel();
   constructor(
     private actionSheetService: ActionSheetService,
     private toastService: ToastService,
     private router: Router,
     private routerInfo: ActivatedRoute,
-    private registeredService: RegisteredService,
+    private registeredSrv: RegisteredService,
     private globalSrv: GlobalService,
   ) { }
 
   ngOnInit() {
-    if (this.globalSrv.wxSessionGetObject('openid')) {
-      this.referrerNumber.openid = this.globalSrv.wxSessionGetObject('openid');
-      // this.referrerVerifyWxSdk();
-    }
+    // if (this.globalSrv.wxSessionGetObject('openid')) {
+    //   this.referrerNumber.openid = this.globalSrv.wxSessionGetObject('openid');
+    //   // this.referrerVerifyWxSdk();
+    // }
   }
   ngOnDestroy() {
     this.actionSheetService.destroyAll();
@@ -184,16 +187,16 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   //   });
   // }
   // workId click
-  public referrerClick(): void {
-   /* // if (id) {
-    //   this.referrerNumber.workId = id;
-    // }
-    // if (!isNumber(this.referrerNumber.workId)) {
-    //   this.dialogShow('ios', '工号只能为数字');
-    //   return;
-    // }*/
-    this.loading_show = true;
-    this.router.navigate(['/tab/home'], {queryParams: this.referrerNumber});
+  public bindingClick(): void {
+    console.log(123);
+    // this.loading_show = true;
+    this.registeredSrv.bindingData({data: this.referrerData, openId: 'o_Jhq1DzwpVxtih4nhwisriXFXhs'}).subscribe(
+      (value) => {
+        console.log(456);
+        console.log(value);
+      }
+    );
+    // this.router.navigate(['/tab/home'], {queryParams: this.referrerNumber});
 
     /*   this.registeredService.verifyReferrer({workId: this.referrerNumber.workId}).subscribe(
          (val) => {

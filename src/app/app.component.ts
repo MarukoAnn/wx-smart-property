@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 import {environment} from '../environments/environment';
 import {GlobalService} from './common/services/global.service';
 
@@ -10,13 +10,17 @@ import {GlobalService} from './common/services/global.service';
 })
 export class AppComponent implements OnInit {
   public current_url: any = null;
+  public wxCode: any = null;
+
   constructor(
     private router: Router,
     private globalSrv: GlobalService,
+    private getrouter: ActivatedRoute
   ) {}
   ngOnInit(): void {
     console.log(environment.env);
     // 判断是否是ios，微信认证登陆时用到
+
     if (!(this.globalSrv.wxSessionGetObject('ios_url'))) {
       this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     }
