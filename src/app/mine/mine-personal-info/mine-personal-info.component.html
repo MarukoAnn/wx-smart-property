@@ -10,7 +10,7 @@
           <img [src]="item.value" alt="" style="width: auto;height: 45px;display: block;border-radius: 50%">
         </div>
       </div>
-      <div class="weui-cell weui-cell_access" *ngFor="let item of persionitem.slice(1,persionitem.length)"  (click)="minePersionChangeInfoClick(item)">
+      <div class="weui-cell weui-cell_access" style="padding: 1.8vh" *ngFor="let item of persionitem.slice(1,persionitem.length)"  (click)="minePersionChangeInfoClick(item)">
         <div class="weui-cell__bd">
           <span>{{item.label}}</span>
         </div>

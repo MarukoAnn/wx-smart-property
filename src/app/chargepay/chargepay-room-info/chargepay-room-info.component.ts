@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {ChargeRoomInfoService} from '../../common/services/charge-room-info.service';
 
 @Component({
   selector: 'app-chargepay-room-info',
@@ -43,11 +44,20 @@ export class ChargepayRoomInfoComponent implements OnInit {
 // ];
   constructor(
     private route: Router,
+    private getRouter: ActivatedRoute,
+    private roomSrv: ChargeRoomInfoService
   ) { }
 
   ngOnInit() {
   }
 
+  public  initializationRoomInfo(): void {
+      this.roomSrv.queryRoomInfo().subscribe(
+        (value) => {
+
+        }
+      );
+  }
   public  chargepaylistClick(e): void {
     console.log(e);
     this.route.navigate(['/pay/detail']);

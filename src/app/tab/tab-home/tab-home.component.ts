@@ -21,44 +21,59 @@ export class TabHomeComponent implements OnInit {
       icon: ''
     }
   };
-  public HouseItem = [
-    {
-      imgUrl: 'assets/images/background.jpg',
-      Content: [
-        {label: '房屋着落', value: '贵州省贵阳市云城尚品小区', color: ''},
-        {label: '详细地址', value: 'A3-15栋2406', color: ''},
-        {label: '房间状态', value: '欠费', color: 'red'}],
-    },
-    {
-      imgUrl: 'assets/images/background.jpg',
-      Content: [
-        {label: '房屋着落', value: '贵州省贵阳市云城尚品小区', color: ''},
-        {label: '详细地址', value: 'A3-15栋2406', color: ''},
-        {label: '房间状态', value: '欠费', color: 'red'}],
-    }
-  ];
+  // public HouseItem = [
+  //   {
+  //     imgUrl: 'assets/images/background.jpg',
+  //     Content: [
+  //       {label: '房屋着落', value: '贵州省贵阳市云城尚品小区', color: ''},
+  //       {label: '详细地址', value: 'A3-15栋2406', color: ''},
+  //       {label: '房间状态', value: '欠费', color: 'red'}],
+  //   },
+  //   {
+  //     imgUrl: 'assets/images/background.jpg',
+  //     Content: [
+  //       {label: '房屋着落', value: '贵州省贵阳市云城尚品小区', color: ''},
+  //       {label: '详细地址', value: 'A3-15栋2406', color: ''},
+  //       {label: '房间状态', value: '欠费', color: 'red'}],
+  //   }
+  // ];
+  public item: any;
+  public HouseItem: any[] = [];
   items: any[] = Array(20)
     .fill(0)
     .map((v: any, i: number) => i);
   constructor(
     private tabSrv: TabService,
     private router: Router,
-
   ) { }
 
   ngOnInit() {
+    // console.log(this.HouseItem[0].Content);
+    this.getHouseInfo();
   }
 
+  public getHouseInfo (): void {
+    this.tabSrv.tabGetHoseList().subscribe(
+      (value) => {
+        this.HouseItem = [];
+        value.entity.forEach( v => {
+          this.HouseItem.push({
+            imgUrl: v.photoPath,
+            Content: [
+              {label: '房屋坐落', value: v.address},
+              {label: '房屋详细', value: v.address},
+              {label: '房屋编号', value: v.roomCode},
+              {label: '房屋状态', value: v.status},
+            ]
+          });
+        });
+        console.log( this.HouseItem);
+      });
+  }
   // 下拉刷新
   onRefresh(ptr: PTRComponent) {
     timer(800).subscribe(() => {
-      this.HouseItem.push( {
-        imgUrl: 'assets/images/background.jpg',
-        Content: [
-          {label: '房屋着落', value: '贵州省贵阳市云城尚品小区', color: ''},
-          {label: '详细地址', value: 'A3-15栋2406', color: ''},
-          {label: '房间状态', value: '欠费', color: 'red'}],
-      });
+      this.getHouseInfo();
       ptr.setFinished();
     });
   }
@@ -71,7 +86,7 @@ export class TabHomeComponent implements OnInit {
 
   // room detaiL
   public  tabRoomDetailClick(e): void {
-      console.log(e);
-      this.router.navigate(['/chargepay/roominfo']);
+      console.log(e.Content[2].value);
+      this.router.navigate(['/chargepay/roominfo'], {queryParams: {roomCode: e.Content[2].value}});
   }
 }

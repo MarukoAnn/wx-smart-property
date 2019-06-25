@@ -4,8 +4,8 @@
   </div>
   <div class="weui-cell" [ngStyle]="{'margin-top':'45px'}">
     <div class="weui-cell__hd"><label class="weui-label"  style="color: #353535">姓名</label></div>
-    <div class="weui-cell__bd">
-      <input class="weui-input" type="text" [(ngModel)]="referrerData.userName" placeholder="请输入姓名" weui-required>
+    <div class="weui-cell__bd" #user>
+      <input class="weui-input"   type="text" [(ngModel)]="referrerData.userName" placeholder="请输入姓名" weui-required>
     </div>
   </div>
   <div class="weui-cell weui-cell_vcode">
@@ -13,7 +13,7 @@
       <label class="weui-label"  style="color: #353535">手机号</label>
     </div>
     <div class="weui-cell__bd">
-      <input class="weui-input" [(ngModel)]="referrerData.mobilePhone" name="tel" placeholder="请输入手机号"
+      <input class="weui-input" [(ngModel)]="referrerData.mobilePhone"  [maxlength]="11" name="tel" placeholder="请输入手机号"
              weui-input="tel" weui-required>
     </div>
     <div class="weui-cell__ft">
@@ -61,5 +61,8 @@
   <!--<div class="reg-referrer-dialog">-->
     <!--<weui-dialog #iosDialog [config]="configDialog"></weui-dialog>-->
   <!--</div>-->
+  <app-loading *ngIf="loading_show"></app-loading>
+  <weui-toptips #toptips></weui-toptips>
 </div>
-<app-loading *ngIf="loading_show"></app-loading>
+
+

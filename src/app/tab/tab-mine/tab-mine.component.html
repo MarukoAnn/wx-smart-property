@@ -15,11 +15,10 @@
     <div class="tab-mine-content-line">
       <div class="weui-cell weui-cell_access" *ngFor="let item of owerItemList" (click)="owerItemClick(item)">
         <div class="weui-cell__bd">
-          <span style="vertical-align: middle">{{item.label}}</span>
-          <!--<span class="weui-badge" style="margin-left: 5px;"></span>-->
+          <span style="vertical-align: middle;font-size: 1rem">{{item.label}}</span>
         </div>
         <!--<div class="weui-cell__ft"></div>-->
-        <div class="weui-cell__ft">{{item.note}}</div>
+        <div class="weui-cell__ft" style="font-size: 0.8rem">{{item.note}}</div>
       </div>
     </div>
   </div>

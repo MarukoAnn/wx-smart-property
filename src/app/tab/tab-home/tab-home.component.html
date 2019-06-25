@@ -7,7 +7,7 @@
           <div class="tab-home-item">
             <img [src]="item.imgUrl" alt="">
             <div class="tab-home-item-text">
-              <div class="weui-flex" *ngFor=" let i of item.Content">
+              <div class="weui-flex"  style="margin-top: 1.5vh" *ngFor=" let i of item.Content">
                 <div >
                   <div class="placeholder">
                     <span>{{i.label}}:</span>
@@ -18,9 +18,12 @@
                     <span style="color: #fff">123</span>
                   </div>
                 </div>
-                <div class="weui-flex__item">
-                  <div class="placeholder">
-                    <span [ngStyle]="{'color': i.color}">{{i.value}}</span>
+                <div class="weui-flex__item" >
+                  <div class="placeholder" *ngIf="i.value === '已欠费'|| i.value === '欠费'">
+                    <span [ngStyle]="{'color': 'red'}">{{i.value}}</span>
+                  </div>
+                  <div class="placeholder" *ngIf="i.value !== '已欠费'|| i.value !== '欠费'">
+                    <span [ngStyle]="{'color': '#000'}">{{i.value}}</span>
                   </div>
                 </div>
               </div>

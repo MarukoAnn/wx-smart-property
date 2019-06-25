@@ -2,8 +2,13 @@
   width: 100vw;
   height: 100vh;
   background: #ECECEC;
+  font-size: 1rem;
   .mine-personal-info-content{
     margin-top: 2px;
+    ::ng-deep .weui-cell:before {
+      left: 0;
+    }
+
   }
   .mine-personal-info-popup{
     ::ng-deep .weui-popup__hd {
@@ -28,7 +33,4 @@
       }
     }
   }
-}
-::ng-deep .weui-cell:before {
-  left: 0;
 }

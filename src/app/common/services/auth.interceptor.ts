@@ -18,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.debug_http(req, next);
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url === '/login') {
+    if (req.url === environment.dev_test_url + `/wx/login` || req.url === environment.dev_test_url + `/wx/userbinding	`) {
       this.clonedRequest = req.clone({
         url:  req.url,
         // url: 'http://192.168.1.88' + req.url,
@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // url: 'http://192.168.1.88' + req.url,
         headers: req.headers
          .set('Content-type', 'application/json; charset=UTF-8')
-         .set('appkey', environment.dev_test_appkey)
+         .set('APPKEY', environment.dev_test_appkey)
       });
 
     }
@@ -42,8 +42,11 @@ export class AuthInterceptor implements HttpInterceptor {
       mergeMap((event: any) => {
         if (event.status === 200) {
           // console.log(event.body.errcode );
-          if (event.body.code === '1000' || event.body.errcode === undefined) {
-            return of(event);
+          console.log(event.body.code);
+          if (event.body.code === '1000' && event.body.errcode === undefined) {
+              return of(event);
+          } else if (event.body.code === undefined && event.body.errcode === 0) {
+              return of(event);
           } else {
             this.router.navigate(['/error'], {
               queryParams: {

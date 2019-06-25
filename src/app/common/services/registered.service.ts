@@ -46,6 +46,6 @@ export class RegisteredService {
   //   return this.http.get(`/wx/getticket?access_token=${params.access_token}`);
   // }*/
   public bindingData(pamars): Observable<any> {
-      return this.http.post(environment.dev_test_url + `/wx/binding	`, pamars);
+      return this.http.post(environment.dev_test_url + `/wx/userbinding	`, pamars);
   }
 }
