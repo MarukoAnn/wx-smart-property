@@ -19,6 +19,9 @@ import { MineDeputyAddComponent } from './mine-deputy-ower-info/mine-deputy-add/
 import { MineTenantDetailComponent } from './mine-tenant-info/mine-tenant-detail/mine-tenant-detail.component';
 import { MineTenantModifyComponent } from './mine-tenant-info/mine-tenant-modify/mine-tenant-modify.component';
 import { MineTenantAddComponent } from './mine-tenant-info/mine-tenant-add/mine-tenant-add.component';
+import {ImageCropperModule} from 'ngx-image-cropper';
+import { MineImageCropperComponent } from './mine-personal-info/mine-image-cropper/mine-image-cropper.component';
+import {QRCodeModule} from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -35,13 +38,16 @@ import { MineTenantAddComponent } from './mine-tenant-info/mine-tenant-add/mine-
   MineDeputyAddComponent,
   MineTenantDetailComponent,
   MineTenantModifyComponent,
-  MineTenantAddComponent],
+  MineTenantAddComponent,
+  MineImageCropperComponent],
   imports: [
     CommonModule,
     MineRoutingModule,
     HeaderModule,
     FormsModule,
     WeUiModule.forRoot(),
+    ImageCropperModule,
+    QRCodeModule,
   ],
   // providers: [PopupConfig, ToastConfig],
   // schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

@@ -5,16 +5,11 @@
   font-size: 1rem;
   .mine-personal-info-content{
     margin-top: 2px;
-    ::ng-deep .weui-cell:before {
-      left: 0;
-    }
 
   }
-  .mine-personal-info-popup{
-    ::ng-deep .weui-popup__hd {
-      display: none;
-    }
-  }
+  //.mine-personal-info-popup{
+  //
+  //}
   .mine-personal-info-toast{
     .weui-toast {
       height: 4vh;
@@ -33,4 +28,10 @@
       }
     }
   }
+}
+::ng-deep .weui-cell:before {
+  left: 0;
+}
+::ng-deep .weui-popup__hd {
+  display: none;
 }

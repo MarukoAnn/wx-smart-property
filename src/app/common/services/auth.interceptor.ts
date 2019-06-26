@@ -18,7 +18,9 @@ export class AuthInterceptor implements HttpInterceptor {
     return this.debug_http(req, next);
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url === environment.dev_test_url + `/wx/login` || req.url === environment.dev_test_url + `/wx/userbinding	`) {
+    if (req.url === environment.dev_test_url + `/wx/login` || req.url === environment.dev_test_url + `/gettoken`) {
+      console.log(req.url);
+      console.log('进来了');
       this.clonedRequest = req.clone({
         url:  req.url,
         // url: 'http://192.168.1.88' + req.url,
@@ -27,14 +29,12 @@ export class AuthInterceptor implements HttpInterceptor {
         // .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1OTcwNTczMX0.viyBP5R4uuo5FivuM6lH1JZDUo_vKRSB1tu7W3XqKqK5d-_GlhnqBDJJ01qbrkVaL_9gywRvLLXbLiXrw3NP5Q')
       });
     } else {
-      console.log(req.url);
-
       this.clonedRequest = req.clone({
         url:  req.url,
-        // url: 'http://192.168.1.88' + req.url,
         headers: req.headers
          .set('Content-type', 'application/json; charset=UTF-8')
-         .set('APPKEY', environment.dev_test_appkey)
+         // .set('APPKEY', environment.dev_test_appkey)
+         .set('APPKEY', this.globalService.wxSessionGetObject('appkey'))
       });
 
     }
@@ -43,15 +43,13 @@ export class AuthInterceptor implements HttpInterceptor {
         if (event.status === 200) {
           // console.log(event.body.errcode );
           console.log(event.body.code);
-          if (event.body.code === '1000' && event.body.errcode === undefined) {
-              return of(event);
-          } else if (event.body.code === undefined && event.body.errcode === 0) {
+          if (event.body.code === '1000') {
               return of(event);
           } else {
             this.router.navigate(['/error'], {
               queryParams: {
                 msg: event.body.msg,
-                url: null,
+                status: event.body.msg,
                 btn: '请重试'
               }
             });

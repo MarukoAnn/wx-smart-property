@@ -30,6 +30,7 @@
     "echarts": "^4.1.0",
     "font-awesome": "^4.7.0",
     "ngx-echarts": "^4.1.0",
+    "ngx-image-cropper": "^1.4.1",
     "ngx-loading": "^3.0.1",
     "ngx-swiper-wrapper": "^7.2.1",
     "ngx-weui": "^7.0.0-rc.1",

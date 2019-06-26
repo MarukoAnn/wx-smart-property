@@ -1,0 +1,17 @@
+<div class="mine-image-cropper">
+  <div>
+    <image-cropper
+      [imageFileChanged]="imageChangedEvent"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 4"
+      [resizeToWidth]="128"
+      format="png"
+      [roundCropper]="true"
+      (imageCropped)="imageCropped($event)"
+      (imageLoaded)="imageLoaded($event)"
+      (cropperReady)="cropperReady($event)"
+      (loadImageFailed)="loadImageFailed($event)"></image-cropper>
+    <img [src]="croppedImage"  alt=""/>
+    <!--<app-lnlr-cropper [aspectRatio]="NaN" [srcImage]="assets/images/background.jpg"></app-lnlr-cropper>-->
+</div>
+</div>

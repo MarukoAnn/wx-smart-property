@@ -56,6 +56,7 @@ export class TabHomeComponent implements OnInit {
     this.tabSrv.tabGetHoseList().subscribe(
       (value) => {
         this.HouseItem = [];
+        // if (value.entity === []){}
         value.entity.forEach( v => {
           this.HouseItem.push({
             imgUrl: v.photoPath,
