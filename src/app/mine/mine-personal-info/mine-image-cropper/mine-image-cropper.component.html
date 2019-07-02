@@ -1,7 +1,8 @@
 <div class="mine-image-cropper">
-  <div>
-    <image-cropper
-      [imageFileChanged]="imageChangedEvent"
+  <app-header [option]="headerOption"></app-header>
+  <div class="mine-image-cropper-content">
+    <image-cropper style="padding: 0;height: 85vh"
+      [imageBase64]="imageChangedEvent"
       [maintainAspectRatio]="true"
       [aspectRatio]="4 / 4"
       [resizeToWidth]="128"
@@ -11,7 +12,12 @@
       (imageLoaded)="imageLoaded($event)"
       (cropperReady)="cropperReady($event)"
       (loadImageFailed)="loadImageFailed($event)"></image-cropper>
-    <img [src]="croppedImage"  alt=""/>
-    <!--<app-lnlr-cropper [aspectRatio]="NaN" [srcImage]="assets/images/background.jpg"></app-lnlr-cropper>-->
-</div>
+      <img [src]="croppedImage" />
+  </div>
+  <button class="weui-btn weui-btn_primary" (click)="mineImageUpalodClick()">确认</button>
+  <!--<button class="weui-btn weui-btn_primary" (click)="mineImageBackClick()" *ngIf="showSuccess === true">返回上一级</button>-->
+  <app-loading [hidden]="loading_show"></app-loading>
+  <div class="mine-personal-info-toast">
+    <weui-toast #success [text]="123" [icon]="''" [time]="1000"></weui-toast>
+  </div>
 </div>

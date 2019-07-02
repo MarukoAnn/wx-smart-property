@@ -32,7 +32,7 @@ const routes: Routes = [
   {path: 'tenantadd', component: MineTenantAddComponent},
   {path: 'tenantmodify', component: MineTenantModifyComponent},
   {path: 'tenantDetail', component: MineTenantDetailComponent},
-  // {path: 'imagecropper', component: MineImageCropperComponent},
+  {path: 'imagecropper', component: MineImageCropperComponent},
   // {path: 'deputyadd', component: MineDeputyAddComponent},
 ];
 

@@ -42,30 +42,31 @@
         </div>
       </div>
     </weui-popup>
+
   <!--获取摄像头-->
   <input #photo type="file" accept="image/*"  style="display: none">
   <!--<input #photo type="file" accept="image/*"  (change)="fileChangeEvent($event)">-->
   <div class="mine-personal-info-toast">
     <weui-toast #success [text]="updateSexMsg" [icon]="''" [time]="1000"></weui-toast>
   </div>
-
-  <weui-popup #full [config]="{is_full: true}">
-    <article class="weui-article">
-      <section >
-        <image-cropper
-          [imageFileChanged]="imageChangedEvent"
-          [maintainAspectRatio]="true"
-          [aspectRatio]="4 / 3"
-          [resizeToWidth]="128"
-          format="png"
-          (imageCropped)="imageCropped($event)"
-          (imageLoaded)="imageLoaded()"
-          (cropperReady)="cropperReady()"
-          (loadImageFailed)="loadImageFailed()"
-          style="width: 100vw;height: 90vw"></image-cropper>
-      </section>
-      <button class="weui-btn weui-btn_primary" (click)="fullPopup.close();this.imageChangedEvent = null;">确认</button>
-    </article>
-  </weui-popup>
+  <!--<weui-popup #full [config]="{is_full: true}">-->
+    <!--<article class="weui-article">-->
+      <!--<div>图片裁剪</div>-->
+      <!--<section >-->
+        <!--<image-cropper-->
+          <!--[imageFileChanged]="imageChangedEvent"-->
+          <!--[maintainAspectRatio]="true"-->
+          <!--[aspectRatio]="4 / 3"-->
+          <!--[resizeToWidth]="128"-->
+          <!--format="png"-->
+          <!--(imageCropped)="imageCropped($event)"-->
+          <!--(imageLoaded)="imageLoaded()"-->
+          <!--(cropperReady)="cropperReady()"-->
+          <!--(loadImageFailed)="loadImageFailed()"-->
+          <!--style="width: 100vw;height: 90vw"></image-cropper>-->
+      <!--</section>-->
+      <!--<button class="weui-btn weui-btn_primary" (click)="fullPopup.close();this.imageChangedEvent = null;">确认</button>-->
+    <!--</article>-->
+  <!--</weui-popup>-->
 </div>
 

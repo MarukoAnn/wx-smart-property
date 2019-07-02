@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {TabComponent} from './tab.component';
 import {TabMineComponent} from './tab-mine/tab-mine.component';
 import {TabHomeComponent} from './tab-home/tab-home.component';
+import {LoginGuard} from '../common/guard/login.guard';
 const tabRoutes: Routes = [
   {
     path: '',

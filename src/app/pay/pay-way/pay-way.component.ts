@@ -23,6 +23,7 @@ export class PayWayComponent implements OnInit {
   public payDetailDta = [
     {label: '房间编号', value: 'YCSP-A3-4-3406', symbol: 0},
     {label: '缴费月数', value: '1个月', symbol: 0},
+    {label: '优惠卷', value: '选择优惠卷', symbol: 0},
     {label: '物业费剩余金额', value: '0.5', symbol: 1},
     {label: '应交金额', value: '12.5', symbol: 1},
     {label: '实缴金额', value: '12', symbol: 1},
@@ -38,4 +39,9 @@ export class PayWayComponent implements OnInit {
       this.router.navigate(['pay/success']);
   }
 
+  public  paySelectCouponClick(value): void {
+      if (value === '优惠卷') {
+        this.router.navigate(['chargepay/coupon']);
+      }
+  }
 }

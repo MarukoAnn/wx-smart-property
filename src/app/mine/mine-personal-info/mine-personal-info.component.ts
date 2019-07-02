@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {PopupComponent, ToastComponent} from 'ngx-weui';
 import {GlobalService} from '../../common/services/global.service';
@@ -7,8 +7,8 @@ import {is_ios} from '../../common/tools/is_ios';
 import {random_word} from '../../common/tools/random_word';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {MineImageCropperService} from '../../common/services/mine-image-cropper.service';
-import {blobToDataURL, dataURLtoFile, noHeaderBase64DataToBlob} from '../../common/tools/readBlobAsDataURL';
 import {ImageCroppedEvent} from 'ngx-image-cropper';
+import {MinePersionalInfoService} from '../../common/services/mine-persional-info.service';
 
 declare const wx: any;
 @Component({
@@ -31,31 +31,32 @@ export class MinePersonalInfoComponent implements OnInit {
       icon: ''
     }
   };
-  public imageChangedEvent: any = '';
-  public croppedImage: any = '';
-  public imgfile: any;
+  // public imageChangedEvent: any = '';
   public getphontoType = [
     {label: '本地选择', value: 'photo'},
     {label: '相机拍照', value: 'camera'},
   ];
   public persionitem = [
-    {label: '我的头像', value: 'assets/images/ic_header.png'},
-    {label: '用户名', value: 'moonshine'},
-    {label: '姓名', value: '张三'},
-    {label: '手机号', value: '18385094323'},
-    {label: '性别', value: '男'},
+    {label: '我的头像', value: ''},
+    {label: '用户名', value: ''},
+    // {label: '姓名', value: '张三'},
+    {label: '手机号', value: ''},
+    {label: '性别', value: ''},
   ];
   public updateSexMsg = '修改成功';
   public wxTicket: any;
   constructor(
     private globalSrv: GlobalService,
     private router: Router,
-    private mineImgSrv: MineImageCropperService
+    private minePerSrv: MinePersionalInfoService
   ) {
   }
-
   ngOnInit() {
-    this.mineImgSrv.getTicket().subscribe(
+    this.initializationUser();
+    if (this.persionitem[0].value) {
+      this.persionitem[0].value = 'assets/images/ic_header.png';
+    }
+    this.minePerSrv.getTicket().subscribe(
       (value) => {
         console.log(value);
         this.wxTicket = value.entity.ticket;
@@ -63,17 +64,28 @@ export class MinePersonalInfoComponent implements OnInit {
       }
     );
   }
-
+  // initialization user
+  public initializationUser (): void {
+      this.minePerSrv.mineGetUserInfo().subscribe(
+        (value) => {
+          this.persionitem[0].value = value.entity.path;
+          this.persionitem[1].value = value.entity.userName;
+          this.persionitem[2].value = value.entity.mobilePhone;
+          this.persionitem[3].value = value.entity.sex;
+        }
+      );
+  }
+  // pop show
   public minePersionSelectImageClick(): void {
-
     this.simplePopup.show();
   }
 
   // cancel select image
   public cancelSelectionClick(): void {
-    console.log(123);
-    this.simplePopup._onCancel();
+    this.simplePopup.close();
+
   }
+
 
   // getphotoType
   public getphontoTypeClick(e): void {
@@ -86,62 +98,36 @@ export class MinePersonalInfoComponent implements OnInit {
         sizeType: ['original', 'compressed'], // 指定是原图还是压缩图，默认都有
         sourceType: ['camera'], // 指定来源是相机.
         success: function (res: any) {
-          const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          wx.getLocalImgData({
-            localId: loaclpath[0], // 图片的localID
-            success: function (event) {
-              const fileData = new FormData();
-              const a_blob = noHeaderBase64DataToBlob(event.localData);
-              blobToDataURL(a_blob, (blob_res) => {
-              fileData.append('file', dataURLtoFile(blob_res, 'img'));
-                // that.show(fileData);
-                // that.simplePopup._onCancel();
-                that.simplePopup._onCancel();
-                that.fullPopup.show();
-                that.imageChangedEvent = fileData.getAll('file');
-
-                // alert(fileData.getAll('file'));
-              });
-
-            },
-            fail: function (event) {
-              console.log(event);
-              that.simplePopup._onCancel();
-              that.fullPopup.show();
-            }
-          });
-        }
+          if (res.localIds) {
+            const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            wx.getLocalImgData({
+              localId: loaclpath[0], // 图片的localID
+              success: function (event) {
+                that.globalSrv.wxSessionSetObject('id', event.localData );
+                window.location.href = 'http://muertest.qicp.vip/CloudPropertyView/#/mine/imagecropper';
+              }
+            });
+          }
+        },
       });
     } else if (e === 'photo') {
+      that.simplePopup.close();
       wx.chooseImage({
         count: 1, // 默认9
         sizeType: ['original', 'compressed'], // 指定是原图还是压缩图，默认都有
         sourceType: ['album'], // 指定来源是相册，
         success: function (res) {
-          const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          wx.getLocalImgData({
-            localId: loaclpath[0], // 图片的localID
-            success: function (event) {
-              const fileData = new FormData();
-              const a_blob = noHeaderBase64DataToBlob(event.localData);
-              blobToDataURL(a_blob, (blob_res) => {
-                fileData.append('file', dataURLtoFile(blob_res, 'img'));
-                // that.show(fileData);
-                // that.simplePopup._onCancel();
-                // alert(fileData.getAll('file'));
-                // that.show(fileData.getAll('file'));
-                that.simplePopup._onCancel();
-                that.fullPopup.show();
-                that.imageChangedEvent = fileData.getAll('file');
-              });
-            },
-            fail: function (event) {
-              console.log(event);
-              that.simplePopup._onCancel();
-              that.fullPopup.show();
+          if (res.localIds) {
+            const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            wx.getLocalImgData({
+              localId: loaclpath[0], // 图片的localID
+              success: function (event) {
+                that.globalSrv.wxSessionSetObject('id', event.localData );
+                window.location.href = 'http://muertest.qicp.vip/CloudPropertyView/#/mine/imagecropper';
+                }
+            });
             }
-          });
-        }
+          }
       });
     }
   }
@@ -149,11 +135,6 @@ export class MinePersonalInfoComponent implements OnInit {
   // 弹窗
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
-  }
-  public show (file): void {
-    this.simplePopup.close();
-    this.fullPopup.show();
-    this.imageChangedEvent = file;
   }
   // change info
   public minePersionChangeInfoClick(e): void {
@@ -197,48 +178,6 @@ export class MinePersonalInfoComponent implements OnInit {
       return;
     }
     window.alert('微信JS-SDK认证失败,请重试');
-  }
-  // fileChangeEvent(event: any): void {
-  //   // this.imageChangedEvent = event;
-  //   // console.log(event.srcElement.files[0]);
-  //   // this.globalSrv.wxSessionSetObject('file', event.srcElement.files[0]);
-  //   this.fullPopup.show();
-  //   this.imageChangedEvent = event.srcElement.files[0];
-  // }
-  imageCropped(event: ImageCroppedEvent) {
-    console.log(event);
-    this.croppedImage = event.base64;
-    this.imgfile =  this.data64toFile(this.croppedImage, 'img');
-    console.log(this.croppedImage);
-  }
-  imageLoaded() {
-    // show cropper
-  }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
-
-  private  data64toFile(dataurl, filename) {
-    const arr = dataurl.split(','),
-      mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      n = bstr.length,
-      u8arr = new Uint8Array(n);
-    // @ts-ignore
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new File([u8arr], filename, { type: mime });
-    // return new Blob([u8arr], { type: mime });
-
-  }
-   public  blobToFile(theBlob, fileName) {
-    theBlob.lastModifiedDate = new Date();
-    theBlob.name = fileName;
-    return theBlob;
   }
 }
 

@@ -3,17 +3,17 @@
   <!--<app-header [option]="headerOption"></app-header>-->
   <div class="tab-mine-header" [ngStyle]="{'margin-top':'1px'}">
       <div class="tab-mine-header-content">
-        <img  class="tab-minen-header-imageTitle" src="assets/images/ic_header.png" alt="">
-        <div>Moonshine</div>
+        <img  class="tab-minen-header-imageTitle" [src]="imageUrl" alt="">
+        <div style="font-size: 0.9rem">{{userName}}</div>
         <div>
-          <i class="fa fa-mobile" style="font-size: 1rem;margin-right: 1vw"></i>
-          <span>18483320348</span>
+          <i class="fa fa-mobile" style="font-size: 1rem;margin-right: 1vw" *ngIf="mobilePhone != undefined"></i>
+          <span>{{mobilePhone}}</span>
         </div>
       </div>
     </div>
   <div class="tab-mine-content">
     <div class="tab-mine-content-line">
-      <div class="weui-cell weui-cell_access" *ngFor="let item of owerItemList" (click)="owerItemClick(item)">
+      <div class="weui-cell weui-cell_access" *ngFor="let item of owerItemList" (click)="owerItemClick(item)" [hidden]="item.hide">
         <div class="weui-cell__bd">
           <span style="vertical-align: middle;font-size: 1rem">{{item.label}}</span>
         </div>

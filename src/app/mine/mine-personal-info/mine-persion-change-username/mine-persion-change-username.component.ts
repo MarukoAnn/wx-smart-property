@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MinePersionalInfoService} from '../../../common/services/mine-persional-info.service';
+import {ToastComponent, ToptipsService} from 'ngx-weui';
 
 @Component({
   selector: 'app-mine-persion-change-username',
@@ -8,6 +10,8 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./mine-persion-change-username.component.less']
 })
 export class MinePersionChangeUsernameComponent implements OnInit {
+  @ViewChild('success') success: ToastComponent;
+
   public headerOption: HeaderContent = {
     title: '更改名字',
     leftContent: {
@@ -24,6 +28,8 @@ export class MinePersionChangeUsernameComponent implements OnInit {
   };
   constructor(
     private getRouter: ActivatedRoute,
+    private minePerSrv: MinePersionalInfoService,
+    private toptipSrv: ToptipsService,
     // private router: Router,
   ) { }
 
@@ -35,23 +41,15 @@ export class MinePersionChangeUsernameComponent implements OnInit {
   }
   // change name
   public mineUserNicUpdate(): void {
-    console.log(123);
-    window.history.back();
-    // this.mineSrv.mineUpdateUserName(this.nikeName).subscribe(
-    //   (val) => {
-    //     if (val.status === 200) {
-    //       this.updateNicMsg = '修改成功';
-    //       this.onToastShow('success');
-    //       timer(1000).subscribe(
-    //         (time) => {
-    //           window.history.back();
-    //         }
-    //       );
-    //       return;
-    //     }
-    //     this.updateNicMsg = `修改失败，错误代码：${val.status}`;
-    //     this.onToastShow('success');
-    //   }
-    // );
+    // window.history.back();
+    this.minePerSrv.updateUserName({ userName: this.nikeName.nikeName}).subscribe(
+      (value) => {
+        // console.log(value.ms);
+        this.onShow('success', value.msg);
+      }
+    );
+  }
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

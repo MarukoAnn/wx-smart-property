@@ -13,6 +13,7 @@ import {WeUiModule} from 'ngx-weui';
 import { ChargepayRoomTenantComponent } from './chargepay-room-tenant/chargepay-room-tenant.component';
 import { ChargepayRoomDeputeyComponent } from './chargepay-room-deputey/chargepay-room-deputey.component';
 import {ListModule} from '../common/components/list/list.module';
+import { ChargepayCouponComponent } from './chargepay-coupon/chargepay-coupon.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ListModule} from '../common/components/list/list.module';
     ChargepayItemDetailComponent,
     ChargepayMonthComponent,
     ChargepayRoomTenantComponent,
-    ChargepayRoomDeputeyComponent],
+    ChargepayRoomDeputeyComponent,
+    ChargepayCouponComponent],
   imports: [
     CommonModule,
     ChargepayRoutingModule,

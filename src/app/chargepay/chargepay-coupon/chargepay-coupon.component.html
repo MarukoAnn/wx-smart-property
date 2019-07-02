@@ -1,0 +1,25 @@
+<div class="chargepay-coupon">
+  <app-header [option]="headerOption" (headerLeftClick)="leftBackClick()"></app-header>
+  <div class="chargepay-coupon-content">
+    <!--不使用优惠卷-->
+    <div class="chargepay-coupon-content-title" (click)="noUserCouponClick($event)">
+      <span >不使用优惠券</span>
+      <i class="icon iconfont icon-chenggong" style="float: right;margin-right: 4vw" [ngStyle]="{'color': color}"></i>
+    </div>
+    <div class="chargepay-coupon-content-body" *ngFor="let item of couponList;let i = index"  (click)="UserCouponClick(i)">
+      <!--<div class="fex"></div>-->
+      <div class="chargepay-coupon-content-body-left">
+        <span >{{item.label}}</span>
+        <!--<div style="width: 2vw;height: 2vw;background: #ECECEC;border-radius: 50%;color: #ECECEC;margin-top:1vh">12</div>-->
+      </div>
+      <div class="chargepay-coupon-content-body-right">
+         <span>
+           {{item.content}}
+         </span>
+        <i class="icon iconfont icon-chenggong" style="float: right;margin-right: 4vw;margin-top: 4vh" [ngStyle]="{'color': item.color}"></i>
+        <div style="font-size: 0.5rem;color: #C9C4C4;"> {{item.endTime}}</div>
+        <div style="font-size: 0.5rem;color: #C9C4C4;"> {{item.company}} <span style="color: #fff;margin: 0">1223</span></div>
+      </div>
+    </div>
+  </div>
+</div>

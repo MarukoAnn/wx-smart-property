@@ -6,6 +6,7 @@ import {ChargepayRoomInfoComponent} from './chargepay-room-info/chargepay-room-i
 import {ChargepayUserInfoComponent} from './chargepay-user-info/chargepay-user-info.component';
 import {ChargepayRoomTenantComponent} from './chargepay-room-tenant/chargepay-room-tenant.component';
 import {ChargepayRoomDeputeyComponent} from './chargepay-room-deputey/chargepay-room-deputey.component';
+import {ChargepayCouponComponent} from './chargepay-coupon/chargepay-coupon.component';
 
 const routes: Routes = [
   {path: 'itemdetail', component: ChargepayItemDetailComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'roominfo', component: ChargepayRoomInfoComponent},
   {path: 'tenant', component: ChargepayRoomTenantComponent},
   {path: 'deputey', component: ChargepayRoomDeputeyComponent},
+  {path: 'coupon', component: ChargepayCouponComponent},
 ];
 
 @NgModule({

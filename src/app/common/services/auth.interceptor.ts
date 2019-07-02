@@ -19,8 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url === environment.dev_test_url + `/wx/login` || req.url === environment.dev_test_url + `/gettoken`) {
-      console.log(req.url);
-      console.log('进来了');
       this.clonedRequest = req.clone({
         url:  req.url,
         // url: 'http://192.168.1.88' + req.url,
@@ -28,15 +26,23 @@ export class AuthInterceptor implements HttpInterceptor {
           .set('Content-type', 'application/json; charset=UTF-8')
         // .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1OTcwNTczMX0.viyBP5R4uuo5FivuM6lH1JZDUo_vKRSB1tu7W3XqKqK5d-_GlhnqBDJJ01qbrkVaL_9gywRvLLXbLiXrw3NP5Q')
       });
-    } else {
+    } else if (req.url === environment.dev_test_url + `/wx/indexuploadphoto`) {
       this.clonedRequest = req.clone({
         url:  req.url,
         headers: req.headers
-         .set('Content-type', 'application/json; charset=UTF-8')
-         // .set('APPKEY', environment.dev_test_appkey)
-         .set('APPKEY', this.globalService.wxSessionGetObject('appkey'))
+          // .set('APPKEY', environment.dev_test_appkey)
+          .set('APPKEY', 'D9313E7909CEA4CD9DE7A026DD20517B')
       });
 
+    } else {
+      console.log(123);
+      this.clonedRequest = req.clone({
+        url:  req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json; charset=UTF-8')
+          // .set('APPKEY', environment.dev_test_appkey)
+          .set('APPKEY', 'D9313E7909CEA4CD9DE7A026DD20517B')
+      });
     }
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -49,7 +55,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.router.navigate(['/error'], {
               queryParams: {
                 msg: event.body.msg,
-                status: event.body.msg,
+                status: event.body.code,
                 btn: '请重试'
               }
             });

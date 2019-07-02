@@ -80,14 +80,14 @@ export class TabHomeComponent implements OnInit {
   }
   // room payment
   public  tabPaymentClick(e): void {
-    console.log(e);
-    this.router.navigate(['/chargepay/itemdetail']);
+    console.log(e.Content[2].value);
+    this.router.navigate(['/chargepay/itemdetail'], {queryParams: {roomCode: e.Content[2].value}});
 
   }
 
   // room detaiL
   public  tabRoomDetailClick(e): void {
-      console.log(e.Content[2].value);
+      // console.log(e.Content[2].value);
       this.router.navigate(['/chargepay/roominfo'], {queryParams: {roomCode: e.Content[2].value}});
   }
 }

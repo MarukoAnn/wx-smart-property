@@ -6,13 +6,12 @@ import {environment} from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class MineImageCropperService {
+export class ChargeMonthService {
 
   constructor(
     private http: HttpClient
   ) { }
-
-  public uploadImage (bady): Observable<any> {
-    return this.http.post(environment.dev_test_url + `/wx/indexuploadphoto`, bady);
+  public getMonthPayment(pamars): Observable<any> {
+      return this.http.post(environment.dev_test_url + `/wx/paymentlist`, pamars);
   }
 }

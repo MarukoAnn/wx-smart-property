@@ -30,6 +30,7 @@
               "src/styles.less",
               "src/assets/icons/iconfont.css",
               "./node_modules/swiper/dist/css/swiper.min.css",
+
             ],
             "scripts": [
               "./node_modules/echarts/dist/echarts.min.js",

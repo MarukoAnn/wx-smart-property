@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router, Routes} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {ChargeMonthService} from '../../common/services/charge-month.service';
 
 @Component({
   selector: 'app-chargepay-month',
@@ -19,29 +20,28 @@ export class ChargepayMonthComponent implements OnInit {
       icon: ''
     }
   };
-  public monthDta = [
-    {label: '1个月', RAmount: 10, PaiAmount: 9.8, discount: 9.8 },
-    {label: '2个月', RAmount: 20, PaiAmount: 19.6, discount: 9.8 },
-    {label: '3个月', RAmount: 30, PaiAmount: 28.5, discount: 9.5 },
-    {label: '4个月', RAmount: 40, PaiAmount: 38, discount: 9.5 },
-    {label: '5个月', RAmount: 50, PaiAmount: 47.5, discount: 9.5 },
-    {label: '6个月', RAmount: 60, PaiAmount: 55.2, discount: 9.2 },
-    {label: '7个月', RAmount: 70, PaiAmount: 65.4, discount: 9.2 },
-    {label: '8个月', RAmount: 80, PaiAmount: 73.4, discount: 9.2 },
-    {label: '9个月', RAmount: 90, PaiAmount: 81, discount: 9.0 },
-    {label: '10个月', RAmount: 100, PaiAmount: 90, discount: 9.0 },
-    {label: '11个月', RAmount: 110, PaiAmount: 99, discount: 9.0 },
-    {label: '12个月', RAmount: 120, PaiAmount: 102, discount: 8.5 },
-];
+  public monthDta = [];
   constructor(
     private getrouter: ActivatedRoute,
     private router: Router,
+    private chargeMonthSrv: ChargeMonthService,
   ) { }
 
   ngOnInit() {
     // this.router.snapshot.queryParams["item"];
     this.getrouter.queryParams.subscribe((value) => {
-        console.log(value.item);
+        console.log(value.roomCode);
+        console.log(value.roomCode);
+        if (value) {
+          this.chargeMonthSrv.getMonthPayment({roomCode: value.roomCode, chargeCode: value.chargeCode}).subscribe(
+            (val) => {
+              console.log(val);
+              val.entity.forEach(v => {
+                this.monthDta.push({label: v.datedif, oldMoney: v.oldMoney, newMoney: v.newMoney, discount: v.discount })
+              })
+            }
+          );
+        }
     });
   }
 
