@@ -5,7 +5,7 @@
     <div class="weui-cells" style="margin-top: 0;font-size: 0.9rem">
       <a class="weui-cell weui-cell_access" *ngFor="let item of owerPayInfo">
         <div class="weui-cell__bd" >
-          <p *ngFor="let i of item.data" style="margin-top: 1vh"><span>{{i.label}}：</span><span>{{i.value}}</span></p>
+          <p *ngFor="let i of item.data" style="margin-top: 1vh"><span>{{i.label}}：</span><span style="font-size: 0.8rem">{{i.value}}</span></p>
         </div>
         <div class="weui-cell__left" style="color: red;font-size: 1.5rem">-￥{{item.payValue}}</div>
       </a>

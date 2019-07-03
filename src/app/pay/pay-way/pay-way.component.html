@@ -1,14 +1,18 @@
 <div class="pay-way">
-  <app-header [option]="headerOption"></app-header>
-
+  <app-header [option]="headerOption" ></app-header>
+<div class="pay-way-content" *ngIf="payDetailDta[payDetailDta.length-1].value !== ''">
   <div class="weui-cell weui-cell_access pay-way-text" *ngFor="let item of payDetailDta" (click)="paySelectCouponClick(item.label)">
-    <div class="weui-cell__bd">
+    <div class="weui-cell__bd" >
       <span style="vertical-align: middle">{{item.label}}：</span>
       <!--<span class="weui-badge" style="margin-left: 5px;">8</span>-->
     </div>
-    <div class="weui-cell__left"><span *ngIf="item.symbol === 1">￥</span>{{item.value}}</div>
+    <div class="weui-cell__left" *ngIf="item.value!== ''"><span *ngIf="item.symbol === 1">￥</span>{{item.value}} <span *ngIf="item.label === '缴费月数'">个月</span></div>
+    <!--<div class="weui-cell__left"><span *ngIf="item.symbol === 1">￥</span>{{item.value}}</div>-->
     <div class="weui-cell__ft" *ngIf="item.label==='优惠卷'"></div>
   </div>
+  <button weui-button style="background: #1C86D6;margin-top: 1vh" (click)="payMoneyClick()">支 付</button>
+
+</div>
   <!--<div class="weui-cell weui-cell_access pay-way-text" *ngFor="let item of payDetailDta.slice(payDetailDta.length-1,payDetailDta.length)">-->
     <!--<div class="weui-cell__bd">-->
       <!--<span style="vertical-align: middle">{{item.label}}：</span>-->
@@ -25,5 +29,4 @@
       <!--(dialogPayDestroy)="onDialogPayClick($event)">-->
     <!--</app-dialog-pay>-->
   <!--</div>-->
-  <button weui-button style="background: #1C86D6;margin-top: 1vh" (click)="payMoneyClick()">支 付</button>
 </div>

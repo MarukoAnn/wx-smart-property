@@ -12,13 +12,21 @@
         <span >{{item.label}}</span>
         <!--<div style="width: 2vw;height: 2vw;background: #ECECEC;border-radius: 50%;color: #ECECEC;margin-top:1vh">12</div>-->
       </div>
-      <div class="chargepay-coupon-content-body-right">
-         <span>
-           {{item.content}}
-         </span>
-        <i class="icon iconfont icon-chenggong" style="float: right;margin-right: 4vw;margin-top: 4vh" [ngStyle]="{'color': item.color}"></i>
-        <div style="font-size: 0.5rem;color: #C9C4C4;"> {{item.endTime}}</div>
-        <div style="font-size: 0.5rem;color: #C9C4C4;"> {{item.company}} <span style="color: #fff;margin: 0">1223</span></div>
+      <div class="chargepay-coupon-content-body-right" >
+        <!--<ul>-->
+          <!--<li style="color: #EA760F;font-size: 0.8rem;font-weight: bold">总金额：{{item.content}}元     余额：{{item.Amoney}}元</li>-->
+          <!--&lt;!&ndash;<li style="color: #EA760F;font-size: 0.8rem;font-weight: bold"></li>&ndash;&gt;-->
+          <!--<li style="font-size: 0.5rem;color: #C9C4C4;">{{item.endTime}}</li>-->
+          <!--<li  style="font-size: 0.5rem;color: #C9C4C4">{{item.company}}</li>-->
+        <!--</ul>-->
+         <span style="margin-left: 4vw">总金额：{{item.content}}元  </span>
+        <span style="margin-left: 2vw;display: inline-block">余额：{{item.Amoney}}元</span>
+        <!--<div class="chargepay-coupon-content-body-right-Money">-->
+           <!--余额：{{item.Amoney}}元-->
+         <!--</div>-->
+          <i class="icon iconfont icon-chenggong" style="float: right;margin-right: 4vw;margin-top: 6vh" [ngStyle]="{'color': item.color}"></i>
+        <div style="font-size: 0.5rem;color: #C9C4C4;height: 3vh"> {{item.endTime}}</div>
+        <div style="font-size: 0.5rem;color: #C9C4C4;height: 3vh"> {{item.company}}</div>
       </div>
     </div>
   </div>

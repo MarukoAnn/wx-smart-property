@@ -6,7 +6,7 @@ import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [
   // {path: '', redirectTo: '/mine/imagecropper', pathMatch: 'full'},
-  {path: '', redirectTo: '/pay/sure', pathMatch: 'full'},
+  {path: '', redirectTo: '/tab/home', pathMatch: 'full'},
   {path: 'tab', canActivate: [LoginGuard], loadChildren: './tab/tab.module#TabModule'},
   {path: 'login', canActivate: [LoginGuard], component: LoginComponent},
   {path: 'registered', canActivate: [LoginGuard], loadChildren: './registered/registered.module#RegisteredModule'},

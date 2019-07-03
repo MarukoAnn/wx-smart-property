@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {GlobalService} from '../../common/services/global.service';
+import {ActivatedRoute} from '@angular/router';
+import {ChargepayCouponService} from '../../common/services/chargepay-coupon.service';
 
 @Component({
   selector: 'app-chargepay-coupon',
@@ -20,26 +22,32 @@ export class ChargepayCouponComponent implements OnInit {
     }
   };
   public color = '#B7B7B7';
-  public code: any;
+  public code = null;
   constructor(
     private globalSrv: GlobalService,
+    private getRouter: ActivatedRoute,
+    private chargeCouponSrv: ChargepayCouponService,
   ) { }
-  public couponList = [
-    {label: '抵扣卷', content: '50元物业费抵扣卷', endTime: '有效期至2019-07-23', company: '云城尚品物业', color: '#B7B7B7', code: 'YCSP-1'},
-    {label: '抵扣卷', content: '50元物业费抵扣卷', endTime: '有效期至2019-07-23', company: '云城尚品物业', color: '#B7B7B7', code: 'YCSP-2'},
-    {label: '抵扣卷', content: '50元物业费抵扣卷', endTime: '有效期至2019-07-23', company: '云城尚品物业', color: '#B7B7B7', code: 'YCSP-3'},
-    {label: '优惠卷', content: '9.6折物业费优惠卷', endTime: '有效期至2019-07-23', company: '云城尚品物业', color: '#B7B7B7', code: 'YCSP-4'},
-    {label: '抵扣卷', content: '150元物业费抵扣卷', endTime: '有效期至2019-07-23', company: '云城尚品物业', color: '#B7B7B7', code: 'YCSP-5'},
-  ];
+  public couponList = [];
   ngOnInit() {
+    this.getRouter.queryParams.subscribe(
+      (val) => {
+         this.chargeCouponSrv.getChargeCoupon({roomCode: val.roomCode, chargeCode: val.chargeCode}).subscribe(
+           (value) => {
+             console.log(value);
+             value.entity.forEach( v => {
+               this.couponList.push({label: v.couponName, content: v.money, endTime: '有效期至' + v.endDate , company: v.organizationName, Amoney: v.balanceAmount, color: '#B7B7B7', code: v.id});
+             });
+           }
+         );
+      });
   }
 
   public  noUserCouponClick(): void {
     this.couponList.forEach(v => {
       v.color = '#B7B7B7';
-      this.code = null;
     });
-      if ( this.color === '#08EA5F') {
+      if (this.color === '#08EA5F') {
         this.color = '#B7B7B7';
       } else {
          this.color = '#08EA5F';
@@ -58,7 +66,7 @@ export class ChargepayCouponComponent implements OnInit {
     // if (this.code === undefined){
     //
     // } else {
-      this.globalSrv.wxSessionSetObject('couponCode', this.code);
+      this.globalSrv.wxSet('couponCode', this.code);
     // }
   }
 }

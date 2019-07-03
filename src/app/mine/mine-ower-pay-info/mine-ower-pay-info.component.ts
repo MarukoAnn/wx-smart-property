@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {PTRComponent} from 'ngx-weui';
 import {timer} from 'rxjs';
+import {MinePersionalInfoService} from '../../common/services/mine-persional-info.service';
+import {MinePayInfoService} from '../../common/services/mine-pay-info.service';
 
 @Component({
   selector: 'app-mine-ower-pay-info',
@@ -20,20 +22,35 @@ export class MineOwerPayInfoComponent implements OnInit {
       icon: ''
     }
   };
-  public owerPayInfo = [
-    {data: [{label: '房间编号', value: 'A3-15-2406'}, {label: '缴费类型', value: '物业费'}, {label: '缴费时间', value: '2019-05-14'}], payValue: '34.5'},
-    {data: [{label: '房间编号', value: 'A3-15-2406'}, {label: '缴费类型', value: '物业费'}, {label: '缴费时间', value: '2019-05-14'}], payValue: '24.5'},
-    {data: [{label: '房间编号', value: 'A3-15-2406'}, {label: '缴费类型', value: '物业费'}, {label: '缴费时间', value: '2019-05-14'}], payValue: '53.5'},
-  ];
-  constructor() { }
+  public owerPayInfo = [];
+  public flag = 2;
+  constructor(
+    private minePayInfoSrv: MinePayInfoService
+  ) { }
 
   ngOnInit() {
+     this.initializationMinePayinfo(1);
+  }
+  public initializationMinePayinfo (pageNum): void {
+    this.minePayInfoSrv.getMinePayInfo({pageNum: pageNum , pageSize: 10}).subscribe(
+      (val) => {
+           console.log(val);
+           if (val.entity){
+             val.entity.forEach( v => {
+               this.owerPayInfo.push(
+                 {data: [{label: '房间编号', value: v.roomCode}, {label: '缴费类型', value: v.chargeName}, {label: '缴费时间', value: v.date}], payValue: v.money},)
+             });
+           }
+
+      });
   }
   // 下拉刷新
   public onRefresh(ptr: PTRComponent): void {
     timer(800).subscribe(() => {
-      this.owerPayInfo.push(  {data: [{label: '房间编号', value: 'A3-15-2406'}, {label: '缴费类型', value: '物业费'}, {label: '缴费时间', value: '2019-05-14'}], payValue: '34.5'});
+      this.initializationMinePayinfo(this.flag);
       ptr.setFinished();
+      this.flag = this.flag + 1;
+      console.log(this.flag);
     });
   }
 }

@@ -11,7 +11,10 @@ export class ChargeRoomInfoService {
   constructor(
     private http: HttpClient
   ) { }
-  public  queryRoomInfo(): Observable<any> {
-      return this.http.post(environment.dev_test_url + `/houseinfo`, {});
+  public  queryRoomInfo(pamars): Observable<any> {
+      return this.http.post(environment.dev_test_url + `/houseinfo`, pamars);
+  }
+  public  queryRoomChargeInfo(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/payment/user`, pamars);
   }
 }

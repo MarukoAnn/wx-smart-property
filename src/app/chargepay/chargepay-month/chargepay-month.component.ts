@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router, Routes} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ChargeMonthService} from '../../common/services/charge-month.service';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-chargepay-month',
@@ -21,24 +22,27 @@ export class ChargepayMonthComponent implements OnInit {
     }
   };
   public monthDta = [];
+  public roomCode: any;
+  public chargeCode: any;
   constructor(
     private getrouter: ActivatedRoute,
     private router: Router,
     private chargeMonthSrv: ChargeMonthService,
+    private globalSrv: GlobalService,
   ) { }
 
   ngOnInit() {
     // this.router.snapshot.queryParams["item"];
     this.getrouter.queryParams.subscribe((value) => {
-        console.log(value.roomCode);
-        console.log(value.roomCode);
+        this.roomCode = this.globalSrv.wxGet('roomCode');
+        this.chargeCode = value.chargeCode;
         if (value) {
-          this.chargeMonthSrv.getMonthPayment({roomCode: value.roomCode, chargeCode: value.chargeCode}).subscribe(
+          this.chargeMonthSrv.getMonthPayment({roomCode: this.roomCode, chargeCode: value.chargeCode}).subscribe(
             (val) => {
               console.log(val);
               val.entity.forEach(v => {
-                this.monthDta.push({label: v.datedif, oldMoney: v.oldMoney, newMoney: v.newMoney, discount: v.discount })
-              })
+                this.monthDta.push({label: v.datedif, oldMoney: v.oldMoney, newMoney: v.newMoney, discount: v.discount });
+              });
             }
           );
         }
@@ -47,6 +51,6 @@ export class ChargepayMonthComponent implements OnInit {
 
   public  monthSelectClick(e): void {
       console.log(e);
-      this.router.navigate(['/pay/sure']);
+      this.router.navigate(['/pay/sure'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode, month: e.label}});
   }
 }

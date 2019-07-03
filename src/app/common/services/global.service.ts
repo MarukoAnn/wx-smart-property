@@ -26,6 +26,13 @@ export class GlobalService {
   public wxSessionPlaceDel(): any {
     this.wxSessionStore.clear();
   }
+  public wxSet(key: string, value: string): void {
+    this.wxSessionStore[key] = value;
+  }
+
+  public wxGet(key: string): string {
+    return this.wxSessionStore[key] || false;
+  }
   // public  wxSessionSetFile(key: string, value: File): void {
   //   this.wxSessionStore[key] = value;
   //

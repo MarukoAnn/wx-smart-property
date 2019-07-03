@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, PTRComponent} from 'ngx-weui';
 import {timer} from 'rxjs';
+import {GlobalService} from '../../common/services/global.service';
 @Component({
   selector: 'app-tab-home',
   templateUrl: './tab-home.component.html',
@@ -45,6 +46,7 @@ export class TabHomeComponent implements OnInit {
   constructor(
     private tabSrv: TabService,
     private router: Router,
+    private globalSrv: GlobalService,
   ) { }
 
   ngOnInit() {
@@ -81,13 +83,15 @@ export class TabHomeComponent implements OnInit {
   // room payment
   public  tabPaymentClick(e): void {
     console.log(e.Content[2].value);
-    this.router.navigate(['/chargepay/itemdetail'], {queryParams: {roomCode: e.Content[2].value}});
+    this.globalSrv.wxSet('roomCode', e.Content[2].value);
+    this.router.navigate(['/chargepay/itemdetail']);
 
   }
 
   // room detaiL
   public  tabRoomDetailClick(e): void {
       // console.log(e.Content[2].value);
-      this.router.navigate(['/chargepay/roominfo'], {queryParams: {roomCode: e.Content[2].value}});
+    this.globalSrv.wxSet('roomCode', e.Content[2].value);
+    this.router.navigate(['/chargepay/roominfo']);
   }
 }
