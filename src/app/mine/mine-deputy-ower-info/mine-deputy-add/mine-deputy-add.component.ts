@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {DialogComponent, DialogConfig} from 'ngx-weui';
 import {ActivatedRoute} from '@angular/router';
+import {MineDeputyService} from '../../../common/services/mine-deputy.service';
 
 @Component({
   selector: 'app-mine-deputy-add',
@@ -25,58 +26,34 @@ export class MineDeputyAddComponent implements OnInit {
     phone: '',
   };
   config: DialogConfig = {};
+  public owerRoomCodeList: any[] = [];
   public houseSelectData: any[] = [];
+  public date: any;
   constructor(
     private getRouter: ActivatedRoute,
+    private mineDeputySrv: MineDeputyService,
+
   ) { }
 
   ngOnInit() {
-    this.getRouter.queryParams.subscribe((value) => {
-      console.log(value);
-      this.duputyData.name = value.value;
-    });
+    // this.date = $filter('date')(new Date(),'MM/dd/yyyy');
+    // console.log(this.date | date:'yyyy-MM-dd HH:mm:ss'} );
+    // this.getRouter.queryParams.subscribe((value) => {
+    //   console.log(value);
+    //   this.duputyData.name = value.value;
+    // });
+    this.mineDeputyInfoInit();
   }
-  // public houseModifyClick(e) {
-  //   const cog = Object.assign({}, <DialogConfig>{
-  //     skin: 'auto',
-  //     type: 'prompt',
-  //     title: '请输入房间号',
-  //     confirm: '确认',
-  //     cancel: '',
-  //     input: 'text',
-  //     inputValue: e,
-  //     backdrop: true,
-  //     // inputOptions: [],
-  //   });
-  //   // cog.inputValue = this.houseSelectData;
-  //   this.config = cog;
-  //   setTimeout(() => {
-  //     (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-  //       console.log(res.result);
-  //       this.houseSelectData.forEach( v => {
-  //         if (v.text === e) {
-  //           v.text = res.result;
-  //         }
-  //       });
-  //       // this.autoAS.hide();
-  //       // (<DialogComponent>this[`autoAS`]).
-  //       // this.houseSelectData = res.result;
-  //       // this.mineSrv.mineUpdateUserName({sex: res.result.value}).subscribe(
-  //       //   (val) => {
-  //       //     if (val.status === 200) {
-  //       //       this.updateSexMsg = '修改成功';
-  //       //       this.tabMineDateInit();
-  //       //       this.onToastShow('success');
-  //       //       return;
-  //       //     }
-  //       //     this.updateSexMsg = `修改失败，错误代码：${val.status}`;
-  //       //     this.onToastShow('success');
-  //       //   }
-  //       // );
-  //     });
-  //   }, 10);
-  //   return false;
-  // }
+  public mineDeputyInfoInit(): void {
+    this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
+      (value) => {
+        console.log(value);
+        value.entity.forEach( (v, index) => {
+          this.owerRoomCodeList.push(  {text: v, value: index + 1});
+        });
+      }
+    );
+  }
 
   public  houseSelectClick() {
     this.config = Object.assign({}, <DialogConfig>{
@@ -88,11 +65,7 @@ export class MineDeputyAddComponent implements OnInit {
       input: 'checkbox',
       // inputValue: e,
       backdrop: true,
-      inputOptions: [
-        {text: 'YCSP-A3-15-2406', value: '1'},
-        {text: 'YCSP-A3-15-2506', value: '2'},
-        {text: 'YCSP-A3-15-2506', value: '3'},
-      ],
+      inputOptions: this.owerRoomCodeList,
     });
     setTimeout(() => {
       (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
@@ -100,21 +73,6 @@ export class MineDeputyAddComponent implements OnInit {
         if (res.text === '确认') {
           this.houseSelectData = res.result;
         }
-        // this.autoAS.hide();
-        // (<DialogComponent>this[`autoAS`]).
-        // this.houseSelectData = res.result;
-        // this.mineSrv.mineUpdateUserName({sex: res.result.value}).subscribe(
-        //   (val) => {
-        //     if (val.status === 200) {
-        //       this.updateSexMsg = '修改成功';
-        //       this.tabMineDateInit();
-        //       this.onToastShow('success');
-        //       return;
-        //     }
-        //     this.updateSexMsg = `修改失败，错误代码：${val.status}`;
-        //     this.onToastShow('success');
-        //   }
-        // );
       });
     }, 10);
     return false;

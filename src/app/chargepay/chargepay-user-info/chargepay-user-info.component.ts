@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ActivatedRoute} from '@angular/router';
+import {ChargepayUserInfoService} from '../../common/services/chargepay-user-info.service';
+import {GlobalService} from '../../common/services/global.service';
+import {PTRComponent, ToptipsService} from 'ngx-weui';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-chargepay-user-info',
@@ -19,26 +23,55 @@ export class ChargepayUserInfoComponent implements OnInit {
       icon: ''
     }
   };
-  public basicData: any;
-  public userinfodetail = [
-    {data: [{label: '缴费时间', value: '2019-05-14'}, {label: '缴费类型', value: '物业费'}], payValue: '34.5'},
-    {data: [{label: '缴费时间', value: '2019-05-14'}, {label: '缴费类型', value: '物业费'}], payValue: '24.5'},
-    {data: [{label: '缴费时间', value: '2019-05-14'}, {label: '缴费类型', value: '物业费'}], payValue: '53.5'},
-  ];
+  public basicData = [
+    {label: '缴费人', value: ''},
+    {label: '电话', value: ''},
+    {label: '房屋编号', value: ''},
+
+  ];;
+  public userinfodetail = [];
+  public flag = 2;
+  public userId: any;
   constructor(
     private getrouter: ActivatedRoute,
+    private chargepayUserInfoSrv: ChargepayUserInfoService,
+    private globalSrv: GlobalService,
+    private toptipSrv: ToptipsService,
+
   ) { }
 
   ngOnInit() {
     this.getrouter.queryParams.subscribe((value) => {
-      console.log(value.item);
-      this.basicData = [
-        {label: '缴费人', value: value.item},
-        {label: '电话', value: '18284823242'},
-        {label: '房屋编号', value: 'A3-15栋2406'},
-
-      ];
+      console.log(value.userId);
+      this.userId = value.userId;
+      this.userInRoomChargeListInit(1, value.userId);
+    });
+  }
+  // user charge list init
+  public  userInRoomChargeListInit(pageNum, userId): void {
+     this.chargepayUserInfoSrv.getUserInRoomChargeList({pageNum: pageNum, pageSize: 10, userId: userId, roomCode: this.globalSrv.wxGet('roomCode')}).subscribe(
+       (val) => {
+         console.log(val);
+         this.basicData[0].value = val.entity.surName;
+         this.basicData[1].value = val.entity.mobilePhone;
+         this.basicData[2].value = this.globalSrv.wxGet('roomCode');
+         val.entity.payList.forEach( v => {
+           this.userinfodetail.push( {data: [{label: '缴费时间', value: v.date}, {label: '缴费类型', value: v.chargeName}], payValue: v.money});
+         });
+         this.onShow('success', val.msg);
+       }
+     );
+  }
+  // 下拉刷新
+  onRefresh(ptr: PTRComponent) {
+    timer(800).subscribe(() => {
+     this.userInRoomChargeListInit(this.flag, this.userId);
+     this.flag = this.flag + 1;
+      ptr.setFinished();
     });
   }
 
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
+  }
 }

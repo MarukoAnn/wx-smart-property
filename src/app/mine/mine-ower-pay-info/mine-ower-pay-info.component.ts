@@ -35,10 +35,10 @@ export class MineOwerPayInfoComponent implements OnInit {
     this.minePayInfoSrv.getMinePayInfo({pageNum: pageNum , pageSize: 10}).subscribe(
       (val) => {
            console.log(val);
-           if (val.entity){
+           if (val.entity) {
              val.entity.forEach( v => {
                this.owerPayInfo.push(
-                 {data: [{label: '房间编号', value: v.roomCode}, {label: '缴费类型', value: v.chargeName}, {label: '缴费时间', value: v.date}], payValue: v.money},)
+                 {data: [{label: '房间编号', value: v.roomCode}, {label: '缴费类型', value: v.chargeName}, {label: '缴费时间', value: v.date}], payValue: v.money});
              });
            }
 

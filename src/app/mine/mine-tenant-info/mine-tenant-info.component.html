@@ -2,7 +2,7 @@
   <app-header [option]="headerOption"></app-header>
   <div class="mine-tenant-info-content">
     <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">
-      <div class="weui-flex" *ngFor="let item of deputyInfo; let index = index">
+      <div class="weui-flex" *ngFor="let item of tenantInfo">
         <div class="weui-flex__item">
           <div class="placeholder">
             <div class="mine-tenant-info-item" (click)="mineTenantDetailClick(item)">

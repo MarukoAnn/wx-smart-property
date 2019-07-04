@@ -1,7 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {DialogComponent, DialogConfig, InputType, SkinType} from 'ngx-weui';
+import {DialogComponent, DialogConfig, InputType, SkinType, ToptipsService} from 'ngx-weui';
+import {MineDeputyService} from '../../../common/services/mine-deputy.service';
+import {ModeifyMineDeputy} from '../../../common/model/mine-deputy.model';
 // import {type} from 'os';
 
 @Component({
@@ -28,20 +30,56 @@ export class MineDeputyChangeInfoComponent implements OnInit {
     phone: '18283923823',
   };
   config: DialogConfig = {};
-  public houseSelectData: any[] = [
-    {text: 'YCSP-A3-15-2406', value: '1'},
-    {text: 'YCSP-A3-15-2506', value: '2'},
-    {text: 'YCSP-A3-15-2506', value: '3'},
-  ];
+  public owerRoomCodeList: any[] = [];
+  public houseSelectData: any[] = [];
+  public userId: any;
+  public ModefyDeputy: ModeifyMineDeputy = new ModeifyMineDeputy();
   constructor(
     private getRouter: ActivatedRoute,
+    private mineDeputySrv: MineDeputyService,
+    private toptipSrv: ToptipsService,
+
+
   ) { }
 
   ngOnInit() {
     this.getRouter.queryParams.subscribe((value) => {
       console.log(value);
-      this.duputyData.name = value.value;
+      this.userId = value.value;
+      this.mineDeputyInfoInit(value.value);
     });
+  }
+
+  public mineDeputyInfoInit(id): void {
+
+    this.mineDeputySrv.queryMineDeputyInfoById({userId: id}).subscribe(
+      value => {
+        // console.log(value);
+        this.duputyData.name = value.entity.userName;
+        this.duputyData.sex = value.entity.sex;
+        this.duputyData.phone = value.entity.userPhone;
+        // this.onShow('success', '查询成功');
+      }
+    );
+    this.mineDeputySrv.queryMineDeputyBindRoomCode({userId: id, identity: 2 }).subscribe(
+      val => {
+        console.log(val);
+        val.entity.forEach( (v, index) => {
+          console.log(v);
+          console.log(index);
+
+          this.houseSelectData.push(    {text: v, value: index + 1});
+        });
+      }
+    );
+    this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
+      (value) => {
+        console.log(value);
+        value.entity.forEach( (v, index) => {
+          this.owerRoomCodeList.push(  {text: v, value: index + 1});
+        });
+      }
+    );
   }
   public houseModifyClick(e) {
     const cog = Object.assign({}, <DialogConfig>{
@@ -92,51 +130,67 @@ export class MineDeputyChangeInfoComponent implements OnInit {
       confirm: '确认',
       cancel: '取消',
       input: 'checkbox',
-      // inputValue: e,
       backdrop: true,
-      inputOptions: [
-        {text: 'YCSP-A3-15-2406', value: '1'},
-        {text: 'YCSP-A3-15-2506', value: '2'},
-        {text: 'YCSP-A3-15-2506', value: '3'},
-      ],
+      inputOptions: this.owerRoomCodeList,
     });
     setTimeout(() => {
       (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
         console.log(res);
         if (res.text === '确认') {
-          this.houseSelectData = res.result;
+          if (res.result.length === 0) {
+            this.autoAS.show();
+            this.onShow('warn', '您未选择房间');
+          } else {
+            res.result.forEach( v => {
+              let flag = true;
+              this.houseSelectData.forEach( item => {
+                if (v.text === item.text) {
+                  flag = false;
+                }
+              });
+              if (flag) {
+                this.houseSelectData.push(v);
+              }
+            });
+          }
         }
-        // this.houseSelectData.forEach( v => {
-        //   if (v.text === e) {
-        //     v.text = res.result;
-        //   }
-        // });
-        // this.autoAS.hide();
-        // (<DialogComponent>this[`autoAS`]).
-        // this.houseSelectData = res.result;
-        // this.mineSrv.mineUpdateUserName({sex: res.result.value}).subscribe(
-        //   (val) => {
-        //     if (val.status === 200) {
-        //       this.updateSexMsg = '修改成功';
-        //       this.tabMineDateInit();
-        //       this.onToastShow('success');
-        //       return;
-        //     }
-        //     this.updateSexMsg = `修改失败，错误代码：${val.status}`;
-        //     this.onToastShow('success');
-        //   }
-        // );
       });
     }, 10);
     return false;
   }
   // 房间删除
   public  houseDelectClick(e): void {
-      console.log(e);
+      this.mineDeputySrv.deleteMineDeputyBindRoomCode({identity: 2, roomCode: e, userId: this.userId}).subscribe(
+        (val) => {
+          console.log(val);
+          this.onShow('success', '删除成功');
+          this.owerRoomCodeList = [];
+          this.houseSelectData = [];
+          this.mineDeputyInfoInit(this.userId);
+        }
+      );
       this.houseSelectData.splice(e, 1);
   }
   // modify submit
   public  mineDeputyModifySureClick(): void {
       console.log(123);
+    this.ModefyDeputy.sex = this.duputyData.sex;
+    this.ModefyDeputy.userName = this.duputyData.name;
+    this.ModefyDeputy.userPhone = this.duputyData.phone;
+    this.ModefyDeputy.userId = this.userId;
+    this.ModefyDeputy.identity = 2;
+    this.houseSelectData.forEach( value => {
+      this.ModefyDeputy.roomCodes.push({roomCode: value.text});
+    });
+    console.log(this.ModefyDeputy);
+      this.mineDeputySrv.updateMineDeputyInfo(this.ModefyDeputy).subscribe(
+        value => {
+          console.log(value);
+        }
+      );
+  }
+
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

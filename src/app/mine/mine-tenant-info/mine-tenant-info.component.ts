@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {Router} from '@angular/router';
-import {PTRComponent} from 'ngx-weui';
+import {PTRComponent, ToptipsService} from 'ngx-weui';
 import {timer} from 'rxjs';
+import {MineDeputyService} from '../../common/services/mine-deputy.service';
+import {MineTenantService} from '../../common/services/mine-tenant.service';
 
 @Component({
   selector: 'app-mine-tenant-info',
@@ -21,61 +23,68 @@ export class MineTenantInfoComponent implements OnInit {
       icon: ''
     }
   };
-  public deputyInfo = [
-    {data: [
-        {label: '姓名', value: '张先生'},
-        {label: '关联时间', value: '2029-3-3'},
-        {label: '详细地址', value: 'A3-15栋2406'},
-        {label: '房屋着落', value: '贵阳市云城商品小区'}
-      ]},
-    {data: [
-        {label: '姓名', value: '王先生'},
-        {label: '关联时间', value: '2029-3-3'},
-        {label: '详细地址', value: 'A3-15栋2406'},
-        {label: '房屋着落', value: '贵阳市云城商品小区'}
-      ]},
-    {data: [
-        {label: '姓名', value: '李先生'},
-        {label: '关联时间', value: '2029-3-3'},
-        {label: '详细地址', value: 'A3-15栋2406'},
-        {label: '房屋着落', value: '贵阳市云城商品小区'}
-      ]},
-  ];
+  public tenantInfo = [];
+  public flag = 2;
   constructor(
-    private router: Router
+    private router: Router,
+    private mineTenantSrv: MineTenantService,
+    private toptipSrv: ToptipsService,
+
   ) { }
 
   ngOnInit() {
+    this.mineTenantInfoInit(1);
+  }
+  public mineTenantInfoInit(page): void {
+    this.mineTenantSrv.queryMineTenantInfoList({pageNum: page, pageSize: 10, identity: 3}).subscribe(
+      value => {
+        value.entity.forEach( v => {
+          this.tenantInfo.push( {data: [
+              {label: '姓名', value: v.userName},
+              {label: '关联时间', value: v.data},
+              {label: '详细地址', value: v.roomCode},
+              {label: '房屋着落', value: v.address}
+            ], userId: v.userId});
+        });
+        // this.onShow('success', '查询' + value.msg);
+      }
+    );
   }
   // 下拉刷新
   onRefresh(ptr: PTRComponent) {
     timer(800).subscribe(() => {
-      this.deputyInfo.push(  {data: [
-          {label: '姓名', value: '李先生'},
-          {label: '关联时间', value: '2029-3-3'},
-          {label: '详细地址', value: 'A3-15栋2406'},
-          {label: '房屋着落', value: '贵阳市云城商品小区'}
-        ]});
+      this.mineTenantInfoInit(1);
+      this.flag ++;
       ptr.setFinished();
     });
   }
   // delete deputyInfo
   public  mineTenantDeleteClick(item): void {
     // console.log(item);
-    this.deputyInfo.splice(item, 1);
+    this.mineTenantSrv.deleteMineTenantInfo({identity: 3, roomCode: item.data[2].value, userId: item.userId}).subscribe(
+      value => {
+        console.log(value);
+        this.onShow('success', '删除' + value.msg);
+        this.mineTenantInfoInit(1);
+      }
+    );
   }
   // modify deputyInfo
   public  mineTenantModifyClick(e): void {
-    this.router.navigate(['mine/tenantmodify'], {queryParams: {value: e.data[0].value}});
+    this.router.navigate(['mine/tenantmodify'], {queryParams: {value: e.userId}});
   }
   // Detail deputyInfo
   public  mineTenantDetailClick(e): void {
     // console.log(e);
-    this.router.navigate(['mine/tenantDetail'], { queryParams: {value: e.data[0].value}});
+    this.router.navigate(['mine/tenantDetail'], { queryParams: {value: e.userId}});
   }
   // add deputyInfo
   public  mineTenantAddClick(): void {
     // console.log();
     this.router.navigate(['mine/tenantadd']);
+  }
+
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

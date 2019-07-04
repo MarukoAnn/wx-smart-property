@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {MineChangePswService} from '../../common/services/mine-change-psw.service';
+import {ToptipsService} from 'ngx-weui';
 
 @Component({
   selector: 'app-mine-chage-password',
@@ -23,12 +25,29 @@ export class MineChangePasswordComponent implements OnInit {
     newpsw: '',
     surepsw: '',
   };
-  constructor() { }
+  constructor(
+    private mineChangePswSrv: MineChangePswService,
+    private toptipSrv: ToptipsService,
+  ) { }
 
   ngOnInit() {
   }
 
   public  mineChangePswSureClick(): void {
       console.log(123);
+      if (this.pswData.surepsw === this.pswData.newpsw){
+            this.mineChangePswSrv.updateMinePassword({newPsw: this.pswData.newpsw, oldPsw: this.pswData.oldpsw}).subscribe(
+              (val) => {
+               console.log(val);
+                this.onShow('success', val.msg);
+              }
+            );
+      } else {
+         this.onShow('warn', '两次密码输入不一致');
+      }
+  }
+
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

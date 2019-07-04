@@ -96,7 +96,7 @@ export class MineTenantModifyComponent implements OnInit {
         console.log(res);
         if (res.result === '') {
           this.onShow('warn', '操作错误,请选择房屋');
-        }else if (res.text === '确认') {
+        } else if (res.text === '确认') {
           // this.houseSelectData = res.result;
           this.houseSetDate('开始');
         }

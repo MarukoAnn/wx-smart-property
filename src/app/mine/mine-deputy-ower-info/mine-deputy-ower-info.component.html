@@ -1,6 +1,6 @@
 <div class="mine-deputy-owner-info">
   <app-header [option]="headerOption"></app-header>
-  <div class="mine-deputy-owner-info-content">
+  <div class="mine-deputy-owner-info-content" *ngIf="deputyInfo.length !== 0">
     <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">
       <div class="weui-flex" *ngFor="let item of deputyInfo; let index = index">
         <div class="weui-flex__item">
@@ -38,7 +38,7 @@
                   </div>
                   <div class="weui-flex__item">
                     <div class="placeholder">
-                      <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#F22C8B,#E64340);height: 6vh;text-align: center;font-size: 1.1rem;line-height: 6vh" (click)="mineDeputyDeleteClick(index)">删除</button>
+                      <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#F22C8B,#E64340);height: 6vh;text-align: center;font-size: 1.1rem;line-height: 6vh" (click)="mineDeputyDeleteClick(item)">删除</button>
                     </div>
                   </div>
                   <div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {ActivatedRoute} from '@angular/router';
+import {MineDeputyService} from '../../../common/services/mine-deputy.service';
+import {ToptipsService} from 'ngx-weui';
 
 @Component({
   selector: 'app-mine-deputy-detail',
@@ -20,19 +22,37 @@ export class MineDeputyDetailComponent implements OnInit {
     }
   };
   public deputyDetailData = [
-    {label: '姓名' , value: '张三'},
-    {label: '性别' , value: '男'},
-    {label: '手机号' , value: '12830123821'},
+    {label: '姓名' , value: ''},
+    {label: '性别' , value: ''},
+    {label: '手机号' , value: ''},
   ];
+  public userId: any;
   constructor(
     private getRouter: ActivatedRoute,
+    private mineDeputySrv: MineDeputyService,
+    private toptipSrv: ToptipsService,
   ) { }
 
   ngOnInit() {
-   this.getRouter.queryParams.subscribe((value) => {
-     this.deputyDetailData[0].value = value.value;
-     // console.log(value.data);
-   });
+    this.getRouter.queryParams.subscribe(
+      value => {
+        this.userId = value.value;
+        this.mineDeputyInfoInit(this.userId);
+      }
+    );
   }
-
+  public mineDeputyInfoInit(id): void {
+    this.mineDeputySrv.queryMineDeputyInfoById({userId: id}).subscribe(
+      value => {
+        console.log(value);
+        this.deputyDetailData[0].value = value.entity.userName;
+        this.deputyDetailData[1].value = value.entity.sex;
+        this.deputyDetailData[2].value = value.entity.userPhone;
+        this.onShow('success', '查询成功');
+      }
+    );
+  }
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
+  }
 }

@@ -3,6 +3,8 @@ import {HeaderContent} from '../../common/components/header/header.model';
 import {ChargepayRoomTenantService} from '../../common/services/chargepay-room-tenant.service';
 import {GlobalService} from '../../common/services/global.service';
 import {ActivatedRoute} from '@angular/router';
+import {PTRComponent} from 'ngx-weui';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-chargepay-room-tenant',
@@ -42,5 +44,5 @@ export class ChargepayRoomTenantComponent implements OnInit {
       }
     );
   }
-
+  // 下拉刷新
 }

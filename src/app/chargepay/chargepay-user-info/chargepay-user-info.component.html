@@ -1,7 +1,7 @@
 <div class="chargepay-user-info">
   <app-header [option]="headerOption"></app-header>
-   <div class="chargepay-user-info-content">
-     <div class="weui-cells" style="margin-top: 2px; font-size: 0.9rem">
+   <div class="chargepay-user-info-content" *ngIf="basicData[basicData.length-1].value !== ''">
+     <div class="weui-cells" style="margin-top: 2px; font-size: 0.9rem" >
        <div class="weui-cell weui-cell_access" *ngFor="let item of basicData">
          <div class="weui-cell__bd">
            <p>{{item.label}}</p>
@@ -9,6 +9,8 @@
          <div class="weui-cell__left" >{{item.value}}</div>
        </div>
      </div>
+     <weui-ptr (refresh)="onRefresh($event)"  style="height: 70vh; background: #ECECEC;margin-top: 2px">
+
      <div class="weui-cells" style="margin-top: 0;font-size: 0.9rem">
        <a class="weui-cell weui-cell_access" *ngFor="let item of userinfodetail">
          <div class="weui-cell__bd" >
@@ -17,5 +19,6 @@
          <div class="weui-cell__left" style="color: red;font-size: 1.5rem">-￥{{item.payValue}}</div>
        </a>
      </div>
+     </weui-ptr>
    </div>
 </div>
