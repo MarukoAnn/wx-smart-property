@@ -8,7 +8,7 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="duputyData.name" value="" placeholder="请输入姓名"
+        <input id="name" class="weui-input" [(ngModel)]="duputyData.realName" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -29,7 +29,7 @@
         <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.phone" value="" placeholder="请输入手机号"
+        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.mobilePhone" value="" placeholder="请输入手机号"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -57,4 +57,6 @@
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>
+  <app-loading [hidden]="loadHidden"></app-loading>
+
 </div>

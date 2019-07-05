@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule, HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {CommonModule, DatePipe, HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 import { MineRoutingModule } from './mine-routing.module';
 import { MineTenantInfoComponent } from './mine-tenant-info/mine-tenant-info.component';
@@ -55,6 +55,7 @@ import {LoadingModule} from '../common/components/loading/loading.module';
     LoadingModule
     // JWeiXinModule,
   ],
+  providers: [DatePipe]
   // schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class MineModule { }

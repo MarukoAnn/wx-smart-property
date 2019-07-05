@@ -5,8 +5,8 @@
       <div class="weui-flex" *ngFor="let item of deputyInfo; let index = index">
         <div class="weui-flex__item">
           <div class="placeholder">
-            <div class="mine-deputy-owner-info-item" (click)="mineDeputyDetailClick(item)">
-              <div class="mine-deputy-owner-info-text">
+            <div class="mine-deputy-owner-info-item" >
+              <div class="mine-deputy-owner-info-text" (click)="mineDeputyDetailClick(item)">
                 <div class="weui-flex" style="padding-top: 1vh" *ngFor=" let i of item.data">
                     <div class="placeholder" >
                       <span>{{i.label}}:</span>

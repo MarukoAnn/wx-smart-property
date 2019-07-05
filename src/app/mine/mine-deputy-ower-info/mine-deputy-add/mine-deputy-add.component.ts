@@ -1,8 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {DialogComponent, DialogConfig} from 'ngx-weui';
+import {DialogComponent, DialogConfig, ToptipsService} from 'ngx-weui';
 import {ActivatedRoute} from '@angular/router';
 import {MineDeputyService} from '../../../common/services/mine-deputy.service';
+import {AddBasicDeputy, AddMineDeputy, AddUserIdentity} from '../../../common/model/mine-deputy.model';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-mine-deputy-add',
@@ -20,23 +22,29 @@ export class MineDeputyAddComponent implements OnInit {
       icon: ''
     }
   };
-  public duputyData = {
-    name: '',
-    sex: '1',
-    phone: '',
-  };
+  public duputyData: AddBasicDeputy = new AddBasicDeputy();
   config: DialogConfig = {};
   public owerRoomCodeList: any[] = [];
   public houseSelectData: any[] = [];
   public date: any;
+  public addUserIdentity: AddUserIdentity = new AddUserIdentity();
+  public addDeputy: AddMineDeputy = new AddMineDeputy();
+  public loadHidden = true;
   constructor(
     private getRouter: ActivatedRoute,
     private mineDeputySrv: MineDeputyService,
+    private datePipe: DatePipe,
+    private toptipSrv: ToptipsService,
+
 
   ) { }
 
   ngOnInit() {
     // this.date = $filter('date')(new Date(),'MM/dd/yyyy');
+    this.addUserIdentity.date = new Date();
+    this.addUserIdentity.date = this.datePipe.transform( this.addUserIdentity.date, 'yyyyMMdd');
+    this.addUserIdentity.identity = 2;
+    this.duputyData.sex = 1;
     // console.log(this.date | date:'yyyy-MM-dd HH:mm:ss'} );
     // this.getRouter.queryParams.subscribe((value) => {
     //   console.log(value);
@@ -47,7 +55,6 @@ export class MineDeputyAddComponent implements OnInit {
   public mineDeputyInfoInit(): void {
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
-        console.log(value);
         value.entity.forEach( (v, index) => {
           this.owerRoomCodeList.push(  {text: v, value: index + 1});
         });
@@ -69,7 +76,6 @@ export class MineDeputyAddComponent implements OnInit {
     });
     setTimeout(() => {
       (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-        console.log(res.result);
         if (res.text === '确认') {
           this.houseSelectData = res.result;
         }
@@ -79,6 +85,23 @@ export class MineDeputyAddComponent implements OnInit {
   }
   // deputy add submit
   public  mineDeputyAddSureClick(): void {
-      console.log(123);
+    this.loadHidden = false;
+      this.addDeputy = new AddMineDeputy();
+    this.houseSelectData.forEach( v => {
+      this.addDeputy.roomList.push(v.text);
+
+    });
+      this.addDeputy.user = this.duputyData;
+      this.addDeputy.userIdentityEntity = this.addUserIdentity;
+      this.mineDeputySrv.addMineDeputyInfo(this.addDeputy).subscribe(
+        value => {
+          this.loadHidden = true;
+          this.onShow('success', '新增成功');
+        }
+      );
+  }
+
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }

@@ -2,6 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {DialogComponent, DialogConfig, ToastComponent, ToptipsComponent, ToptipsService} from 'ngx-weui';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {ActivatedRoute, Router} from '@angular/router';
+import {AddMineTenant, ModifyMineTenant} from '../../../common/model/mine-tenant.model';
+import {MineTenantService} from '../../../common/services/mine-tenant.service';
+import {ModeifyMineDeputy} from '../../../common/model/mine-deputy.model';
 
 @Component({
   selector: 'app-mine-tenant-modify',
@@ -21,60 +24,57 @@ export class MineTenantModifyComponent implements OnInit {
       icon: ''
     }
   };
-  public duputyData = {
-    name: '张先生',
-    sex: '男',
-    phone: '18283923823',
-  };
+  // public tenantData = {
+  //   name: '',
+  //   sex: '',
+  //   phone: '',
+  // };
   config: DialogConfig = {};
-  public houseSelectData: any[] = [
-    {text: 'YCSP-A3-15-2406', value: '1'},
-    {text: 'YCSP-A3-15-2506', value: '2'},
-    {text: 'YCSP-A3-15-2506', value: '3'},
-  ];
+  public owerRoomCodeList: any[] = [];
+  public modifyTenant: ModifyMineTenant = new ModifyMineTenant();
+  public userId: any;
   constructor(
     private getRouter: ActivatedRoute,
     private router: Router,
-    private toptipSrv: ToptipsService
+    private toptipSrv: ToptipsService,
+    private mineTenantSrv: MineTenantService
+
   ) { }
 
   ngOnInit() {
     this.getRouter.queryParams.subscribe((value) => {
-      console.log(value);
-      this.duputyData.name = value.value;
+      this.userId = value.value;
+      this.mineDeputyInfoInit(value.value);
     });
-  }
-  // house modify
-  public houseModifyClick(e) {
-    const cog = Object.assign({}, <DialogConfig>{
-      skin: 'auto',
-      type: 'prompt',
-      title: '请输入房间号',
-      confirm: '确认',
-      cancel: '取消',
-      input: 'text',
-      inputValue: e,
-      backdrop: true,
-      // inputOptions: [],
-    });
-    // cog.inputValue = this.houseSelectData;
-    this.config = cog;
-    setTimeout(() => {
-      (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-        console.log(res);
 
-        if (res.text === '确认') {
-          this.houseSelectData.forEach( v => {
-            if (v.text === e) {
-              v.text = res.result;
-            }
-          });
-        }
-      });
-    }, 10);
-    // return false;
   }
-  // house select
+
+  public mineDeputyInfoInit(id): void {
+    this.mineTenantSrv.queryMineOwnerBindRoomCode().subscribe(
+      (value) => {
+        value.entity.forEach( (v) => {
+          this.owerRoomCodeList.push(  {text: v});
+        });
+      }
+    );
+    this.mineTenantSrv.queryMineTennatInfoById({userId: id}).subscribe(
+      value => {
+        // console.log(value);
+        this.modifyTenant.userName = value.entity.userName;
+        this.modifyTenant.sex = value.entity.sex;
+        this.modifyTenant.userPhone = value.entity.userPhone;
+        // this.onShow('success', '查询成功');
+      }
+    );
+    this.mineTenantSrv.getMineTenantBindRoomCode({userId: id }).subscribe(
+      val => {
+        console.log(val);
+        this.modifyTenant.roomCodes = val.entity;
+      }
+    );
+    this.modifyTenant = new AddMineTenant();
+    this.modifyTenant.sex = 1;
+  }
   public  houseSelectClick() {
     this.config = Object.assign({}, <DialogConfig>{
       skin: 'auto',
@@ -85,11 +85,7 @@ export class MineTenantModifyComponent implements OnInit {
       input: 'radio',
       // inputValue: e,
       backdrop: true,
-      inputOptions: [
-        {text: 'YCSP-A3-15-2406', value: '1'},
-        {text: 'YCSP-A3-15-2506', value: '2'},
-        {text: 'YCSP-A3-15-2506', value: '3'},
-      ],
+      inputOptions: this.owerRoomCodeList
     });
     setTimeout(() => {
       (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
@@ -98,57 +94,50 @@ export class MineTenantModifyComponent implements OnInit {
           this.onShow('warn', '操作错误,请选择房屋');
         } else if (res.text === '确认') {
           // this.houseSelectData = res.result;
-          this.houseSetDate('开始');
-        }
-      });
-    }, 10);
-    return false;
-  }
-  // house setDate
-  public  houseSetDate(e) {
-    this.config = Object.assign({}, <DialogConfig>{
-      skin: 'auto',
-      type: 'prompt',
-      title: '请输入租赁' + e + '时间',
-      confirm: '确认',
-      cancel: '取消',
-      input: 'text',
-      inputPlaceholder: '必填项    列如：(1995-04-05)',
-      inputValue: '',
-      backdrop: true,
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-        console.log(res);
-        if (res.result === '') {
-           this.onShow('warn', '请输入租赁' + e + '日期');
-        } else {
-          if (res.text === '确认') {
-            if (e === '开始') {
-              this.houseSetDate('截止');
-
+          let flag = true;
+          if (this.modifyTenant.roomCodes.length >= 1) {
+            this.modifyTenant.roomCodes.forEach(  v => {
+              if (v.roomCode === res.result.text) {
+                flag = false;
+              }
+            });
+            if (flag) {
+              this.modifyTenant.roomCodes.push({roomCode: res.result.text, startDate: '', endDate: ''});
             } else {
-              console.log('结束');
+              this.onShow('warn', '该房间已经选择');
             }
-            // this.houseSelectData = res.result;
+          } else {
+            this.modifyTenant.roomCodes.push({roomCode: res.result.text, startDate: '', endDate: ''});
           }
+          // this.houseSetDate('开始');
         }
       });
     }, 10);
     return false;
   }
-  // house delete
   public  houseDelectClick(e): void {
-    console.log(e);
-    this.houseSelectData.splice(e, 1);
+
+    this.modifyTenant.roomCodes.splice(e, 1);
   }
   // modify submit
   public  mineTenantModifySureClick(): void {
-    console.log(123);
-    setTimeout( () => {
-      this.onShow('success', '提交成功');
-      this.router.navigate(['/mine/tenantinfo']);
+    let submitBoolen = false;
+    this.modifyTenant.roomCodes.forEach( v => {
+      if (v.endDate === '' || v.endDate === '') {
+        submitBoolen = true;
+      }
     });
+    if (submitBoolen) {
+      this.onShow('warn', '请选择日期');
+    } else  {
+      this.modifyTenant.userId = this.userId;
+      this.mineTenantSrv.updateMineTennatInfo(this.modifyTenant).subscribe(
+        value => {
+          console.log(value);
+          this.onShow('success', '修改成功');
+        }
+      );
+    }
   }
   // toast
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {

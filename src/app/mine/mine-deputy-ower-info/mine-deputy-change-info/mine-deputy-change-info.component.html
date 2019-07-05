@@ -37,7 +37,7 @@
     <!--添加房屋按钮-->
     <div class="weui-cell">
       <div class="weui-cell__hd">
-        <button weui-button class="weui-btn-succes" style="height: 4vh;font-size: 0.8rem;line-height: 4vh" (click)="houseSelectClick()">绑定房屋</button>
+        <button weui-button class="weui-btn-succes" style="height: 4vh;font-size: 0.8rem;line-height: 4vh" (click)="houseSelectClick()" *ngIf="owerRoomCodeList.length !== 0">绑定房屋</button>
       </div>
     </div>
     <!--<div class="weui-cells">-->
@@ -57,15 +57,15 @@
           <span style="font-size: 0.875rem">{{item.text}}</span>
         </div>
         <div class="weui-cell__hd">
-          <button weui-button  [weui-type]="'warn'" style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 2vw" (click)="houseDelectClick(item.text)">删除</button>
+          <button weui-button  [weui-type]="'warn'" style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 6vw" (click)="houseDelectClick(item.text)">删除</button>
         </div>
-        <div class="weui-cell__hd">
-          <button weui-button style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 3vw" (click)="houseModifyClick(item.text)">修改</button>
-        </div>
+        <!--<div class="weui-cell__hd">-->
+          <!--<button weui-button style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 3vw" (click)="houseModifyClick(item.text)">修改</button>-->
+        <!--</div>-->
       </div>
     <!--</div>-->
   </div>
-  <div class="min-deputy-add-footer" *ngIf="owerRoomCodeList.length !== 0">
+  <div class="min-deputy-add-footer" >
     <div class="weui-cell">
       <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineDeputyModifySureClick()">提交</button>
     </div>

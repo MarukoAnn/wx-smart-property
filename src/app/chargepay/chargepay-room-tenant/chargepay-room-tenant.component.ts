@@ -23,6 +23,7 @@ export class ChargepayRoomTenantComponent implements OnInit {
       icon: ''
     }
   };
+  // public basicData: any[] = [];
   public tenantListData = {
     type: 1,
     data: []
@@ -39,6 +40,7 @@ export class ChargepayRoomTenantComponent implements OnInit {
       (value) => {
         console.log(value);
         value.entity.forEach( v => {
+          console.log( v.userName);
           this.tenantListData.data.push({name: v.userName, phone: v.userPhone, startTime: v.startDate, endTime: v.endDate});
         });
       }

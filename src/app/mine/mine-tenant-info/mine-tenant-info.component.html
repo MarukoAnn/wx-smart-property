@@ -5,8 +5,8 @@
       <div class="weui-flex" *ngFor="let item of tenantInfo">
         <div class="weui-flex__item">
           <div class="placeholder">
-            <div class="mine-tenant-info-item" (click)="mineTenantDetailClick(item)">
-              <div class="mine-tenant-info-text">
+            <div class="mine-tenant-info-item">
+              <div class="mine-tenant-info-text"  (click)="mineTenantDetailClick(item)">
                 <div class="weui-flex" style="padding-top: 1vh" *ngFor=" let i of item.data">
                   <div class="placeholder">
                     <span>{{i.label}}:</span>
@@ -38,7 +38,7 @@
                   </div>
                   <div class="weui-flex__item">
                     <div class="placeholder">
-                      <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#F22C8B,#E64340);height: 6vh;text-align: center;font-size: 1.1rem;line-height: 6vh" (click)="mineTenantDeleteClick(index)">删除</button>
+                      <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#F22C8B,#E64340);height: 6vh;text-align: center;font-size: 1.1rem;line-height: 6vh" (click)="mineTenantDeleteClick(item)">删除</button>
                     </div>
                   </div>
                   <div>

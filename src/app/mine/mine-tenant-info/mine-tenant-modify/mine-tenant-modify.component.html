@@ -9,7 +9,7 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="duputyData.name" value="" placeholder="请输入姓名"
+        <input id="name" class="weui-input" [(ngModel)]="modifyTenant.userName" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -18,7 +18,7 @@
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
-        <select class="weui-select"  [(ngModel)]="duputyData.sex" name="sex">
+        <select class="weui-select"  [(ngModel)]="modifyTenant.sex" name="sex">
           <option value="男">男</option>
           <option value="女">女</option>
         </select>
@@ -29,7 +29,7 @@
         <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.phone" value="" placeholder="请输入手机号"
+        <input id="newpsw" class="weui-input" [(ngModel)]="modifyTenant.userPhone" value="" placeholder="请输入手机号"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -49,18 +49,29 @@
     <!--</div>-->
     <!--// 选择的房间-->
     <!--<div class="weui-cells">-->
-    <div class="weui-cell weui-cell__access" *ngFor="let item of houseSelectData;let i = index">
-      <div class="weui-cell__hd">
-        <span>房间号：</span>
+
+
+    <div  style="margin-left: 3vw" *ngFor="let item of modifyTenant.roomCodes;let i = index">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"> <span>房间号：</span></div>
+        <div class="weui-cell__bd"> <span>{{item.roomCode}}</span></div>
+        <button weui-button  [weui-type]="'warn'" style="height: 4vh;width: 20vw;font-size: 0.6rem;line-height: 4vh" (click)="houseDelectClick(i)">删除</button>
       </div>
-      <div class="weui-cell__hd">
-        <span>{{item.text}}</span>
+      <div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label  class="weui-label">请选择租赁截止日期：</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input" [(ngModel)]="modifyTenant.roomCodes[i].startDate" name="date" type="date" [value]="modifyTenant.roomCodes[i].startDate">
+          </div>
+        </div>
       </div>
-      <div class="weui-cell__hd">
-        <button weui-button  [weui-type]="'warn'" style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 2vw" (click)="houseDelectClick(i)">删除</button>
-      </div>
-      <div class="weui-cell__hd">
-        <button weui-button style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 3vw" (click)="houseModifyClick(item.text)">修改</button>
+      <div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd"><label  class="weui-label">请选择租赁截止日期：</label></div>
+          <div class="weui-cell__bd">
+            <input class="weui-input"  [(ngModel)]="modifyTenant.roomCodes[i].endDate" name="date" type="date"  placeholder="'2019-07-27'">
+          </div>
+        </div>
       </div>
     </div>
     <!--</div>-->

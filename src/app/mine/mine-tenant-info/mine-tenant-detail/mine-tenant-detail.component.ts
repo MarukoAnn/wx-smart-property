@@ -40,7 +40,7 @@ export class MineTenantDetailComponent implements OnInit {
     });
   }
   public mineTenantInfoInit (id): void {
-    this.mineTenantSrv.queryMineDeputyInfoById({userId: id}).subscribe(
+    this.mineTenantSrv.queryMineTennatInfoById({userId: id}).subscribe(
       value => {
         console.log(value);
         this.tenantDetailData[0].value = value.entity.userName;

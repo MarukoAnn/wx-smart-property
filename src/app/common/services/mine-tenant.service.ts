@@ -14,10 +14,22 @@ export class MineTenantService {
   public queryMineTenantInfoList(pamars): Observable<any> {
     return this.http.post(environment.dev_test_url + `/wx/indexroomuser` , pamars);
   }
-  public deleteMineTenantInfo(pamars): Observable<any> {
-    return this.http.post(environment.dev_test_url + `/wx/payment/user` , pamars);
+  public  getMineTenantBindRoomCode(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/gettenantroom`, pamars);
   }
-  public queryMineDeputyInfoById(pamars): Observable<any> {
+  public  deleteMineTenantBindRoomCode(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/deputy/delete`, pamars);
+  }
+  public queryMineTennatInfoById(pamars): Observable<any> {
     return this.http.post(environment.dev_test_url + `/wx/user/getinfo` , pamars);
+  }
+  public  addMineTennatInfo(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/addtenantuser`, pamars);
+  }
+  public  updateMineTennatInfo(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/updatetenantroom`, pamars);
+  }
+  public  queryMineOwnerBindRoomCode(): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/getroomcodes`, {});
   }
 }

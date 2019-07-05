@@ -25,9 +25,9 @@ export class MineDeputyChangeInfoComponent implements OnInit {
     }
   };
   public duputyData = {
-    name: '张先生',
-    sex: '男',
-    phone: '18283923823',
+    name: '',
+    sex: '',
+    phone: '',
   };
   config: DialogConfig = {};
   public owerRoomCodeList: any[] = [];
@@ -64,17 +64,16 @@ export class MineDeputyChangeInfoComponent implements OnInit {
     this.mineDeputySrv.queryMineDeputyBindRoomCode({userId: id, identity: 2 }).subscribe(
       val => {
         console.log(val);
+        this.houseSelectData = [];
         val.entity.forEach( (v, index) => {
-          console.log(v);
-          console.log(index);
-
-          this.houseSelectData.push(    {text: v, value: index + 1});
+          this.houseSelectData.push({text: v, value: index + 1});
         });
       }
     );
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
         console.log(value);
+        this.owerRoomCodeList = [];
         value.entity.forEach( (v, index) => {
           this.owerRoomCodeList.push(  {text: v, value: index + 1});
         });
@@ -141,17 +140,27 @@ export class MineDeputyChangeInfoComponent implements OnInit {
             this.autoAS.show();
             this.onShow('warn', '您未选择房间');
           } else {
-            res.result.forEach( v => {
-              let flag = true;
-              this.houseSelectData.forEach( item => {
-                if (v.text === item.text) {
-                  flag = false;
-                }
-              });
-              if (flag) {
-                this.houseSelectData.push(v);
-              }
+            const list = [];
+            res.result.forEach(v => {
+              list.push(v.text);
             });
+            this.mineDeputySrv.updateMineDeputyBindRoom({startDate: -1, userId: this.userId, identity: 2, roomCodes: list}).subscribe(
+              value => {
+                console.log(value);
+                this.mineDeputyInfoInit(this.userId);
+              }
+            );
+            // res.result.forEach( v => {
+            //   let flag = true;
+            //   this.houseSelectData.forEach( item => {
+            //     if (v.text === item.text) {
+            //       flag = false;
+            //     }
+            //   });
+            //   if (flag) {
+            //     this.houseSelectData.push(v);
+            //   }
+            // });
           }
         }
       });
@@ -169,7 +178,6 @@ export class MineDeputyChangeInfoComponent implements OnInit {
           this.mineDeputyInfoInit(this.userId);
         }
       );
-      this.houseSelectData.splice(e, 1);
   }
   // modify submit
   public  mineDeputyModifySureClick(): void {
@@ -178,14 +186,11 @@ export class MineDeputyChangeInfoComponent implements OnInit {
     this.ModefyDeputy.userName = this.duputyData.name;
     this.ModefyDeputy.userPhone = this.duputyData.phone;
     this.ModefyDeputy.userId = this.userId;
-    this.ModefyDeputy.identity = 2;
-    this.houseSelectData.forEach( value => {
-      this.ModefyDeputy.roomCodes.push({roomCode: value.text});
-    });
-    console.log(this.ModefyDeputy);
       this.mineDeputySrv.updateMineDeputyInfo(this.ModefyDeputy).subscribe(
         value => {
           console.log(value);
+          this.onShow('success', '修改成功');
+          this.mineDeputyInfoInit(this.userId);
         }
       );
   }

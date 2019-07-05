@@ -38,10 +38,11 @@ export class MineDeputyOwerInfoComponent implements OnInit {
       this.mineDeputySrv.queryMineDeputyInfoList({pageNum: page, pageSize: 10, identity: 2}).subscribe(
         value => {
           console.log(value);
+          this.deputyInfo = [];
           value.entity.forEach( v => {
             this.deputyInfo.push( {data: [
                 {label: '姓名', value: v.userName},
-                {label: '关联时间', value: v.data},
+                {label: '关联时间', value: v.date},
                 {label: '详细地址', value: v.roomCode},
                 {label: '房屋着落', value: v.address}
               ], userId: v.userId});
@@ -61,7 +62,7 @@ export class MineDeputyOwerInfoComponent implements OnInit {
   // delete deputyInfo
   public  mineDeputyDeleteClick(item): void {
       // console.log(item);
-    this.mineDeputySrv.deleteMineDeputyInfo({identity: 2, roomCode: item.data[2].value, userId: item.userId}).subscribe(
+    this.mineDeputySrv.deleteMineDeputyBindRoomCode({identity: 2, roomCode: item.data[2].value, userId: item.userId}).subscribe(
       value => {
         this.onShow('success', '删除' + value.msg);
         this.mineDeputyInfoInit(1);

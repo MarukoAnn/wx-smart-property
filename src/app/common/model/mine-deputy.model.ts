@@ -1,6 +1,4 @@
 export class ModeifyMineDeputy {
-  identity?: any;
-  roomCodes?: RoomCodeList[] = [];
   sex?: any;
   userId?: any;
   userName?: any;
@@ -11,16 +9,17 @@ export class RoomCodeList {
   startDate ?: any;
 }
 export class AddMineDeputy {
-  user?: any;
+  user?: AddBasicDeputy;
   roomList?: RoomCodeList[] = [];
-  userIdentityEntity?: any;
+  userIdentityEntity?: AddUserIdentity;
 }
 export class AddBasicDeputy {
   mobilePhone?: any;
   realName?: any;
   sex?: any;
 }
-export class AddUserIdentity{
+export class AddUserIdentity {
   date?: any;
   identity?: any;
+  endData?: any;
 }
