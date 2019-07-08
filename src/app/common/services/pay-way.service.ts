@@ -14,4 +14,7 @@ export class PayWayService {
   public  getPayInfo(pamars): Observable<any> {
      return this.http.post(environment.dev_test_url + `/wx/paycharge`, pamars);
   }
+  public  getPayMoney(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/wxchargepay`, pamars);
+  }
 }

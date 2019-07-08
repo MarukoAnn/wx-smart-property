@@ -9,7 +9,7 @@ import { MineModifyPhoneComponent } from './mine-modify-phone/mine-modify-phone.
 import { MinePersonalInfoComponent } from './mine-personal-info/mine-personal-info.component';
 import { MineOwerPayInfoComponent } from './mine-ower-pay-info/mine-ower-pay-info.component';
 import {HeaderModule} from '../common/components/header/header.module';
-import {JWeiXinModule, JWeiXinService, WeUiModule} from 'ngx-weui';
+import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
 import { MinePersionChangePhoneComponent } from './mine-personal-info/mine-persion-change-phone/mine-persion-change-phone.component';
 import { MinePersionChangeUsernameComponent } from './mine-personal-info/mine-persion-change-username/mine-persion-change-username.component';
@@ -22,9 +22,6 @@ import { MineTenantAddComponent } from './mine-tenant-info/mine-tenant-add/mine-
 import {ImageCropperModule} from 'ngx-image-cropper';
 import { MineImageCropperComponent } from './mine-personal-info/mine-image-cropper/mine-image-cropper.component';
 import {QRCodeModule} from 'angularx-qrcode';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthInterceptor} from '../common/services/auth.interceptor';
-import {LoaderService} from 'ngx-weui/utils/loader.service';
 import {LoadingModule} from '../common/components/loading/loading.module';
 
 @NgModule({
@@ -52,7 +49,7 @@ import {LoadingModule} from '../common/components/loading/loading.module';
     WeUiModule.forRoot(),
     ImageCropperModule,
     QRCodeModule,
-    LoadingModule
+    LoadingModule,
     // JWeiXinModule,
   ],
   providers: [DatePipe]

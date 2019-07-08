@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AddMineTenant, ModifyMineTenant} from '../../../common/model/mine-tenant.model';
 import {MineTenantService} from '../../../common/services/mine-tenant.service';
 import {ModeifyMineDeputy} from '../../../common/model/mine-deputy.model';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-mine-tenant-modify',
@@ -37,7 +38,9 @@ export class MineTenantModifyComponent implements OnInit {
     private getRouter: ActivatedRoute,
     private router: Router,
     private toptipSrv: ToptipsService,
-    private mineTenantSrv: MineTenantService
+    private mineTenantSrv: MineTenantService,
+    private datePipe: DatePipe,
+
 
   ) { }
 
@@ -131,6 +134,11 @@ export class MineTenantModifyComponent implements OnInit {
       this.onShow('warn', '请选择日期');
     } else  {
       this.modifyTenant.userId = this.userId;
+      this.modifyTenant.roomCodes.forEach( value => {
+        value.startDate = this.datePipe.transform(value.startDate, 'yyyy-MM-dd');
+        value.endDate = this.datePipe.transform(value.endDate, 'yyyy-MM-dd');
+      });
+      console.log(this.modifyTenant);
       this.mineTenantSrv.updateMineTennatInfo(this.modifyTenant).subscribe(
         value => {
           console.log(value);

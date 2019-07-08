@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 export class AuthInterceptor implements HttpInterceptor {
   public clonedRequest: any;
   constructor(
-    private globalService: GlobalService,
+    private globalSrv: GlobalService,
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,7 +31,8 @@ export class AuthInterceptor implements HttpInterceptor {
         url:  req.url,
         headers: req.headers
           // .set('APPKEY', environment.dev_test_appkey)
-          .set('APPKEY', 'D9313E7909CEA4CD9DE7A026DD20517B')
+          .set('APPKEY', this.globalSrv.wxSessionGetObject('appkey'))
+          // .set('APPKEY', 'D9313E7909CEA4CD9DE7A026DD20517B')
       });
 
     } else {
@@ -41,7 +42,8 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
           // .set('APPKEY', environment.dev_test_appkey)
-          .set('APPKEY', 'D9313E7909CEA4CD9DE7A026DD20517B')
+          // .set('APPKEY', 'D9313E7909CEA4CD9DE7A026DD20517B')
+          .set('APPKEY', this.globalSrv.wxSessionGetObject('appkey'))
       });
     }
     return next.handle(this.clonedRequest).pipe(

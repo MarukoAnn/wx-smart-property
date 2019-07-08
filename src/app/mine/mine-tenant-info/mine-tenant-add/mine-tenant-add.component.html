@@ -48,17 +48,17 @@
       </div>
       <div>
         <div class="weui-cell">
-          <div class="weui-cell__hd"><label  class="weui-label">请选择租赁截止日期</label></div>
+          <div class="weui-cell__hd"><label  class="weui-label" style="width: 30vw">租赁开始日期</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input" [(ngModel)]="addTenant.roomCodes[i].startDate" name="date" type="date" value="">
+            <weui-date-picker placeholder="请选租赁开始日期" name="date" [(ngModel)]="addTenant.roomCodes[i].startDate"></weui-date-picker>
           </div>
         </div>
       </div>
       <div>
         <div class="weui-cell">
-          <div class="weui-cell__hd"><label  class="weui-label">请选择租赁截止日期</label></div>
+          <div class="weui-cell__hd"><label  class="weui-label" style="width: 30vw">租赁截止日期</label></div>
           <div class="weui-cell__bd">
-            <input class="weui-input"  [(ngModel)]="addTenant.roomCodes[i].endDate" name="date" type="date" value="">
+            <weui-date-picker placeholder="请选租赁截止日期"  name="date" [(ngModel)]="addTenant.roomCodes[i].endDate"></weui-date-picker>
           </div>
         </div>
       </div>
