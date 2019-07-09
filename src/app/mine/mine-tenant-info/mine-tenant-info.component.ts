@@ -40,12 +40,14 @@ export class MineTenantInfoComponent implements OnInit {
       value => {
         this.tenantInfo = [];
         value.entity.forEach( v => {
-          this.tenantInfo.push( {data: [
-              {label: '姓名', value: v.userName},
-              {label: '关联时间', value: v.data},
-              {label: '详细地址', value: v.roomCode},
-              {label: '房屋着落', value: v.address}
-            ], userId: v.userId});
+          if (v !== null) {
+            this.tenantInfo.push( {data: [
+                {label: '姓名', value: v.userName},
+                {label: '关联时间', value: v.data},
+                {label: '详细地址', value: v.roomCode},
+                {label: '房屋着落', value: v.address}
+              ], userId: v.userId});
+          }
         });
         // this.onShow('success', '查询' + value.msg);
       }

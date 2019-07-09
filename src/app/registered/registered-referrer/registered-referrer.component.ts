@@ -76,7 +76,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       this.onShow('warn', '您输入的数据不合法');
     } else {
       this.loading_show = true;
-      this.registeredSrv.bindingData({data: this.referrerData, openId: 'o_Jhq1DzwpVxtih4nhwisriXFXhs'}).subscribe(
+      this.registeredSrv.bindingData({data: this.referrerData, openId: this.globalSrv.wxSessionGetObject('openid')}).subscribe(
         (value) => {
           this.globalSrv.wxSessionSetObject('appkey', value.entity.APPKEY);
           this.loading_show = false;

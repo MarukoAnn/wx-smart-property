@@ -25,9 +25,17 @@ export class LoginComponent implements OnInit {
 
     // this.globalSrv.wxSessionGetObject('ios_url')
     this.url = this.globalSrv.wxSessionGetObject('ios_url');
-    this.wxCode = this.url.split('?')[1].split('code=')[1].split('&')[0];
-    this.globalSrv.wxSessionSetObject('code', this.wxCode);
-    this.getOpenid();
+    this.getrouter.queryParams.subscribe(
+      (value) => {
+        console.log(value.code);
+        if (value.code) {
+          // this.wxCode = this.url.split('?')[1].split('code=')[1].split('&')[0];
+          this.wxCode = value.code;
+          this.globalSrv.wxSessionSetObject('code', this.wxCode);
+          this.getOpenid();
+        }
+      }
+    );
   }
 
   // getOpenid

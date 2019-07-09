@@ -64,7 +64,7 @@ export class TabHomeComponent implements OnInit {
             imgUrl: v.photoPath,
             Content: [
               {label: '房屋坐落', value: v.address},
-              {label: '房屋详细', value: v.address},
+              {label: '房屋详细', value: v.roomInfo},
               {label: '房屋编号', value: v.roomCode},
               {label: '房屋状态', value: v.status},
             ]

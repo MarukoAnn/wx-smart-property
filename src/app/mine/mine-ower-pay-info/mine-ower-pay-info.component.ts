@@ -37,8 +37,9 @@ export class MineOwerPayInfoComponent implements OnInit {
            console.log(val);
            if (val.entity) {
              val.entity.forEach( v => {
-               this.owerPayInfo.push(
-                 {data: [{label: '房间编号', value: v.roomCode}, {label: '缴费类型', value: v.chargeName}, {label: '缴费时间', value: v.date}], payValue: v.money});
+               if (v !== null) {
+                 this.owerPayInfo.push({data: [{label: '房间编号', value: v.roomCode}, {label: '缴费类型', value: v.chargeName}, {label: '缴费时间', value: v.date}], payValue: v.money});
+               }
              });
            }
 

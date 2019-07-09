@@ -11,7 +11,7 @@ import {GlobalService} from '../../common/services/global.service';
 })
 export class ChargepayItemDetailComponent implements OnInit {
   public headerOption: HeaderContent = {
-    title: '费 用 明 细',
+    title: '缴 费 项 目',
     leftContent: {
       icon: 'icon iconfont icon-fanhui'
     },

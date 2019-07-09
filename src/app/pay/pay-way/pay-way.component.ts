@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {PayWayService} from '../../common/services/pay-way.service';
 import {GlobalService} from '../../common/services/global.service';
 import {PayData, PayMoneyData} from '../../common/model/pay-payway.model';
+import {ToastComponent, ToastService} from 'ngx-weui';
 declare let WeixinJSBridge;
 @Component({
   selector: 'app-pay-way',
@@ -41,6 +42,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
     private getRouter: ActivatedRoute,
     private payWaySrv: PayWayService,
     private globalSrv: GlobalService,
+    private toastSrv: ToastService
   ) { }
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
         if (this.couponCode === false || this.couponCode === 'null') {
           this.payWaySrv.getPayInfo({chargeCode: val.chargeCode, roomCode: this.roomCode, datedif: val.month}).subscribe(
             (value) => {
-              // console.log(value);
+              console.log(value);
               this.payMoneyData.couponId = -1;
             this.payDetailDta[0].value = value.entity.roomCode;
             this.payDetailDta[1].value = value.entity.datedif;
@@ -74,7 +76,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
             (value) => {
               console.log(value);
               this.payMoneyData.couponId =    this.couponCode;
-
               this.payDetailDta[0].value = value.entity.roomCode;
               this.payDetailDta[1].value = value.entity.datedif;
               this.payDetailDta[2].value = value.entity.couponMoney;
@@ -90,18 +91,18 @@ export class PayWayComponent implements OnInit, OnDestroy {
   }
   public  payMoneyClick(): void {
       this.payMoneyData.openId = this.globalSrv.wxSessionGetObject('openid');
+      this.onShowBySrv('loading', false);
       this.payWaySrv.getPayMoney(this.payMoneyData).subscribe(
         value => {
           console.log(value);
-           this.payData.appId = value.entity.appId;
-           this.payData.nonceStr = value.entity.nonceStr;
-           this.payData.package = value.entity.packagedto;
-           this.payData.paySign = value.entity.paySign;
-           this.payData.signType = value.entity.signType;
-           this.payData.timeStamp = value.entity.timeStamp;
-          // if (value.code === '2000'){
-            this.onBridgeReady(this.payData);
-          // }
+          this.payData.appId = value.entity.appId;
+          this.payData.nonceStr = value.entity.nonceStr;
+          this.payData.package = value.entity.packagedto;
+          this.payData.paySign = value.entity.paySign;
+          this.payData.signType = value.entity.signType;
+          this.payData.timeStamp = value.entity.timeStamp;
+          this.onShowBySrv('loading', true);
+          this.onBridgeReady(this.payData);
         }
       );
   }
@@ -110,14 +111,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
     console.log(obj);
     const that = this;
     WeixinJSBridge.invoke(
-      'getBrandWCPayRequest', {
-        'appId': obj.appId,
-        'timeStamp': obj.timeStamp,
-        'nonceStr': obj.nonceStr,
-        'package': obj.package,
-        'signType': obj.signType,
-        'paySign': obj.paySign,
-      },
+      'getBrandWCPayRequest', obj,
       function (res) {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
           that.router.navigate(['pay/success']);
@@ -129,10 +123,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
           //         orderId: that.payDetailsData.id
           //       }});
           //   }
-          // );
-        } else {
-          // alert(res.err_msg);
-          alert(obj.package);
         }
       });
   }
@@ -141,7 +131,14 @@ export class PayWayComponent implements OnInit, OnDestroy {
         this.router.navigate(['chargepay/coupon'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode}});
       }
   }
-
+  onShowBySrv(type: 'success' | 'loading', forceHide: boolean = false) {
+    this.toastSrv[type]();
+    if (forceHide === true) {
+      setTimeout(() => {
+        this.toastSrv.hide();
+      }, 1000);
+    }
+  }
   ngOnDestroy(): void {
     this.globalSrv.wxSessionRemove('couponCode');
   }

@@ -8,9 +8,6 @@ import {AuthInterceptor} from './common/services/auth.interceptor';
 import { ErrorRemindComponent } from './error-remind/error-remind.component';
 import {LoadingModule} from './common/components/loading/loading.module';
 import { LoginComponent } from './login/login.component';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
-import {JWeiXinModule, JWeiXinService, WeUiModule} from 'ngx-weui';
-import {LoaderService} from 'ngx-weui/utils/loader.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +25,7 @@ import {LoaderService} from 'ngx-weui/utils/loader.service';
   providers: [
     // 使用http拦截器
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    // {provide: LocationStrategy, useClass: HashLocationStrategy}
 
 ],
   bootstrap: [AppComponent]

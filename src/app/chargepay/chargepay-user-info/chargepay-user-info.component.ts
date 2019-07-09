@@ -56,7 +56,9 @@ export class ChargepayUserInfoComponent implements OnInit {
          this.basicData[1].value = val.entity.mobilePhone;
          this.basicData[2].value = this.globalSrv.wxGet('roomCode');
          val.entity.payList.forEach( v => {
-           this.userinfodetail.push( {data: [{label: '缴费时间', value: v.date}, {label: '缴费类型', value: v.chargeName}], payValue: v.money});
+           if (v !== null) {
+             this.userinfodetail.push( {data: [{label: '缴费时间', value: v.date}, {label: '缴费类型', value: v.chargeName}], payValue: v.money});
+           }
          });
          this.onShow('success', val.msg);
        }

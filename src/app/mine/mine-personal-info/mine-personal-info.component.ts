@@ -104,7 +104,8 @@ export class MinePersonalInfoComponent implements OnInit {
               localId: loaclpath[0], // 图片的localID
               success: function (event) {
                 that.globalSrv.wxSessionSetObject('id', event.localData );
-                window.location.href = 'http://muertest.qicp.vip/CloudPropertyView/#/mine/imagecropper';
+                that.router.navigate(['/mine/imagecropper']);
+                // window.location.href = 'http://2m2766a493.iok.la/CloudPropertyView/mine/imagecropper';
               }
             });
           }
@@ -123,7 +124,8 @@ export class MinePersonalInfoComponent implements OnInit {
               localId: loaclpath[0], // 图片的localID
               success: function (event) {
                 that.globalSrv.wxSessionSetObject('id', event.localData );
-                window.location.href = 'http://muertest.qicp.vip/CloudPropertyView/#/mine/imagecropper';
+                that.router.navigate(['/mine/imagecropper']);
+                // window.location.href = 'http://2m2766a493.iok.la/CloudPropertyView/mine/imagecropper';
                 }
             });
             }
@@ -132,10 +134,10 @@ export class MinePersonalInfoComponent implements OnInit {
     }
   }
 
-  // 弹窗
-  public onToastShow(type: 'success' | 'loading') {
-    (<ToastComponent>this[`${type}Toast`]).onShow();
-  }
+  // // 弹窗
+  // public onToastShow(type: 'success' | 'loading') {
+  //   (<ToastComponent>this[`${type}Toast`]).onShow();
+  // }
   // change info
   public minePersionChangeInfoClick(e): void {
     console.log(e);
@@ -174,7 +176,7 @@ export class MinePersonalInfoComponent implements OnInit {
           'previewImage',
         ]
       });
-      alert('认证成功');
+      // alert('认证成功');
       return;
     }
     window.alert('微信JS-SDK认证失败,请重试');

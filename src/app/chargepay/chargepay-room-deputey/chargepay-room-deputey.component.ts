@@ -44,7 +44,9 @@ export class ChargepayRoomDeputeyComponent implements OnInit {
         console.log(value);
         value.entity.forEach( v => {
           // this.tenantListData
-          this.deputerListData.data.push({name: v.userName, phone: v.userPhone, endTime: v.startDate});
+          if (v !== null) {
+            this.deputerListData.data.push({name: v.userName, phone: v.userPhone, endTime: v.startDate});
+          }
         });
       }
     );
