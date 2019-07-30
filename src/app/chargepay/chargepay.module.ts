@@ -14,6 +14,7 @@ import { ChargepayRoomTenantComponent } from './chargepay-room-tenant/chargepay-
 import { ChargepayRoomDeputeyComponent } from './chargepay-room-deputey/chargepay-room-deputey.component';
 import {ListModule} from '../common/components/list/list.module';
 import { ChargepayCouponComponent } from './chargepay-coupon/chargepay-coupon.component';
+import { ChargepayOwnerInfoComponent } from './chargepay-owner-info/chargepay-owner-info.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ChargepayCouponComponent } from './chargepay-coupon/chargepay-coupon.co
     ChargepayMonthComponent,
     ChargepayRoomTenantComponent,
     ChargepayRoomDeputeyComponent,
-    ChargepayCouponComponent],
+    ChargepayCouponComponent,
+    ChargepayOwnerInfoComponent],
   imports: [
     CommonModule,
     ChargepayRoutingModule,

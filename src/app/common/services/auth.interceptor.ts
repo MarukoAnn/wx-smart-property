@@ -41,7 +41,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
 
     } else {
-      console.log(123);
       this.clonedRequest = req.clone({
         url:  req.url,
         headers: req.headers
@@ -52,8 +51,6 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
         if (event.status === 200) {
-          // console.log(event.body.errcode );
-          console.log(event.body.code);
           if (event.body.code === '1000') {
               return of(event);
           } else {
@@ -99,7 +96,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
 
     } else {
-      console.log(123);
       this.clonedRequest = req.clone({
         url:  req.url,
         headers: req.headers

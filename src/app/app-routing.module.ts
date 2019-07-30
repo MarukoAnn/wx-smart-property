@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import {ErrorRemindComponent} from './error-remind/error-remind.component';
 import {LoginGuard} from './common/guard/login.guard';
 import {LoginComponent} from './login/login.component';
+import {TabComponent} from './tab/tab.component';
+import {TabModule} from './tab/tab.module';
 
 const routes: Routes = [
   // {path: '', redirectTo: '/mine/imagecropper', pathMatch: 'full'},
-  // {path: '', redirectTo: '/tab/home', pathMatch: 'full'},
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '', redirectTo: '/tab/home', pathMatch: 'full'},
+  // {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'tab', canActivate: [LoginGuard], loadChildren: './tab/tab.module#TabModule'},
   {path: 'login', canActivate: [LoginGuard], component: LoginComponent},
   {path: 'registered', canActivate: [LoginGuard], loadChildren: './registered/registered.module#RegisteredModule'},

@@ -55,8 +55,9 @@ export class TabHomeComponent implements OnInit {
   }
 
   public getHouseInfo (): void {
-    this.tabSrv.tabGetHoseList().subscribe(
+    this.tabSrv.tabGetHouseList().subscribe(
       (value) => {
+        console.log(value);
         this.HouseItem = [];
         // if (value.entity === []){}
         value.entity.forEach( v => {
@@ -82,13 +83,12 @@ export class TabHomeComponent implements OnInit {
   }
   // room payment
   public  tabPaymentClick(e): void {
-    console.log(e.Content[2].value);
     this.globalSrv.wxSet('roomCode', e.Content[2].value);
     this.router.navigate(['/chargepay/itemdetail']);
 
   }
 
-  // room detaiL
+  // room detail
   public  tabRoomDetailClick(e): void {
       // console.log(e.Content[2].value);
     this.globalSrv.wxSet('roomCode', e.Content[2].value);

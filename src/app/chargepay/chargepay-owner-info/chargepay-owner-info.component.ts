@@ -5,13 +5,13 @@ import {ChargepayRoomTenantService} from '../../common/services/chargepay-room-t
 import {GlobalService} from '../../common/services/global.service';
 
 @Component({
-  selector: 'app-chargepay-room-deputey',
-  templateUrl: './chargepay-room-deputey.component.html',
-  styleUrls: ['./chargepay-room-deputey.component.less']
+  selector: 'app-chargepay-owner-info',
+  templateUrl: './chargepay-owner-info.component.html',
+  styleUrls: ['./chargepay-owner-info.component.less']
 })
-export class ChargepayRoomDeputeyComponent implements OnInit {
+export class ChargepayOwnerInfoComponent implements OnInit {
   public headerOption: HeaderContent = {
-    title: '副业主信息',
+    title: '业主信息',
     leftContent: {
       icon: 'icon iconfont icon-fanhui'
     },
@@ -34,16 +34,15 @@ export class ChargepayRoomDeputeyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.chargeRoomTenantSrv.getRoomTenantList({identity: 2, roomCode: this.globalSrv.wxGet('roomCode')}).subscribe(
+    this.chargeRoomTenantSrv.getRoomOwnerList({roomCode: this.globalSrv.wxGet('roomCode')}).subscribe(
       (value) => {
         if (value.entity) {
           value.entity.forEach( v => {
             // this.tenantListData
             if (v !== null) {
-              this.deputerListData.data.push({name: v.userName, phone: v.userPhone, endTime: v.startDate});
+              this.deputerListData.data.push({name: v.userName, phone: v.phone, endTime: v.startDate});
             }
           });
-
         }
       }
     );

@@ -14,4 +14,7 @@ export class ChargepayRoomTenantService {
   public getRoomTenantList (parmas): Observable<any> {
       return this.http.post(environment.dev_test_url + `/wx/roomuser`, parmas);
   }
+  public getRoomOwnerList (parmas): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/indexroomusergetporperty`, parmas);
+  }
 }

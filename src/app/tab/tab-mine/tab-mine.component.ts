@@ -52,6 +52,8 @@ export class TabMineComponent implements OnInit {
               this.owerItemList[1].hide = true;
               this.owerItemList[2].hide = true;
             }
+          }else {
+            console.log(123);
           }
         }
       );

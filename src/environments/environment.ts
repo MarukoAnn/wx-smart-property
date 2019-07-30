@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   env: '开发环境中.........................',
-  dev_test_url: 'http://2m2766a493.iok.la',
-  dev_test_appkey: 'D9313E7909CEA4CD9DE7A026DD20517B',
+  dev_test_url: 'http://wy.gyrbi.com',
+  dev_test_appkey: '977A12C32FFABA3CC5FFBC7557E6A8A9',
   // dev_test_url: 'www.e2jtv.com',
 };
 

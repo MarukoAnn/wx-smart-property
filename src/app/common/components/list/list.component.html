@@ -3,19 +3,19 @@
     <div class="weui-cell weui-cell_access" *ngFor="let item of data.data">
       <div class="weui-cell__bd" *ngIf="data.type === 1">
         <p>姓名：{{item.name}}</p>
-        <p style="margin-top: 1.5vh">租赁开始日期：{{item.startTime}}</p>
+        <p style="margin-top: 1.5vh" *ngIf="item.startTime">租赁开始日期：{{item.startTime}}</p>
+      </div>
+      <div class="weui-cell__left" *ngIf="data.type === 1">
+        <p *ngIf="item.phone">电话号码：{{item.phone}}</p>
+        <p style="margin-top: 1.5vh" *ngIf="item.endTime">租赁结束日期：{{item.endTime}}</p>
       </div>
       <div class="weui-cell__bd" *ngIf="data.type === 2">
         <p>姓名：{{item.name}}</p>
-        <p style="margin-top: 1.5vh">电话号码：{{item.phone}}</p>
-      </div>
-      <div class="weui-cell__left" *ngIf="data.type === 1">
-        <p >电话号码：{{item.phone}}</p>
-        <p style="margin-top: 1.5vh">租赁结束日期：{{item.endTime}}</p>
+        <p style="margin-top: 1.5vh" *ngIf="item.phone">电话号码：{{item.phone}}</p>
       </div>
       <div class="weui-cell__left" *ngIf="data.type === 2">
         <p style="color: #fff">绑定日期：</p>
-        <p style="margin-top: 1.5vh">绑定日期：{{item.endTime}}</p>
+        <p style="margin-top: 1.5vh" *ngIf="item.endTime">绑定日期：{{item.endTime}}</p>
       </div>
     </div>
   </div>

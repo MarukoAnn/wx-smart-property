@@ -28,8 +28,6 @@ export class ChargepayRoomInfoComponent implements OnInit {
     {label: '楼栋', value: ''},
     {label: '单元', value: ''},
     {label: '面积', value: ''},
-    {label: '业主', value: ''},
-    {label: '电话', value: ''},
     // {label: '物业下次缴费时间', value: '2019-06-17'},
     // {label: '停车下次缴费时间', value: '2019-06-17'},
     // {label: '二次加压下次缴费时间', value: '2019-06-17'},
@@ -50,26 +48,23 @@ export class ChargepayRoomInfoComponent implements OnInit {
   public  initializationRoomInfo(Code): void {
       this.roomSrv.queryRoomInfo({roomCode: Code}).subscribe(
         (value) => {
-          // this.basicData[0].valu
-          console.log(value);
           this.basicData[0].value = value.entity.houseInfo.roomCode;
           this.basicData[1].value = value.entity.houseInfo.districtName + value.entity.houseInfo.villageName;
           this.basicData[2].value = value.entity.houseInfo.regionName;
           this.basicData[3].value = value.entity.houseInfo.buildingName;
           this.basicData[4].value = value.entity.houseInfo.unitName;
           this.basicData[5].value = value.entity.houseInfo.roomSize;
-          this.basicData[6].value = value.entity.houseInfo.userName;
-          this.basicData[7].value = value.entity.houseInfo.userPhone;
-          value.entity.chargeMaxTime.forEach( v => {
-            if (v.endTime !== null) {
-              this.basicData.push({label: v.chargeStr, value: v.endTime});
-            }
-          });
+          if ( value.entity.chargeMaxTime) {
+            value.entity.chargeMaxTime.forEach( v => {
+              if (v.endTime !== null) {
+                this.basicData.push({label: v.chargeStr, value: v.endTime});
+              }
+            });
+          }
         }
       );
   }
   public  chargepaylistClick(e): void {
-    console.log(e);
     this.route.navigate(['/pay/detail']);
 
   }
@@ -79,5 +74,8 @@ export class ChargepayRoomInfoComponent implements OnInit {
   public  deputeyClick(): void {
     this.route.navigate(['/chargepay/deputey']);
 
+  }
+  public  ownerClick(): void {
+    this.route.navigate(['/chargepay/owner']);
   }
 }

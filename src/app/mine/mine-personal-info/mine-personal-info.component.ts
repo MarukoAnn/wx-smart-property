@@ -6,9 +6,8 @@ import {Router} from '@angular/router';
 import {is_ios} from '../../common/tools/is_ios';
 import {random_word} from '../../common/tools/random_word';
 import {hex_sha1} from '../../common/tools/hex_sha1';
-import {MineImageCropperService} from '../../common/services/mine-image-cropper.service';
-import {ImageCroppedEvent} from 'ngx-image-cropper';
 import {MinePersionalInfoService} from '../../common/services/mine-persional-info.service';
+import {environment} from '../../../environments/environment';
 
 declare const wx: any;
 @Component({
@@ -58,7 +57,6 @@ export class MinePersonalInfoComponent implements OnInit {
     }
     this.minePerSrv.getTicket().subscribe(
       (value) => {
-        console.log(value);
         this.wxTicket = value.entity.ticket;
         this.mineUserWxSdk();
       }
@@ -104,8 +102,7 @@ export class MinePersonalInfoComponent implements OnInit {
               localId: loaclpath[0], // 图片的localID
               success: function (event) {
                 that.globalSrv.wxSessionSetObject('id', event.localData );
-                that.router.navigate(['/mine/imagecropper']);
-                // window.location.href = 'http://2m2766a493.iok.la/CloudPropertyView/mine/imagecropper';
+                window.location.href = environment.dev_test_url + '/CloudPropertyView/mine/imagecropper';
               }
             });
           }
@@ -124,8 +121,8 @@ export class MinePersonalInfoComponent implements OnInit {
               localId: loaclpath[0], // 图片的localID
               success: function (event) {
                 that.globalSrv.wxSessionSetObject('id', event.localData );
-                that.router.navigate(['/mine/imagecropper']);
-                // window.location.href = 'http://2m2766a493.iok.la/CloudPropertyView/mine/imagecropper';
+                // that.router.navigate(['/mine/imagecropper']);
+                window.location.href = environment.dev_test_url + '/CloudPropertyView/mine/imagecropper';
                 }
             });
             }

@@ -1,7 +1,7 @@
 <div class="mine-image-cropper">
   <app-header [option]="headerOption"></app-header>
   <div class="mine-image-cropper-content">
-    <image-cropper style="padding: 0;height: 85vh"
+    <image-cropper style="padding: 0"
       [imageBase64]="imageChangedEvent"
       [maintainAspectRatio]="true"
       [aspectRatio]="4 / 4"
@@ -12,7 +12,6 @@
       (imageLoaded)="imageLoaded($event)"
       (cropperReady)="cropperReady($event)"
       (loadImageFailed)="loadImageFailed($event)"></image-cropper>
-      <img [src]="croppedImage" />
   </div>
   <button class="weui-btn weui-btn_primary" (click)="mineImageUpalodClick()">确认</button>
   <!--<button class="weui-btn weui-btn_primary" (click)="mineImageBackClick()" *ngIf="showSuccess === true">返回上一级</button>-->

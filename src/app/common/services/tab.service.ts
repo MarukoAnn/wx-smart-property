@@ -10,20 +10,20 @@ export class TabService {
     private http: HttpClient
   ) {}
   // 房屋
-  public tabGetHoseList(): Observable<any> {
+  public tabGetHouseList(): Observable<any> {
     return this.http.post(environment.dev_test_url + `/indexroom`, {});
   }
-  public tabDeleteClient(id): Observable<any> {
-    return this.http.post(`/contacts/delete`, {id: id});
-  }
-  public tabSearchClientList(params): Observable<any> {
-    return this.http.post(`/contacts/nameLike`, params);
-  }
-  public tabGetClientAdrs(params): Observable<any> {
-    return this.http.post(`/address/ListFindById`, params);
-  }
-  // get user info
-  public tabGetUserInfo(): Observable<any> {
-    return this.http.post(`/member/userInfo`, {});
-  }
+  // public tabDeleteClient(id): Observable<any> {
+  //   return this.http.post(`/contacts/delete`, {id: id});
+  // }
+  // public tabSearchClientList(params): Observable<any> {
+  //   return this.http.post(`/contacts/nameLike`, params);
+  // }
+  // public tabGetClientAdrs(params): Observable<any> {
+  //   return this.http.post(`/address/ListFindById`, params);
+  // }
+  // // get user info
+  // public tabGetUserInfo(): Observable<any> {
+  //   return this.http.post(`/member/userInfo`, {});
+  // }
 }

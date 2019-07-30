@@ -49,8 +49,8 @@ export class MineImageCropperComponent implements OnInit{
     this.loading_show = false;
     this.mineImgSrv.uploadImage(files).subscribe(
       (value) => {
-        this.loading_show = true;
-          this.imageChangedEvent = null;
+          this.loading_show = true;
+          // this.imageChangedEvent = null;
           this.onShow('success', '修改成功');
           // this.router.navigate(['/tab/mine']);
     }
@@ -88,10 +88,6 @@ export class MineImageCropperComponent implements OnInit{
     }
     return new File([u8arr], filename, { type: mime });
     // return new Blob([u8arr], { type: mime });
-
-  }
-
-  ngAfterViewInit(): void {
 
   }
   //  public  blobToFile(theBlob, fileName) {

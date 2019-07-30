@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-pay-success',
@@ -16,6 +17,6 @@ export class PaySuccessComponent implements OnInit {
   }
 
   public  payWayClick(): void {
-      this.route.navigate(['tab/home']);
+    window.location.href = environment.dev_test_url+ '/CloudPropertyView/tab/home';
   }
 }
