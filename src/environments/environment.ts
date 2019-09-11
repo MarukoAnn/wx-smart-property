@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   env: '开发环境中.........................',
   dev_test_url: 'http://wy.gyrbi.com',
-  dev_test_appkey: '977A12C32FFABA3CC5FFBC7557E6A8A9',
+  dev_test_appkey: '337C62C07E76BF68FB84A42D7841DDD7',
   // dev_test_url: 'www.e2jtv.com',
 };
 

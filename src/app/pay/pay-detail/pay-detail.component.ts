@@ -30,8 +30,6 @@ export class PayDetailComponent implements OnInit {
     {label: '单元', value: ''},
     {label: '面积', value: ''},
     {label: '花园面积', value: ''},
-    {label: '业主', value: ''},
-    {label: '电话', value: ''},
   ];
   public paydetail = [];
   public roomCode: any;

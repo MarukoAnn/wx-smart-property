@@ -58,48 +58,6 @@ export class MineTenantAddComponent implements OnInit {
     this.addTenant = new AddMineTenant();
     this.addTenant.sex = 1;
   }
-  // public houseModifyClick(e) {
-  //   const cog = Object.assign({}, <DialogConfig>{
-  //     skin: 'auto',
-  //     type: 'prompt',
-  //     title: '请输入房间号',
-  //     confirm: '确认',
-  //     cancel: '',
-  //     input: 'text',
-  //     inputValue: e,
-  //     backdrop: true,
-  //     // inputOptions: [],
-  //   });
-  //   // cog.inputValue = this.houseSelectData;
-  //   this.config = cog;
-  //   setTimeout(() => {
-  //     (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-  //       console.log(res.result);
-  //       this.houseSelectData.forEach( v => {
-  //         if (v.text === e) {
-  //           v.text = res.result;
-  //         }
-  //       });
-  //       // this.autoAS.hide();
-  //       // (<DialogComponent>this[`autoAS`]).
-  //       // this.houseSelectData = res.result;
-  //       // this.mineSrv.mineUpdateUserName({sex: res.result.value}).subscribe(
-  //       //   (val) => {
-  //       //     if (val.status === 200) {
-  //       //       this.updateSexMsg = '修改成功';
-  //       //       this.tabMineDateInit();
-  //       //       this.onToastShow('success');
-  //       //       return;
-  //       //     }
-  //       //     this.updateSexMsg = `修改失败，错误代码：${val.status}`;
-  //       //     this.onToastShow('success');
-  //       //   }
-  //       // );
-  //     });
-  //   }, 10);
-  //   return false;
-  // }
-
   public  houseSelectClick() {
     this.config = Object.assign({}, <DialogConfig>{
       skin: 'auto',
@@ -132,8 +90,14 @@ export class MineTenantAddComponent implements OnInit {
   public  mineTenantAddSureClick(): void {
     this.loadHidden = false;
     console.log(this.addTenant);
+
+    this.addTenant.roomCodes.forEach( v => {
+       v.endDate = this.datePipe.transform(v.endDate, 'yyyy-MM-dd');
+       v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd')
+    });
     this.mineTenantSrv.addMineTennatInfo(this.addTenant).subscribe(
       value => {
+        // console.log(value);
         this.loadHidden = true;
         this.onShow('success', '新增成功');
       }
