@@ -47,11 +47,12 @@ export class ChargepayCouponComponent implements OnInit {
     this.couponList.forEach(v => {
       v.color = '#B7B7B7';
     });
-      if (this.color === '#08EA5F') {
-        this.color = '#B7B7B7';
-      } else {
-         this.color = '#08EA5F';
-      }
+    if (this.color === '#08EA5F') {
+      this.color = '#B7B7B7';
+    } else {
+       this.color = '#08EA5F';
+    }
+    this.globalSrv.wxSet('couponCode', '1');
   }
   public UserCouponClick (index): void {
     console.log(index);

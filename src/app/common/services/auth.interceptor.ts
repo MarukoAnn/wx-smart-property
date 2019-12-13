@@ -51,17 +51,17 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
         if (event.status === 200) {
-          if (event.body.code === '1000') {
+          // if (event.body.code === '1000') {
               return of(event);
-          } else {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: event.body.msg,
-                status: event.body.code,
-                btn: '请重试'
-              }
-            });
-          }
+          // } else {
+          //   this.router.navigate(['/error'], {
+          //     queryParams: {
+          //       msg: event.body.msg,
+          //       status: event.body.code,
+          //       btn: '请重试'
+          //     }
+          //   });
+          // }
         }
         return EMPTY;
       }),
@@ -106,19 +106,17 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
         if (event.status === 200) {
-          // console.log(event.body.errcode );
-          console.log(event.body.code);
-          if (event.body.code === '1000') {
+          // if (event.body.code === '1000') {
             return of(event);
-          } else {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: event.body.msg,
-                status: event.body.code,
-                btn: '请重试'
-              }
-            });
-          }
+          // } else {
+          //   this.router.navigate(['/error'], {
+          //     queryParams: {
+          //       msg: event.body.msg,
+          //       status: event.body.code,
+          //       btn: '请重试'
+          //     }
+          //   });
+          // }
         }
         return EMPTY;
       }),

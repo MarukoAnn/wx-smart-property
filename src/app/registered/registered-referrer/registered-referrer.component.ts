@@ -22,6 +22,8 @@ import {
 } from '../../common/tools/readBlobAsDataURL';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {RegisteredReferrerModel} from '../../common/model/registered-referrer.model';
+import {Observable, timer} from 'rxjs';
+import {map} from 'rxjs/operators';
 declare const qrcode: any;
 declare const wx: any;
 @Component({
@@ -37,6 +39,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public surePsw: any;
   public verificationCode: any;
   public loading_show = false;
+  public showData = '获取验证码';
   public headerOption: HeaderContent = {
     title: '用户绑定',
     leftContent: {
@@ -48,6 +51,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       icon: ''
     }
   };
+  public flag = 1;
   public referrerData: RegisteredReferrerModel = new RegisteredReferrerModel();
   constructor(
     private actionSheetService: ActionSheetService,
@@ -70,26 +74,65 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   }
   // workId click
   public bindingClick(): void {
-    // console.log(t);
-    console.log(this.referrerData.password);
-    if (this.referrerData.password === undefined && this.referrerData.mobilePhone === undefined  || isNaN(this.referrerData.mobilePhone) || this.referrerData.password === undefined ) {
-      this.onShow('warn', '您输入的数据不合法');
-    } else {
-      this.loading_show = true;
-      this.registeredSrv.bindingData({data: this.referrerData, openId: this.globalSrv.wxSessionGetObject('openid')}).subscribe(
-        (value) => {
-          this.globalSrv.wxSessionSetObject('appkey', value.entity.APPKEY);
-          this.loading_show = false;
-          this.router.navigate(['/tab/home']);
-        }
-      );
-    }
+    if (this.flag === 1) {
 
+      if (this.referrerData.password === undefined && this.referrerData.mobilePhone === undefined  || isNaN(this.referrerData.mobilePhone) || this.referrerData.password === undefined ) {
+        this.onShow('warn', '您输入的数据不合法');
+      } else {
+        this.flag = 2;
+        this.loading_show = true;
+        this.registeredSrv.bindingData({data: this.referrerData, openId: this.globalSrv.wxSessionGetObject('openid')}).subscribe(
+          (value) => {
+            this.flag = 1;
+            if (value.code === '1000') {
+              this.globalSrv.wxSessionSetObject('appkey', value.entity.APPKEY);
+              this.loading_show = false;
+              this.router.navigate(['/tab/home']);
+            }else {
+              this.loading_show = false;
+              this.onShow('warn', value.msg)
+            }
+
+          }
+        );
+      }
+    } else {
+      this.onShow('warn', '正在提交信息，请勿重复点击')
+    }
   }
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
   }
-  public  onSendCode(): void {
-      console.log(123);
+
+  public  getPhoneCode(): void {
+    if (this.referrerData.mobilePhone){
+        this.registeredSrv.getPhoneNumber({phone: this.referrerData.mobilePhone}).subscribe(
+          value => {
+            console.log(value);
+            if (value.code === '1000') {
+              this.calc();
+            }else {
+              setTimeout(()=> {
+                this.showData = '重新发送';
+              },1000);
+            }
+          }
+        )
+
+      }
+    return
   }
+ public  calc(): void {
+   let i = 60;
+   const showSecond = setInterval(()=> {
+     if (i < 1) {
+       clearInterval(showSecond);
+       this.showData = '获取验证码'
+     }else {
+       this.showData = i + 's';
+       console.log(this.showData);
+     }
+     i--
+   }, 500);
+ }
 }

@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   public wxCode: any = null;
   public wxOpenid: any = null;
   public url: any = null;
+  // public headImgUrl: any;
   constructor(
     private router: Router,
     private getrouter: ActivatedRoute,
@@ -23,14 +24,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
+    // this.url ='http://wy.gyrbi.com/?code=021GIK9u1J99Ie0nmY7u1TDF9u1GIK9M&state='
     // this.globalSrv.wxSessionGetObject('ios_url')
+    // this.wxCode = '061FFeRV0fgv922oVgSV0e6YQV0FFeR8';
+    // this.getOpenid();
     this.url = this.globalSrv.wxSessionGetObject('ios_url');
     this.getrouter.queryParams.subscribe(
       (value) => {
         console.log(value.code);
         if (value.code) {
-          // this.wxCode = this.url.split('?')[1].split('code=')[1].split('&')[0];
           this.wxCode = value.code;
+          this.globalSrv.wxSessionSetObject('code', this.wxCode);
+          this.getOpenid();
+        } else {
+          this.wxCode = this.url.split('?')[1].split('code=')[1].split('&')[0];
           this.globalSrv.wxSessionSetObject('code', this.wxCode);
           this.getOpenid();
         }
@@ -47,7 +54,9 @@ export class LoginComponent implements OnInit {
               if (value.entity.openId) {
                 // value.entity.json()
                 this.wxOpenid = value.entity.openId;
+                // this.headImgUrl = value.entity.userInfo.headimgurl;
                 this.globalSrv.wxSessionSetObject('openid', value.entity.openId);
+                this.globalSrv.wxSessionSetObject('imageUrl', value.entity.userInfo.headimgurl);
                 this.getLogin(value.entity.openId);
               }
             }

@@ -39,11 +39,13 @@ export class TabMineComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.globalSrv.wxSessionGetObject('imageUrl') !== undefined){
+      this.imageUrl = this.globalSrv.wxSessionGetObject('imageUrl');
+    }
       this.mineSrv.mineGetUserInfo().subscribe(
         (value) => {
           console.log(value);
           if (value.entity) {
-            this.imageUrl = value.entity.path;
             this.userName = value.entity.userName;
             this.mobilePhone = value.entity.mobilePhone;
             if (value.entity.maxIdentity === '2') {

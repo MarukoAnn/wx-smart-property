@@ -31,10 +31,10 @@ export class MinePersonalInfoComponent implements OnInit {
     }
   };
   // public imageChangedEvent: any = '';
-  public getphontoType = [
-    {label: '本地选择', value: 'photo'},
-    {label: '相机拍照', value: 'camera'},
-  ];
+  // public getphontoType = [
+  //   {label: '本地选择', value: 'photo'},
+  //   {label: '相机拍照', value: 'camera'},
+  // ];
   public persionitem = [
     {label: '我的头像', value: ''},
     {label: '用户名', value: ''},
@@ -42,7 +42,7 @@ export class MinePersonalInfoComponent implements OnInit {
     {label: '手机号', value: ''},
     {label: '性别', value: ''},
   ];
-  public updateSexMsg = '修改成功';
+  // public updateSexMsg = '修改成功';
   public wxTicket: any;
   constructor(
     private globalSrv: GlobalService,
@@ -51,22 +51,21 @@ export class MinePersonalInfoComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.initializationUser();
-    if (this.persionitem[0].value) {
-      this.persionitem[0].value = 'assets/images/ic_header.png';
+    if (this.globalSrv.wxSessionGetObject('imageUrl') !== undefined){
+      this.persionitem[0].value = this.globalSrv.wxSessionGetObject('imageUrl');
     }
-    this.minePerSrv.getTicket().subscribe(
-      (value) => {
-        this.wxTicket = value.entity.ticket;
-        this.mineUserWxSdk();
-      }
-    );
+    this.initializationUser();
+    // this.minePerSrv.getTicket().subscribe(
+    //   (value) => {
+    //     this.wxTicket = value.entity.ticket;
+    //     // this.mineUserWxSdk();
+    //   }
+    // );
   }
   // initialization user
   public initializationUser (): void {
       this.minePerSrv.mineGetUserInfo().subscribe(
         (value) => {
-          this.persionitem[0].value = value.entity.path;
           this.persionitem[1].value = value.entity.userName;
           this.persionitem[2].value = value.entity.mobilePhone;
           this.persionitem[3].value = value.entity.sex;
@@ -74,62 +73,62 @@ export class MinePersonalInfoComponent implements OnInit {
       );
   }
   // pop show
-  public minePersionSelectImageClick(): void {
-    this.simplePopup.show();
-  }
+  // public minePersionSelectImageClick(): void {
+  //   this.simplePopup.show();
+  // }
 
   // cancel select image
-  public cancelSelectionClick(): void {
-    this.simplePopup.close();
-
-  }
+  // public cancelSelectionClick(): void {
+  //   this.simplePopup.close();
+  //
+  // }
 
 
   // getphotoType
-  public getphontoTypeClick(e): void {
-    console.log(e);
-    const that = this;
-    // this.onToastShow('success');
-    if (e === 'camera') {
-      wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ['original', 'compressed'], // 指定是原图还是压缩图，默认都有
-        sourceType: ['camera'], // 指定来源是相机.
-        success: function (res: any) {
-          if (res.localIds) {
-            const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-            wx.getLocalImgData({
-              localId: loaclpath[0], // 图片的localID
-              success: function (event) {
-                that.globalSrv.wxSessionSetObject('id', event.localData );
-                window.location.href = environment.dev_test_url + '/CloudPropertyView/mine/imagecropper';
-              }
-            });
-          }
-        },
-      });
-    } else if (e === 'photo') {
-      that.simplePopup.close();
-      wx.chooseImage({
-        count: 1, // 默认9
-        sizeType: ['original', 'compressed'], // 指定是原图还是压缩图，默认都有
-        sourceType: ['album'], // 指定来源是相册，
-        success: function (res) {
-          if (res.localIds) {
-            const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-            wx.getLocalImgData({
-              localId: loaclpath[0], // 图片的localID
-              success: function (event) {
-                that.globalSrv.wxSessionSetObject('id', event.localData );
-                // that.router.navigate(['/mine/imagecropper']);
-                window.location.href = environment.dev_test_url + '/CloudPropertyView/mine/imagecropper';
-                }
-            });
-            }
-          }
-      });
-    }
-  }
+  // public getphontoTypeClick(e): void {
+  //   console.log(e);
+  //   const that = this;
+  //   // this.onToastShow('success');
+  //   if (e === 'camera') {
+  //     wx.chooseImage({
+  //       count: 1, // 默认9
+  //       sizeType: ['original', 'compressed'], // 指定是原图还是压缩图，默认都有
+  //       sourceType: ['camera'], // 指定来源是相机.
+  //       success: function (res: any) {
+  //         if (res.localIds) {
+  //           const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+  //           wx.getLocalImgData({
+  //             localId: loaclpath[0], // 图片的localID
+  //             success: function (event) {
+  //               that.globalSrv.wxSessionSetObject('id', event.localData );
+  //               window.location.href = environment.dev_test_url + '/CloudPropertyView/mine/imagecropper';
+  //             }
+  //           });
+  //         }
+  //       },
+  //     });
+  //   } else if (e === 'photo') {
+  //     that.simplePopup.close();
+  //     wx.chooseImage({
+  //       count: 1, // 默认9
+  //       sizeType: ['original', 'compressed'], // 指定是原图还是压缩图，默认都有
+  //       sourceType: ['album'], // 指定来源是相册，
+  //       success: function (res) {
+  //         if (res.localIds) {
+  //           const loaclpath = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+  //           wx.getLocalImgData({
+  //             localId: loaclpath[0], // 图片的localID
+  //             success: function (event) {
+  //               that.globalSrv.wxSessionSetObject('id', event.localData );
+  //               // that.router.navigate(['/mine/imagecropper']);
+  //               window.location.href = environment.dev_test_url + '/CloudPropertyView/mine/imagecropper';
+  //               }
+  //           });
+  //           }
+  //         }
+  //     });
+  //   }
+  // }
 
   // // 弹窗
   // public onToastShow(type: 'success' | 'loading') {

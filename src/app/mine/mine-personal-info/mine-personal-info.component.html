@@ -2,11 +2,11 @@
   <app-header [option]="headerOption"></app-header>
   <div class="mine-personal-info-content">
     <div class="weui-cells" style="margin-top: 0;font-size: 0.9rem">
-      <div class="weui-cell weui-cell_access" *ngFor="let item of persionitem.slice(0,1)"   (click)="minePersionSelectImageClick()">
+      <div class="weui-cell weui-cell_access" *ngFor="let item of persionitem.slice(0,1)">
         <div class="weui-cell__bd">
           <span>{{item.label}}</span>
         </div>
-        <div class="weui-cell__ft">
+        <div class="weui-cell__left">
           <img [src]="item.value" alt="" style="width: auto;height: 45px;display: block;border-radius: 50%">
         </div>
       </div>
@@ -24,31 +24,31 @@
     </div>
   </div>
 
-  <weui-popup #photo>
-      <div class="weui-cells" style="margin: 0">
-        <div class="weui-cell weui-cell_access" *ngFor="let item of getphontoType " >
-          <div class="weui-cell__bd" style="text-align: center" (click)="getphontoTypeClick(item.value)">
-            <span>{{item.label}}</span>
-            <!--<input type="file" class="weui-uploader__input"  accept="image/*"  (change)="fileChangeEvent($event)" >{{item.label}}-->
-          </div>
+<!--  <weui-popup #photo>-->
+<!--      <div class="weui-cells" style="margin: 0">-->
+<!--        <div class="weui-cell weui-cell_access" *ngFor="let item of getphontoType " >-->
+<!--          <div class="weui-cell__bd" style="text-align: center" (click)="getphontoTypeClick(item.value)">-->
+<!--            <span>{{item.label}}</span>-->
+<!--            &lt;!&ndash;<input type="file" class="weui-uploader__input"  accept="image/*"  (change)="fileChangeEvent($event)" >{{item.label}}&ndash;&gt;-->
+<!--          </div>-->
 
-        </div>
-      </div>
-      <div class="weui-cells">
-        <div class="weui-cell weui-cell_access" (click)="cancelSelectionClick()">
-          <div class="weui-cell__bd" style="text-align: center">
-            <span>取消</span>
-          </div>
-        </div>
-      </div>
-    </weui-popup>
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="weui-cells">-->
+<!--        <div class="weui-cell weui-cell_access" (click)="cancelSelectionClick()">-->
+<!--          <div class="weui-cell__bd" style="text-align: center">-->
+<!--            <span>取消</span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </weui-popup>-->
 
   <!--获取摄像头-->
-  <input #photo type="file" accept="image/*"  style="display: none">
+<!--  <input #photo type="file" accept="image/*"  style="display: none">-->
   <!--<input #photo type="file" accept="image/*"  (change)="fileChangeEvent($event)">-->
-  <div class="mine-personal-info-toast">
-    <weui-toast #success [text]="updateSexMsg" [icon]="''" [time]="1000"></weui-toast>
-  </div>
+<!--  <div class="mine-personal-info-toast">-->
+<!--    <weui-toast #success [text]="updateSexMsg" [icon]="''" [time]="1000"></weui-toast>-->
+<!--  </div>-->
   <!--<weui-popup #full [config]="{is_full: true}">-->
     <!--<article class="weui-article">-->
       <!--<div>图片裁剪</div>-->

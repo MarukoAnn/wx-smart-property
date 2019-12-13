@@ -10,13 +10,14 @@ import {environment} from '../../../environments/environment';
 export class PaySuccessComponent implements OnInit {
 
   constructor(
-    private route: Router,
+    private router: Router,
   ) { }
 
   ngOnInit() {
   }
 
   public  payWayClick(): void {
-    window.location.href = environment.dev_test_url+ '/CloudPropertyView/tab/home';
+    window.location.href = environment.dev_test_url+ '/wx/tab/home';
+    // this.router.navigate(['/tab/home']);
   }
 }
