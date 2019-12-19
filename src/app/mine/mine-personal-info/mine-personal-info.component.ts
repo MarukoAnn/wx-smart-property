@@ -137,9 +137,7 @@ export class MinePersonalInfoComponent implements OnInit {
   // change info
   public minePersionChangeInfoClick(e): void {
     console.log(e);
-    if (e.label === '手机号') {
-      this.router.navigate(['mine/changephone'], {queryParams: {value: e.value}});
-    } else if (e.label === '用户名') {
+   if (e.label === '用户名') {
       this.router.navigate(['mine/changeusername'], {queryParams: {value: e.value}});
     }
   }

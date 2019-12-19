@@ -39,12 +39,14 @@ export class ChargepayRoomTenantComponent implements OnInit {
     this.chargeRoomTenantSrv.getRoomTenantList({identity: 3, roomCode:  this.globalSrv.wxGet('roomCode')}).subscribe(
       (value) => {
         console.log(value);
-        value.entity.forEach( v => {
-          if (v !== null) {
-            console.log( v.userName);
-            this.tenantListData.data.push({name: v.userName, phone: v.userPhone, startTime: v.startDate, endTime: v.endDate});
-          }
-        });
+        if (value.entity !== null){
+          value.entity.forEach( v => {
+            if (v !== null) {
+              console.log( v.userName);
+              this.tenantListData.data.push({name: v.userName, phone: v.userPhone, startTime: v.startDate, endTime: v.endDate});
+            }
+          });
+        }
       }
     );
   }
