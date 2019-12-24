@@ -50,7 +50,7 @@ export class RegisteredService {
   }
 
   public getPhoneNumber(pamars): Observable<any> {
-    return this.http.post(environment.dev_test_url + `/wx/sendmsg`, pamars);
+    return this.http.post(environment.dev_test_url + `/wx/userbinding/getVerificationCode`, pamars);
   }
 
 }

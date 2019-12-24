@@ -12,8 +12,8 @@
       </div>
     </div>
   <div class="tab-mine-content" *ngIf="mobilePhone != undefined">
-    <div class="tab-mine-content-line">
-      <div class="weui-cell weui-cell_access" *ngFor="let item of owerItemList" (click)="owerItemClick(item)" [hidden]="item.hide">
+    <div class="tab-mine-content-line" *ngFor="let item of owerItemList">
+      <div class="weui-cell weui-cell_access"  (click)="owerItemClick(item)" *ngIf="item.hide">
         <div class="weui-cell__bd">
           <span style="vertical-align: middle;font-size: 1rem">{{item.label}}</span>
         </div>

@@ -14,26 +14,48 @@
     </div>
     <div class="weui-cell">
       <div class="weui-cell__hd">
+        <label  class="weui-label" style="color: #000">身份证号</label>
+      </div>
+      <div class="weui-cell__bd">
+        <input  class="weui-input" [(ngModel)]="addTenant.idNumber" value="" placeholder="请输入身份证号"
+               weui-input="newpsw" weui-required>
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label  class="weui-label" style="color: #000">手机号</label>
+      </div>
+      <div class="weui-cell__bd">
+        <input  class="weui-input" [(ngModel)]="addTenant.userPhone" value="" placeholder="请输入手机号"
+               weui-input="newpsw" weui-required>
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
         <select class="weui-select" name="select" [(ngModel)]="addTenant.sex" name="sex">
-          <option value="1">请选择性别</option>
           <option value="男">男</option>
           <option value="女">女</option>
         </select>
       </div>
     </div>
-    <div class="weui-cell">
+
+    <!--<div class="weui-cell" style="padding: 0"></div>-->
+
+    <div class="weui-cell weui-cell_vcode">
       <div class="weui-cell__hd">
-        <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
+        <label class="weui-label"  style="color: #353535">验证码</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="addTenant.userPhone" value="" placeholder="请输入手机号"
-               weui-input="newpsw" weui-required>
+        <input class="weui-input" [(ngModel)]="addTenant.verificationCode"  [maxlength]="11" name="tel" placeholder="请输入验证码"
+               weui-input="tel" weui-required>
+      </div>
+      <div class="weui-cell__ft">
+        <button class="weui-vcode-btn" (click)="getPhoneCode()">{{showData}}</button>
       </div>
     </div>
-    <!--<div class="weui-cell" style="padding: 0"></div>-->
     <!--添加房屋按钮-->
     <div class="weui-cell">
       <div class="weui-cell__hd">

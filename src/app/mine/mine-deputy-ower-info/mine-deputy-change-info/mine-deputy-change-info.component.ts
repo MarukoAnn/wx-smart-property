@@ -54,7 +54,7 @@ export class MineDeputyChangeInfoComponent implements OnInit {
 
     this.mineDeputySrv.queryMineDeputyInfoById({userId: id}).subscribe(
       value => {
-        // console.log(value);
+        console.log(value);
         this.duputyData.name = value.entity.userName;
         this.duputyData.sex = value.entity.sex;
         this.duputyData.phone = value.entity.userPhone;
@@ -146,8 +146,12 @@ export class MineDeputyChangeInfoComponent implements OnInit {
             });
             this.mineDeputySrv.updateMineDeputyBindRoom({startDate: -1, userId: this.userId, identity: 2, roomCodes: list}).subscribe(
               value => {
-                console.log(value);
-                this.mineDeputyInfoInit(this.userId);
+                if (value.code === '1000') {
+                  this.mineDeputyInfoInit(this.userId);
+                }else {
+                  this.onShow('warn', value.msg)
+                }
+
               }
             );
             // res.result.forEach( v => {

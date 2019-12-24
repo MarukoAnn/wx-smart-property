@@ -24,14 +24,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.url ='http://wy.gyrbi.com/?code=021GIK9u1J99Ie0nmY7u1TDF9u1GIK9M&state='
+    // this.url = 'http://wy.gyrbi.com/wx/index.html?code=001bgswl0Cpunp1LGLxl0J0qwl0bgswL&state=';
     // this.globalSrv.wxSessionGetObject('ios_url')
     // this.wxCode = '061FFeRV0fgv922oVgSV0e6YQV0FFeR8';
     // this.getOpenid();
     this.url = this.globalSrv.wxSessionGetObject('ios_url');
     this.getrouter.queryParams.subscribe(
       (value) => {
-        console.log(value.code);
+        // console.log(value.code);
         if (value.code) {
           this.wxCode = value.code;
           this.globalSrv.wxSessionSetObject('code', this.wxCode);

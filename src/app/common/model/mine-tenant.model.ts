@@ -3,6 +3,8 @@ export class AddMineTenant {
   sex?: any;
   userName?: any;
   userPhone?: any;
+  verificationCode?: any;
+  idNumber?: any;
 }
 export class RoomData {
   endDate?: any;

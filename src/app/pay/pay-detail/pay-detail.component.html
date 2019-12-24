@@ -6,7 +6,7 @@
        <div class="weui-cell__bd">
          <p>{{item.label}}</p>
        </div>
-       <div class="weui-cell__left" >{{item.value}}</div>
+       <div class="weui-cell__left" >{{item.value}} <span *ngIf="item.label ==='面积'">平米</span></div>
      </div>
    </div>
    <weui-ptr (refresh)="onRefresh($event)"  style="height: 50vh;background: #ECECEC;margin-top: 2px">

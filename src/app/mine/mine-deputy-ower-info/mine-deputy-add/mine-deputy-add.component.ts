@@ -30,6 +30,7 @@ export class MineDeputyAddComponent implements OnInit {
   public addUserIdentity: AddUserIdentity = new AddUserIdentity();
   public addDeputy: AddMineDeputy = new AddMineDeputy();
   public loadHidden = true;
+  public showData = '获取验证码';
   constructor(
     private getRouter: ActivatedRoute,
     private mineDeputySrv: MineDeputyService,
@@ -44,26 +45,39 @@ export class MineDeputyAddComponent implements OnInit {
     this.addUserIdentity.date = new Date();
     this.addUserIdentity.date = this.datePipe.transform( this.addUserIdentity.date, 'yyyyMMdd');
     this.addUserIdentity.identity = 2;
-    this.duputyData.sex = 1;
+    this.duputyData.sex = '男';
     // console.log(this.date | date:'yyyy-MM-dd HH:mm:ss'} );
     // this.getRouter.queryParams.subscribe((value) => {
     //   console.log(value);
     //   this.duputyData.name = value.value;
     // });
-    this.mineDeputyInfoInit();
+
   }
   public mineDeputyInfoInit(): void {
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
-        value.entity.forEach( (v, index) => {
-          this.owerRoomCodeList.push(  {text: v, value: index + 1});
-        });
+        console.log(value);
+        if (value.code === '1000') {
+          if (value.entity.length !== 0) {
+            value.entity.forEach( (v, index) => {
+              this.owerRoomCodeList.push({text: v, value: index + 1});
+            });
+            this.showDialog();
+          } else {
+            this.onShow('warn', '您暂时还没有房屋信息，请先去绑定房屋');
+          }
+        } else {
+           this.onShow('warn', value.msg);
+        }
       }
     );
   }
 
-  public  houseSelectClick() {
-    this.config = Object.assign({}, <DialogConfig>{
+  public  houseSelectClick(): void {
+    this.mineDeputyInfoInit();
+  }
+  public  showDialog(): void {
+    this.config = Object.assign({}, <DialogConfig> {
       skin: 'auto',
       type: 'prompt',
       title: '请选择房间号',
@@ -81,7 +95,6 @@ export class MineDeputyAddComponent implements OnInit {
         }
       });
     }, 10);
-    return false;
   }
   // deputy add submit
   public  mineDeputyAddSureClick(): void {
@@ -103,5 +116,40 @@ export class MineDeputyAddComponent implements OnInit {
 
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
+  }
+  // setToast(type: 'success' | 'loading') {
+  //   this.toastService[type]();
+  // }
+
+  public  getPhoneCode(): void {
+    // if ((this.referrerData.realName !== undefined || this.referrerData.realName !== '') && this.referrerData.idNumber !== undefined && this.referrerData.idNumber !== '') {
+    //   this.registeredSrv.getPhoneNumber({realName: this.referrerData.realName, idNumber: this.referrerData.idNumber }).subscribe(
+    //     value => {
+    //       console.log(value);
+    //       if (value.code === '1000') {
+    //         this.calc();
+    //       } else {
+    //         setTimeout(() => {
+    //           this.showData = '重新发送';
+    //         }, 1000);
+    //       }
+    //     }
+    //   );
+    //
+    // }
+  }
+
+  public  calc(): void {
+    let i = 60;
+    const showSecond = setInterval(() => {
+      if (i < 1) {
+        clearInterval(showSecond);
+        this.showData = '获取验证码';
+      } else {
+        this.showData = i + 's';
+        console.log(this.showData);
+      }
+      i--;
+    }, 1000);
   }
 }

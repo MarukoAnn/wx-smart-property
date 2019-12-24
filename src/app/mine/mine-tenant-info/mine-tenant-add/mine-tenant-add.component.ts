@@ -25,6 +25,7 @@ export class MineTenantAddComponent implements OnInit {
       icon: ''
     }
   };
+  public showData = '获取验证码';
   public tenantData: AddBasicDeputy = new AddBasicDeputy();
   config: DialogConfig = {};
   public owerRoomCodeList: any[] = [];
@@ -56,7 +57,7 @@ export class MineTenantAddComponent implements OnInit {
       }
     );
     this.addTenant = new AddMineTenant();
-    this.addTenant.sex = 1;
+    this.addTenant.sex = '男';
   }
   public  houseSelectClick() {
     this.config = Object.assign({}, <DialogConfig>{
@@ -93,7 +94,7 @@ export class MineTenantAddComponent implements OnInit {
 
     this.addTenant.roomCodes.forEach( v => {
        v.endDate = this.datePipe.transform(v.endDate, 'yyyy-MM-dd');
-       v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd')
+       v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd');
     });
     this.mineTenantSrv.addMineTennatInfo(this.addTenant).subscribe(
       value => {
@@ -107,10 +108,12 @@ export class MineTenantAddComponent implements OnInit {
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
   }
-  public selectStartDate(e): void {
-      console.log(e);
-  }
-  public selectEndDate (e): void {
-      console.log(e);
-  }
+  // public selectStartDate(e): void {
+  //     console.log(e);
+  // }
+  // public selectEndDate (e): void {
+  //     console.log(e);
+  // }
+  // 获取手机号
+  public  getPhoneCode(): void {}
 }

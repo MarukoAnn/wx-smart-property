@@ -17,7 +17,7 @@ export class PaySuccessComponent implements OnInit {
   }
 
   public  payWayClick(): void {
-    window.location.href = environment.dev_test_url+ '/wx/tab/home';
+    window.location.href ='/wx/tab/home';
     // this.router.navigate(['/tab/home']);
   }
 }

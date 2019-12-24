@@ -22,11 +22,11 @@ export class TabMineComponent implements OnInit {
     }
   };
   public owerItemList = [
-    {label: '个人资料', note: '', hide: false},
-    {label: '副业主信息', note: '仅业主可见' , hide: false},
-    {label: '租客信息', note: '仅业主、副业主可见', hide: false},
-    {label: '我的缴费明细', note: '', hide: false},
-    {label: '修改密码', note: '', hide: false},
+    {label: '个人资料', note: '', hide: true},
+    {label: '副业主信息', note: '仅业主可见' , hide: true},
+    {label: '租客信息', note: '仅业主、副业主可见', hide: true},
+    {label: '我的缴费明细', note: '', hide: true},
+    // {label: '修改密码', note: '', hide: false},
   ];
   public imageUrl: any;  // 头像地址
   public userName: any;  // 用户姓名
@@ -49,12 +49,13 @@ export class TabMineComponent implements OnInit {
             this.userName = value.entity.userName;
             this.mobilePhone = value.entity.mobilePhone;
             if (value.entity.maxIdentity === '2') {
-              this.owerItemList[1].hide = true;
+              this.owerItemList[1].hide = false;
+              console.log(this.owerItemList);
             } else if (value.entity.maxIdentity === '3') {
-              this.owerItemList[1].hide = true;
-              this.owerItemList[2].hide = true;
+              this.owerItemList[1].hide = false;
+              this.owerItemList[2].hide = false;
             }
-          }else {
+          } else {
             console.log(123);
           }
         }

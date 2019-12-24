@@ -17,6 +17,7 @@ export class AddBasicDeputy {
   mobilePhone?: any;
   realName?: any;
   sex?: any;
+  verificationCode?: any;
 }
 export class AddUserIdentity {
   date?: any;

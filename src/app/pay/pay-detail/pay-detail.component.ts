@@ -27,9 +27,9 @@ export class PayDetailComponent implements OnInit {
     {label: '房屋编号', value: ''},
     {label: '项目名', value: ''},
     {label: '地块', value: ''},
+    {label: '楼栋', value: ''},
     {label: '单元', value: ''},
     {label: '面积', value: ''},
-    {label: '花园面积', value: ''},
   ];
   public paydetail = [];
   public roomCode: any;
@@ -58,8 +58,7 @@ export class PayDetailComponent implements OnInit {
         this.basicData[3].value = value.entity.houseInfo.buildingName;
         this.basicData[4].value = value.entity.houseInfo.unitName;
         this.basicData[5].value = value.entity.houseInfo.roomSize;
-        this.basicData[6].value = value.entity.houseInfo.userName;
-        this.basicData[7].value = value.entity.houseInfo.userPhone;
+        this.basicData[6].value = value.entity.houseInfo.roomSize;
       }
     );
   }

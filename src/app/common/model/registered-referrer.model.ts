@@ -1,6 +1,5 @@
 export class RegisteredReferrerModel {
-  userName?: any; // 用户名;
-  mobilePhone?: any; // 手机号;
-  password?: any; // 密码;
-  verificationCode?: any; // 密码;
+  surName?: any; // 姓名;
+  phone?: any; // 手机号;
+  verificationCode?: any; // 验证码
 }
