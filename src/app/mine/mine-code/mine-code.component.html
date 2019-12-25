@@ -1,0 +1,24 @@
+<div class="mine-code">
+  <app-header [option]="headerOption"></app-header>
+  <div class="mine-code-content">
+    <div class="weui-cell" style="padding: 0;margin-top: 5px;"></div>
+    <div class="weui-cell weui-cell_vcode" style="background: #fff">
+      <div class="weui-cell__hd">
+        <label class="weui-label"  style="color: #353535">验证码</label>
+      </div>
+      <div class="weui-cell__bd">
+        <input class="weui-input" [(ngModel)]="verificationCode"  name="tel" placeholder="请输入验证码"
+               weui-input="tel" weui-required>
+      </div>
+      <div class="weui-cell__ft">
+        <button class="weui-vcode-btn" (click)="getPhoneCode()">{{showData}}</button>
+      </div>
+    </div>
+    <div class="weui-cell" style="padding: 0"></div>
+  </div>
+  <div class="min-deputy-add-footer">
+    <div class="weui-cell">
+      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="AddSureClick()">提交</button>
+    </div>
+  </div>
+</div>
