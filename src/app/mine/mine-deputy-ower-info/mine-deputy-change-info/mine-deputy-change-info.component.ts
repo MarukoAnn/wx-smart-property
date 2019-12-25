@@ -148,8 +148,8 @@ export class MineDeputyChangeInfoComponent implements OnInit {
               value => {
                 if (value.code === '1000') {
                   this.mineDeputyInfoInit(this.userId);
-                }else {
-                  this.onShow('warn', value.msg)
+                } else {
+                  this.onShow('warn', value.msg);
                 }
 
               }

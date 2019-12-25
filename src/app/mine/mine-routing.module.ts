@@ -15,6 +15,7 @@ import {MineTenantAddComponent} from './mine-tenant-info/mine-tenant-add/mine-te
 import {MineTenantModifyComponent} from './mine-tenant-info/mine-tenant-modify/mine-tenant-modify.component';
 import {MineTenantDetailComponent} from './mine-tenant-info/mine-tenant-detail/mine-tenant-detail.component';
 import {MineImageCropperComponent} from './mine-personal-info/mine-image-cropper/mine-image-cropper.component';
+import {MineCodeComponent} from './mine-code/mine-code.component';
 
 const routes: Routes = [
   {path: 'owerinfo', component: MineOwerPayInfoComponent},
@@ -32,7 +33,7 @@ const routes: Routes = [
   {path: 'tenantadd', component: MineTenantAddComponent},
   {path: 'tenantmodify', component: MineTenantModifyComponent},
   {path: 'tenantDetail', component: MineTenantDetailComponent},
-  {path: 'imagecropper', component: MineImageCropperComponent},
+  {path: 'mineCode', component: MineCodeComponent},
   // {path: 'deputyadd', component: MineDeputyAddComponent},
 ];
 

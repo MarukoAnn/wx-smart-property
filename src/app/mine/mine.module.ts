@@ -23,6 +23,7 @@ import {ImageCropperModule} from 'ngx-image-cropper';
 import { MineImageCropperComponent } from './mine-personal-info/mine-image-cropper/mine-image-cropper.component';
 import {QRCodeModule} from 'angularx-qrcode';
 import {LoadingModule} from '../common/components/loading/loading.module';
+import { MineCodeComponent } from './mine-code/mine-code.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {LoadingModule} from '../common/components/loading/loading.module';
   MineTenantDetailComponent,
   MineTenantModifyComponent,
   MineTenantAddComponent,
-  MineImageCropperComponent],
+  MineImageCropperComponent,
+  MineCodeComponent],
   imports: [
     CommonModule,
     MineRoutingModule,

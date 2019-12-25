@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {DialogComponent, DialogConfig, ToptipsService} from 'ngx-weui';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import {MineDeputyService} from '../../../common/services/mine-deputy.service';
 import {AddBasicDeputy, AddMineDeputy, AddUserIdentity} from '../../../common/model/mine-deputy.model';
 import {DatePipe} from '@angular/common';
+import {GlobalService} from '../../../common/services/global.service';
 
 @Component({
   selector: 'app-mine-deputy-add',
@@ -24,6 +25,8 @@ export class MineDeputyAddComponent implements OnInit {
   };
   public duputyData: AddBasicDeputy = new AddBasicDeputy();
   config: DialogConfig = {};
+  public verifyPhone: RegExp = /^1[37458]\d{9}$/;
+  public hiddenWarn: any;
   public owerRoomCodeList: any[] = [];
   public houseSelectData: any[] = [];
   public date: any;
@@ -36,6 +39,8 @@ export class MineDeputyAddComponent implements OnInit {
     private mineDeputySrv: MineDeputyService,
     private datePipe: DatePipe,
     private toptipSrv: ToptipsService,
+    private router: Router,
+    private globalSrv: GlobalService
 
 
   ) { }
@@ -43,7 +48,7 @@ export class MineDeputyAddComponent implements OnInit {
   ngOnInit() {
     // this.date = $filter('date')(new Date(),'MM/dd/yyyy');
     this.addUserIdentity.date = new Date();
-    this.addUserIdentity.date = this.datePipe.transform( this.addUserIdentity.date, 'yyyyMMdd');
+    this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyyMMdd');
     this.addUserIdentity.identity = 2;
     this.duputyData.sex = '男';
     // console.log(this.date | date:'yyyy-MM-dd HH:mm:ss'} );
@@ -54,6 +59,7 @@ export class MineDeputyAddComponent implements OnInit {
 
   }
   public mineDeputyInfoInit(): void {
+    this.owerRoomCodeList = [];
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
         console.log(value);
@@ -98,20 +104,38 @@ export class MineDeputyAddComponent implements OnInit {
   }
   // deputy add submit
   public  mineDeputyAddSureClick(): void {
-    this.loadHidden = false;
-      this.addDeputy = new AddMineDeputy();
-    this.houseSelectData.forEach( v => {
-      this.addDeputy.roomList.push(v.text);
+    // this.loadHidden = false;
 
-    });
-      this.addDeputy.user = this.duputyData;
-      this.addDeputy.userIdentityEntity = this.addUserIdentity;
-      this.mineDeputySrv.addMineDeputyInfo(this.addDeputy).subscribe(
-        value => {
-          this.loadHidden = true;
-          this.onShow('success', '新增成功');
+      const List = ['mobilePhone', 'realName', 'sex'];
+      const  listStatus = List.some(v => {
+        return this.duputyData[v] === undefined || this.duputyData[v] === null;
+      });
+      if (!listStatus) {
+        if (this.hiddenWarn) {
+          this.onShow('warn', '请输入正确的手机号');
+        } else if (this.houseSelectData.length !== 0) {
+          this.addDeputy = new AddMineDeputy();
+          this.houseSelectData.forEach( v => {
+            this.addDeputy.roomList.push(v.text);
+          });
+          this.addDeputy.user = this.duputyData;
+          this.addDeputy.userIdentityEntity = this.addUserIdentity;
+          this.globalSrv.wxSessionSetObject('addData', this.addDeputy);
+          this.router.navigate(['/mine/mineCode']);
+        } else  {
+          this.onShow('warn', '请选择房屋');
         }
-      );
+      } else {
+        this.onShow('warn', '您有信息未填写完整');
+      }
+
+
+      // this.mineDeputySrv.addMineDeputyInfo(this.addDeputy).subscribe(
+      //   value => {
+      //     this.loadHidden = true;
+      //     this.onShow('success', '新增成功');
+      //   }
+      // );
   }
 
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
@@ -120,6 +144,14 @@ export class MineDeputyAddComponent implements OnInit {
   // setToast(type: 'success' | 'loading') {
   //   this.toastService[type]();
   // }
+  // 身份证验证
+  public  inputNumberFocus(): void {
+    if (this.verifyPhone.test(this.duputyData.mobilePhone)) {
+      this.hiddenWarn = false;
+    } else {
+      this.hiddenWarn = true;
+    }
+  }
 
   public  getPhoneCode(): void {
     // if ((this.referrerData.realName !== undefined || this.referrerData.realName !== '') && this.referrerData.idNumber !== undefined && this.referrerData.idNumber !== '') {

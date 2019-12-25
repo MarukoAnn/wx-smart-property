@@ -17,8 +17,10 @@
         <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.mobilePhone" value="" placeholder="请输入手机号"
-               weui-input="newpsw" weui-required>
+        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.mobilePhone" [maxLength]="11" value="" placeholder="请输入手机号" (blur)="inputNumberFocus()" >
+      </div>
+      <div class="weui-cell__ft" [hidden]="!hiddenWarn">
+        <i class="weui-icon-warn"></i>
       </div>
     </div>
     <div class="weui-cell">
@@ -32,18 +34,18 @@
         </select>
       </div>
     </div>
-    <div class="weui-cell weui-cell_vcode">
-      <div class="weui-cell__hd">
-        <label class="weui-label"  style="color: #353535">验证码</label>
-      </div>
-      <div class="weui-cell__bd">
-        <input class="weui-input" [(ngModel)]="duputyData.verificationCode"  [maxlength]="11" name="tel" placeholder="请输入验证码"
-               weui-input="tel" weui-required>
-      </div>
-      <div class="weui-cell__ft">
-        <button class="weui-vcode-btn" (click)="getPhoneCode()">{{showData}}</button>
-      </div>
-    </div>
+<!--    <div class="weui-cell weui-cell_vcode">-->
+<!--      <div class="weui-cell__hd">-->
+<!--        <label class="weui-label"  style="color: #353535">验证码</label>-->
+<!--      </div>-->
+<!--      <div class="weui-cell__bd">-->
+<!--        <input class="weui-input" [(ngModel)]="duputyData.verificationCode"  [maxlength]="11" name="tel" placeholder="请输入验证码"-->
+<!--               weui-input="tel" weui-required>-->
+<!--      </div>-->
+<!--      <div class="weui-cell__ft">-->
+<!--        <button class="weui-vcode-btn" (click)="getPhoneCode()">{{showData}}</button>-->
+<!--      </div>-->
+<!--    </div>-->
     <!--<div class="weui-cell" style="padding: 0"></div>-->
     <!--添加房屋按钮-->
     <div class="weui-cell">
@@ -64,7 +66,7 @@
   </div>
   <div class="min-deputy-add-footer">
     <div class="weui-cell">
-        <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineDeputyAddSureClick()">提交</button>
+        <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineDeputyAddSureClick()">下一步</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>

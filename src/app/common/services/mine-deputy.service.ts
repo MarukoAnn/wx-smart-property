@@ -29,9 +29,6 @@ export class MineDeputyService {
   public  deleteMineDeputyBindRoomCode(pamars): Observable<any> {
     return this.http.post(environment.dev_test_url + `/deputy/delete`, pamars);
   }
-  public  addMineDeputyInfo(pamars): Observable<any> {
-    return this.http.post(environment.dev_test_url + `/wx/adduser`, pamars);
-  }
   public  updateMineDeputyInfo(pamars): Observable<any> {
     return this.http.post(environment.dev_test_url + `/wx/roomusersubmit`, pamars);
   }

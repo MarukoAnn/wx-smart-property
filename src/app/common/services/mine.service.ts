@@ -43,4 +43,11 @@ export class MineService {
   public mineGetUserInfo(): Observable<any> {
     return this.http.post(environment.dev_test_url + `/wx/index`, {});
   }
+  public mineGetCode(): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/proprietorGetVerificationCode`, {});
+  }
+  // 添加副业主
+  public  addMineDeputyInfo(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/adduser`, pamars);
+  }
 }

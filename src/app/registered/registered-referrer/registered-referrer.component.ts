@@ -62,7 +62,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   // workId click
   public bindingClick(): void {
     if (this.flag === 1) {
-      const List = ['surName', 'phone', 'verificationCode'];
+      const List = ['surName', 'phone'];
       const status = List.some(v => {
         return this.referrerData[v] === undefined || this.referrerData[v] === '';
       });
