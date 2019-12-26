@@ -75,6 +75,14 @@ export class AuthInterceptor implements HttpInterceptor {
               btn: '请重试'
             }
           });
+        } else if (err.status === 400) {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: '连接服务器失败，请检查网络！',
+              url: null,
+              btn: '请重试'
+            }
+          });
         }
         return EMPTY;
       })

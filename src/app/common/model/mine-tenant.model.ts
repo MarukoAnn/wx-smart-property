@@ -4,7 +4,6 @@ export class AddMineTenant {
   userName?: any;
   userPhone?: any;
   verificationCode?: any;
-  idNumber?: any;
 }
 export class RoomData {
   endDate?: any;

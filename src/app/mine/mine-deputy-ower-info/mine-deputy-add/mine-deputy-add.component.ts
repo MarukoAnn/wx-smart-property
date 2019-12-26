@@ -33,7 +33,6 @@ export class MineDeputyAddComponent implements OnInit {
   public addUserIdentity: AddUserIdentity = new AddUserIdentity();
   public addDeputy: AddMineDeputy = new AddMineDeputy();
   public loadHidden = true;
-  public showData = '获取验证码';
   constructor(
     private getRouter: ActivatedRoute,
     private mineDeputySrv: MineDeputyService,
@@ -51,11 +50,6 @@ export class MineDeputyAddComponent implements OnInit {
     this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyyMMdd');
     this.addUserIdentity.identity = 2;
     this.duputyData.sex = '男';
-    // console.log(this.date | date:'yyyy-MM-dd HH:mm:ss'} );
-    // this.getRouter.queryParams.subscribe((value) => {
-    //   console.log(value);
-    //   this.duputyData.name = value.value;
-    // });
 
   }
   public mineDeputyInfoInit(): void {
@@ -66,7 +60,7 @@ export class MineDeputyAddComponent implements OnInit {
         if (value.code === '1000') {
           if (value.entity.length !== 0) {
             value.entity.forEach( (v, index) => {
-              this.owerRoomCodeList.push({text: v, value: index + 1});
+              this.owerRoomCodeList.push({text: v.roomCode, value: index + 1, organizationId: v.organizationId, organizationName: v.organizationName});
             });
             this.showDialog();
           } else {
@@ -90,13 +84,13 @@ export class MineDeputyAddComponent implements OnInit {
       confirm: '确认',
       cancel: '取消',
       input: 'checkbox',
-      // inputValue: e,
       backdrop: true,
       inputOptions: this.owerRoomCodeList,
     });
     setTimeout(() => {
       (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
         if (res.text === '确认') {
+          console.log(res.result);
           this.houseSelectData = res.result;
         }
       });
@@ -104,7 +98,6 @@ export class MineDeputyAddComponent implements OnInit {
   }
   // deputy add submit
   public  mineDeputyAddSureClick(): void {
-    // this.loadHidden = false;
 
       const List = ['mobilePhone', 'realName', 'sex'];
       const  listStatus = List.some(v => {
@@ -116,34 +109,30 @@ export class MineDeputyAddComponent implements OnInit {
         } else if (this.houseSelectData.length !== 0) {
           this.addDeputy = new AddMineDeputy();
           this.houseSelectData.forEach( v => {
-            this.addDeputy.roomList.push(v.text);
+            this.addDeputy.roomList.push({
+              roomCode: v.text,
+              organizationId: v.organizationId,
+              organizationName: v.organizationName,
+              startDate: '',
+              endDate: '',
+            });
           });
           this.addDeputy.user = this.duputyData;
           this.addDeputy.userIdentityEntity = this.addUserIdentity;
           this.globalSrv.wxSessionSetObject('addData', this.addDeputy);
-          this.router.navigate(['/mine/mineCode']);
+          this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'add'}});
         } else  {
           this.onShow('warn', '请选择房屋');
         }
       } else {
         this.onShow('warn', '您有信息未填写完整');
       }
-
-
-      // this.mineDeputySrv.addMineDeputyInfo(this.addDeputy).subscribe(
-      //   value => {
-      //     this.loadHidden = true;
-      //     this.onShow('success', '新增成功');
-      //   }
-      // );
   }
 
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
   }
-  // setToast(type: 'success' | 'loading') {
-  //   this.toastService[type]();
-  // }
+
   // 身份证验证
   public  inputNumberFocus(): void {
     if (this.verifyPhone.test(this.duputyData.mobilePhone)) {
@@ -151,37 +140,5 @@ export class MineDeputyAddComponent implements OnInit {
     } else {
       this.hiddenWarn = true;
     }
-  }
-
-  public  getPhoneCode(): void {
-    // if ((this.referrerData.realName !== undefined || this.referrerData.realName !== '') && this.referrerData.idNumber !== undefined && this.referrerData.idNumber !== '') {
-    //   this.registeredSrv.getPhoneNumber({realName: this.referrerData.realName, idNumber: this.referrerData.idNumber }).subscribe(
-    //     value => {
-    //       console.log(value);
-    //       if (value.code === '1000') {
-    //         this.calc();
-    //       } else {
-    //         setTimeout(() => {
-    //           this.showData = '重新发送';
-    //         }, 1000);
-    //       }
-    //     }
-    //   );
-    //
-    // }
-  }
-
-  public  calc(): void {
-    let i = 60;
-    const showSecond = setInterval(() => {
-      if (i < 1) {
-        clearInterval(showSecond);
-        this.showData = '获取验证码';
-      } else {
-        this.showData = i + 's';
-        console.log(this.showData);
-      }
-      i--;
-    }, 1000);
   }
 }

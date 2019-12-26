@@ -46,8 +46,17 @@ export class MineService {
   public mineGetCode(): Observable<any> {
     return this.http.post(environment.dev_test_url + `/wx/proprietorGetVerificationCode`, {});
   }
-  // 添加副业主
+  // 添加 租客 副业主
   public  addMineDeputyInfo(pamars): Observable<any> {
     return this.http.post(environment.dev_test_url + `/wx/adduser`, pamars);
+  }
+ // 修改 租客 副业主
+  public  updateMineDeputyInfo(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/wx/roomusersubmit`, pamars);
+  }
+
+  //  删除 租客 副业主
+  public  deleteMineDeputyBindRoomCode(pamars): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/deputy/delete`, pamars);
   }
 }

@@ -64,13 +64,13 @@ export class MineTenantInfoComponent implements OnInit {
   // delete deputyInfo
   public  mineTenantDeleteClick(item): void {
     console.log(item);
-    this.mineTenantSrv.deleteMineTenantBindRoomCode({identity: 3, roomCode: item.data[2].value, userId: item.userId}).subscribe(
-      value => {
-        console.log(value);
-        this.onShow('success', '删除' + value.msg);
-        this.mineTenantInfoInit(1);
-      }
-    );
+    // this.mineTenantSrv.deleteMineTenantBindRoomCode({identity: 3, roomCode: item.data[2].value, userId: item.userId}).subscribe(
+    //   value => {
+    //     console.log(value);
+    //     this.onShow('success', '删除' + value.msg);
+    //     this.mineTenantInfoInit(1);
+    //   }
+    // );
   }
   // modify deputyInfo
   public  mineTenantModifyClick(e): void {

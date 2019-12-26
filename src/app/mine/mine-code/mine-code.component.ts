@@ -25,17 +25,26 @@ export class MineCodeComponent implements OnInit {
   public addData:  AddMineDeputy = new AddMineDeputy();
   public verificationCode: any;
   public showData = '获取验证码';
+  public type: any;
   constructor(
     private mineSrv: MineService,
     private toptipSrv: ToptipsService,
     private toastService: ToastService,
     private globalSrv: GlobalService,
     private router: Router,
+    private getRouter: ActivatedRoute,
   ) {
-    // private getRouter: ActivatedRoute,
+
   }
 
   ngOnInit() {
+    // this.getRouter.
+    this.getRouter.queryParams.subscribe(
+      value => {
+        console.log(value);
+        this.type = value.type;
+      }
+    );
   }
 
   public  getPhoneCode(): void {
@@ -58,10 +67,11 @@ export class MineCodeComponent implements OnInit {
       this.setToast('loading');
       this.addData =  this.globalSrv.wxSessionGetObject('addData');
       this.addData.verificationCode = this.verificationCode;
-      if (this.addData.userIdentityEntity.identity === 2) {
-        this.addDeputyInfo();
-      } else {
-
+      switch (this.type) {
+        case 'add':  this.addDeputyInfo(); break;
+        case 'modify':  this.modifyDeputyInfo(); break;
+        case 'delete':  this.deleteDeputyInfo(); break;
+        default: break;
       }
     } else {
       this.onShow('warn', '验证码不能为空');
@@ -100,5 +110,35 @@ export class MineCodeComponent implements OnInit {
         this.onShow('warn', value.msg);
       }
     });
+  }
+  // 修改副业主信息
+  public  modifyDeputyInfo(): void {
+    this.mineSrv.updateMineDeputyInfo(this.addData).subscribe(
+      value => {
+        if (value.code === '1000') {
+          this.toastService.hide();
+          this.setToast('success');
+          this.onShow('success', '修改成功');
+          this.router.navigate(['/mine/deputyinfo']);
+        } else {
+          this.onShow('warn', value.msg);
+        }
+      }
+    );
+  }
+  // 删除副业主信息
+  public  deleteDeputyInfo(): void {
+    this.mineSrv.deleteMineDeputyBindRoomCode(this.addData).subscribe(
+      value => {
+        if (value.code === '1000') {
+          this.toastService.hide();
+          this.setToast('success');
+          this.onShow('success', '删除成功');
+          this.router.navigate(['/mine/deputyinfo']);
+        } else {
+          this.onShow('warn', value.msg);
+        }
+      }
+    );
   }
 }

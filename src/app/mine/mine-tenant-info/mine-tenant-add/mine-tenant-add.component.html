@@ -14,20 +14,13 @@
     </div>
     <div class="weui-cell">
       <div class="weui-cell__hd">
-        <label  class="weui-label" style="color: #000">身份证号</label>
-      </div>
-      <div class="weui-cell__bd">
-        <input  class="weui-input" [(ngModel)]="addTenant.idNumber" value="" placeholder="请输入身份证号"
-               weui-input="newpsw" weui-required>
-      </div>
-    </div>
-    <div class="weui-cell">
-      <div class="weui-cell__hd">
         <label  class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input  class="weui-input" [(ngModel)]="addTenant.userPhone" value="" placeholder="请输入手机号"
-               weui-input="newpsw" weui-required>
+        <input  class="weui-input" [(ngModel)]="addTenant.userPhone" [maxLength]="11" value="" placeholder="请输入手机号" (blur)="inputNumberFocus()" >
+      </div>
+      <div class="weui-cell__ft" [hidden]="!hiddenWarn">
+        <i class="weui-icon-warn"></i>
       </div>
     </div>
     <div class="weui-cell">
@@ -39,21 +32,6 @@
           <option value="男">男</option>
           <option value="女">女</option>
         </select>
-      </div>
-    </div>
-
-    <!--<div class="weui-cell" style="padding: 0"></div>-->
-
-    <div class="weui-cell weui-cell_vcode">
-      <div class="weui-cell__hd">
-        <label class="weui-label"  style="color: #353535">验证码</label>
-      </div>
-      <div class="weui-cell__bd">
-        <input class="weui-input" [(ngModel)]="addTenant.verificationCode"  [maxlength]="11" name="tel" placeholder="请输入验证码"
-               weui-input="tel" weui-required>
-      </div>
-      <div class="weui-cell__ft">
-        <button class="weui-vcode-btn" (click)="getPhoneCode()">{{showData}}</button>
       </div>
     </div>
     <!--添加房屋按钮-->
@@ -99,11 +77,9 @@
   </div>
   <div class="mine-tenant-add-footer">
     <div class="weui-cell">
-      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantAddSureClick()">提交</button>
+      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantAddSureClick()">下一步</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>
   <weui-toptips #toptips></weui-toptips>
-  <app-loading [hidden]="loadHidden"></app-loading>
-
 </div>

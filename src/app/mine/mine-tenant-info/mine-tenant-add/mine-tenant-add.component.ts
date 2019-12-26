@@ -6,6 +6,7 @@ import {MineTenantService} from '../../../common/services/mine-tenant.service';
 import {AddBasicDeputy, AddMineDeputy, AddUserIdentity} from '../../../common/model/mine-deputy.model';
 import {DatePipe} from '@angular/common';
 import {AddMineTenant} from '../../../common/model/mine-tenant.model';
+import {GlobalService} from '../../../common/services/global.service';
 
 @Component({
   selector: 'app-mine-tenant-add',
@@ -25,20 +26,21 @@ export class MineTenantAddComponent implements OnInit {
       icon: ''
     }
   };
-  public showData = '获取验证码';
-  public tenantData: AddBasicDeputy = new AddBasicDeputy();
   config: DialogConfig = {};
   public owerRoomCodeList: any[] = [];
   public houseSelectData: any[] = [];
   public date: any;
   public addTenant: AddMineTenant = new AddMineTenant();
   public loadHidden = true;
+  public hiddenWarn: boolean;
+  public verifyPhone: RegExp = /^1[37458]\d{9}$/;
   constructor(
     private getRouter: ActivatedRoute,
-    private router: Router,
     private toptipSrv: ToptipsService,
     private datePipe: DatePipe,
-    private mineTenantSrv: MineTenantService
+    private mineTenantSrv: MineTenantService,
+    private router: Router,
+    private globalSrv: GlobalService
   ) { }
 
   ngOnInit() {
@@ -89,31 +91,51 @@ export class MineTenantAddComponent implements OnInit {
   }
   // deputy add submit
   public  mineTenantAddSureClick(): void {
-    this.loadHidden = false;
-    console.log(this.addTenant);
-
-    this.addTenant.roomCodes.forEach( v => {
-       v.endDate = this.datePipe.transform(v.endDate, 'yyyy-MM-dd');
-       v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd');
+    const List = ['mobilePhone', 'realName', 'sex'];
+    const  listStatus = List.some(v => {
+      return this.addTenant[v] === undefined || this.addTenant[v] === null;
     });
-    this.mineTenantSrv.addMineTennatInfo(this.addTenant).subscribe(
-      value => {
-        // console.log(value);
-        this.loadHidden = true;
-        this.onShow('success', '新增成功');
+    if (!listStatus) {
+      if (this.addTenant.roomCodes.length > 0) {
+        if (
+          this.addTenant.roomCodes.some( val => {
+            return val.startDate === undefined || val.endDate === undefined;
+          })
+        ) {
+          this.onShow('warn', '请选择房子的租赁日期或者结束日期');
+        } else {
+          this.addTenant.roomCodes.forEach( v => {
+            v.endDate = this.datePipe.transform(v.endDate, 'yyyy-MM-dd');
+            v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd');
+          });
+        }
+      } else {
+        this.globalSrv.wxSessionSetObject('addData', this.addTenant);
+        this.router.navigate(['/mine/code'], {queryParams: {type: 'add', value: '3'}});
       }
-    );
+    }
+
+    // this.mineTenantSrv.addMineTennatInfo(this.addTenant).subscribe(
+    //   value => {
+    //     // console.log(value);
+    //     this.loadHidden = true;
+    //     this.onShow('success', '新增成功');
+    //   }
+    // );
   }
   // toast
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
   }
-  // public selectStartDate(e): void {
-  //     console.log(e);
-  // }
-  // public selectEndDate (e): void {
-  //     console.log(e);
-  // }
-  // 获取手机号
-  public  getPhoneCode(): void {}
+  // 手机号验证
+  public  inputNumberFocus(): void {
+
+    if (this.verifyPhone.test(this.addTenant.userPhone)) {
+      this.hiddenWarn = false;
+      console.log(123);
+    } else {
+      this.hiddenWarn = true;
+      console.log(456);
+    }
+  }
 }
