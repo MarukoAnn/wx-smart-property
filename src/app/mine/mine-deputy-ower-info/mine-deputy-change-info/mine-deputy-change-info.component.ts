@@ -3,8 +3,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {DialogComponent, DialogConfig, InputType, SkinType, ToptipsService} from 'ngx-weui';
 import {MineDeputyService} from '../../../common/services/mine-deputy.service';
-import {ModeifyMineDeputy} from '../../../common/model/mine-deputy.model';
+import {AddBasicDeputy, AddMineDeputy, AddUserIdentity, ModeifyMineDeputy} from '../../../common/model/mine-deputy.model';
 import {GlobalService} from '../../../common/services/global.service';
+import {DatePipe} from '@angular/common';
 // import {type} from 'os';
 
 @Component({
@@ -23,20 +24,18 @@ export class MineDeputyChangeInfoComponent implements OnInit {
       icon: ''
     }
   };
-  public duputyData = {
-    name: '',
-    sex: '',
-    phone: '',
-  };
   config: DialogConfig = {};
   public owerRoomCodeList: any[] = [];
   public houseSelectData: any[] = [];
   public userId: any;
-  public ModefyDeputy: ModeifyMineDeputy = new ModeifyMineDeputy();
+  public modefyDeputy: AddBasicDeputy = new AddBasicDeputy();
+  public ModefyDeputy: AddMineDeputy = new AddMineDeputy();
+  public userIdentity: AddUserIdentity = new AddUserIdentity();
   constructor(
     private getRouter: ActivatedRoute,
     private mineDeputySrv: MineDeputyService,
     private toptipSrv: ToptipsService,
+    private datePipe: DatePipe,
     private router: Router,
     private globalSrv: GlobalService
 
@@ -44,9 +43,14 @@ export class MineDeputyChangeInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.ModefyDeputy.userIdentityEntity.date = '';
+    // this.ModefyDeputy.userIdentityEntity.identity = '2';
+    this.userIdentity.date = '';
+    this.userIdentity.identity = '2';
     this.getRouter.queryParams.subscribe((value) => {
       this.userId = value.value;
       this.mineDeputyInfoInit(value.value);
+      this.modefyDeputy.userId = value.value;
       if (this.globalSrv.wxSessionGetObject('roomList') === 0) {
         this.getRoomList(value.value);
       } else {
@@ -62,7 +66,7 @@ export class MineDeputyChangeInfoComponent implements OnInit {
         console.log(val);
         this.houseSelectData = [];
         val.entity.forEach(v => {
-          this.houseSelectData.push(v.roomCode);
+          this.houseSelectData.push({roomCode: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
         });
       }
     );
@@ -71,9 +75,9 @@ export class MineDeputyChangeInfoComponent implements OnInit {
   public mineDeputyInfoInit(id): void {
     this.mineDeputySrv.queryMineDeputyInfoById({userId: id}).subscribe(
       value => {
-        this.duputyData.name = value.entity.userName;
-        this.duputyData.sex = value.entity.sex;
-        this.duputyData.phone = value.entity.userPhone;
+        this.modefyDeputy.realName = value.entity.userName;
+        this.modefyDeputy.sex = value.entity.sex;
+        this.modefyDeputy.mobilePhone = value.entity.userPhone;
       }
     );
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
@@ -81,7 +85,7 @@ export class MineDeputyChangeInfoComponent implements OnInit {
         console.log(value);
         this.owerRoomCodeList = [];
         value.entity.forEach( (v, index) => {
-          this.owerRoomCodeList.push({text: v.roomCode, value: index + 1, organizationId: v.organizationId, organizationName: v.organizationName});
+          this.owerRoomCodeList.push({text: v.roomCode, value: index + 1, organizationId: v.organizationId, organizationName: v.organizationName, startDate: '', endDate: ''});
         });
       }
     );
@@ -108,10 +112,12 @@ export class MineDeputyChangeInfoComponent implements OnInit {
               this.autoAS.show();
               this.onShow('warn', '您未选择房间');
             } else {
+              console.log(this.houseSelectData);
               res.result.forEach(v => {
-                // if (this.houseSelectData.forEach(val => {}))
-                if (this.houseSelectData.indexOf(v.text) === -1
-                 ) {
+                const result = this.houseSelectData.some(item => {
+                  return  item.roomCode === v.text;
+                });
+                if (!result) {
                   this.houseSelectData.push({roomCode: v.text, organizationId: v.organizationId, organizationName: v.organizationName, startDate: '', endDate: ''});
                 } else {
                   this.onShow('warn', '该房屋已绑定');
@@ -160,20 +166,24 @@ export class MineDeputyChangeInfoComponent implements OnInit {
   }
   // modify submit
   public  mineDeputyModifySureClick(): void {
-    const List = ['phone', 'name', 'sex'];
+    const List = ['mobilePhone', 'realName', 'sex'];
     const  listStatus = List.some(v => {
-      return this.duputyData[v] === undefined || this.duputyData[v] === null;
+      return this.modefyDeputy[v] === undefined || this.modefyDeputy[v] === null;
     });
-    const roomList = this.globalSrv.wxSessionGetObject('roomList');
-    roomList.forEach( v => {
-      this.ModefyDeputy.roomCodes.push({startDate: '', endDate: '', roomCode: v});
+    // const roomList = this.globalSrv.wxSessionGetObject('roomList');
+    // console.log(roomList);
+    // if (roomList !== 0 ) {
+    //
+    // }
+    console.log(this.houseSelectData);
+    this.houseSelectData.forEach( v => {
+      this.ModefyDeputy.roomList.push({startDate: '', endDate: '', roomCode: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
     });
     if (!listStatus) {
-        this.ModefyDeputy.sex = this.duputyData.sex;
-        this.ModefyDeputy.userName = this.duputyData.name;
-        this.ModefyDeputy.userPhone = this.duputyData.phone;
-        this.ModefyDeputy.userId = this.userId;
+        this.ModefyDeputy.user = this.modefyDeputy;
+        this.ModefyDeputy.userIdentityEntity  = this.userIdentity;
         this.globalSrv.wxSessionSetObject('addData', this.ModefyDeputy);
+        // console.log(this.ModefyDeputy);
         this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'modify'}});
     }
   }

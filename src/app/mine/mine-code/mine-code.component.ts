@@ -41,7 +41,6 @@ export class MineCodeComponent implements OnInit {
     // this.getRouter.
     this.getRouter.queryParams.subscribe(
       value => {
-        console.log(value);
         this.type = value.type;
       }
     );

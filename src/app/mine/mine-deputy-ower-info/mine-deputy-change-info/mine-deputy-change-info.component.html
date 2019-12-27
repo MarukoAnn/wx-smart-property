@@ -1,7 +1,7 @@
 <div class="mine-deputy-change-info">
   <app-header [option]="headerOption"></app-header>
   <!--<div class="jasmine-d"></div>-->
-  <div class="mine-deputy-change-info-content" *ngIf="duputyData.phone !== ''">
+  <div class="mine-deputy-change-info-content" >
     <!--副业主信息-->
     <div class="weui-cell" style="padding: 0;margin-top: 10px;"></div>
     <div class="weui-cell">
@@ -9,7 +9,7 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="duputyData.name" value="" placeholder="请输入姓名"
+        <input id="name" class="weui-input" [(ngModel)]="modefyDeputy.realName" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -18,7 +18,7 @@
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
-          <select class="weui-select"  [(ngModel)]="duputyData.sex" name="sex">
+          <select class="weui-select"  [(ngModel)]="modefyDeputy.sex" name="sex">
             <option value="男">男</option>
             <option value="女">女</option>
           </select>
@@ -29,7 +29,7 @@
         <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="duputyData.phone" value="" placeholder="请输入手机号"
+        <input id="newpsw" class="weui-input" [(ngModel)]="modefyDeputy.mobilePhone" value="" placeholder="请输入手机号"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -54,7 +54,7 @@
             <span style="font-size: 0.875rem">房间号：</span>
          </div>
         <div class="weui-cell__hd">
-          <span style="font-size: 0.875rem">{{item}}</span>
+          <span style="font-size: 0.875rem">{{item.roomCode}}</span>
         </div>
         <div class="weui-cell__hd">
           <button weui-button  [weui-type]="'warn'" style="height: 4vh;font-size: 0.6rem;line-height: 4vh;margin-left: 6vw" (click)="houseDelectClick(item, index)">删除</button>

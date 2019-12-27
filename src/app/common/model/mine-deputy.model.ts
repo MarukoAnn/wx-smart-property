@@ -22,6 +22,7 @@ export class AddBasicDeputy {
   mobilePhone?: any;
   realName?: any;
   sex?: any;
+  userId?: any;
 }
 export class AddUserIdentity {
   date?: any;
@@ -33,4 +34,6 @@ export class RoomCode {
   roomCode?: any;
   startDate ?: any;
   endDate ?: any;
+  organizationName ?: any;
+  organizationId ?: any;
 }
