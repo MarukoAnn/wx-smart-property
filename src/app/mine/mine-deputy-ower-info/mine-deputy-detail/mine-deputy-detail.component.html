@@ -1,5 +1,5 @@
 <div class="mine-deputy-detail">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <div class="mine-deputy-detail-content" *ngIf="deputyDetailData[deputyDetailData.length - 1].value !== ''">
     <div class="weui-cell" style="padding: 0;margin-top: 1px"></div>
     <div class="weui-cell weui-cell_access" *ngFor="let item of deputyDetailData">

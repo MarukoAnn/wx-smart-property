@@ -1,5 +1,5 @@
 <div class="mine-image-cropper">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption"  (headerLeftClick)="backHome()"></app-header>
   <div class="mine-image-cropper-content">
     <image-cropper style="padding: 0"
       [imageBase64]="imageChangedEvent"

@@ -1,5 +1,5 @@
 <div class="chargepay-month">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
    <div class="weui-grids charge-month-grids">
      <a class="weui-grid" (click)="monthSelectClick(item)" *ngFor="let item of monthDta">
        <p class="weui-grid__label">{{item.label}}个月</p>

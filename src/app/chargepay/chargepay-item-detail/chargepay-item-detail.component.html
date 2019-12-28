@@ -1,5 +1,5 @@
 <div class="charge-item-detail">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption"  (headerLeftClick)="backHome()"></app-header>
   <div class="weui-cell weui-cell_access charge-item-detail-list" *ngFor="let item of chargeItemList" (click)="chargepayItemClick(item)">
     <div class="weui-cell__bd"   style="font-size: 1rem">
       <span style="vertical-align: middle">缴费类型：{{item.label}}</span>

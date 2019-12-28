@@ -78,4 +78,7 @@ export class ChargepayRoomInfoComponent implements OnInit {
   public  ownerClick(): void {
     this.route.navigate(['/chargepay/owner']);
   }
+  public  backHome(): void {
+    window.history.back();
+  }
 }

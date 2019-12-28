@@ -67,6 +67,7 @@ export class ChargepayCouponComponent implements OnInit {
     // if (this.code === undefined){
     //
     // } else {
+      window.history.back();
       this.globalSrv.wxSet('couponCode', this.code);
     // }
   }

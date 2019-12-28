@@ -1,5 +1,5 @@
 <div class="mine-personal-info">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <div class="mine-personal-info-content">
     <div class="weui-cells" style="margin-top: 0;font-size: 0.9rem">
       <div class="weui-cell weui-cell_access" *ngFor="let item of persionitem.slice(0,1)">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mine-modify-phone',
@@ -19,11 +20,16 @@ export class MineModifyPhoneComponent implements OnInit {
     }
   };
   public iphone: any;
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit() {
   }
   public  onSendCode(): void {
     console.log(123);
+  }
+  public  backHome(): void {
+    window.history.back();
   }
 }

@@ -51,4 +51,8 @@ export class ChargepayRoomTenantComponent implements OnInit {
     );
   }
   // 下拉刷新
+
+  public  backHome(): void {
+    window.history.back();
+  }
 }

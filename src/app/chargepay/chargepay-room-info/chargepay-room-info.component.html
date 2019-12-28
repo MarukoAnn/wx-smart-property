@@ -1,5 +1,5 @@
 <div class="chargepay-roomInfo">
-  <app-header [option]="headerOption" (headerRightClick)="chargepaylistClick($event)"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()" (headerRightClick)="chargepaylistClick($event)"></app-header>
   <!--<div class="weui-cell weui-cell_access" style="margin-top: 2px"></div>-->
   <div class="chargepay-roomInfo-basic" *ngIf="basicData[basicData.length-1].value !==''">
     <div class="weui-cells" style="margin-top: 2px; font-size: 0.9rem">

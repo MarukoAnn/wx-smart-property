@@ -5,6 +5,7 @@ import {PTRComponent, ToptipsService} from 'ngx-weui';
 import {timer} from 'rxjs';
 import {MineDeputyService} from '../../common/services/mine-deputy.service';
 import {MineTenantService} from '../../common/services/mine-tenant.service';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-mine-tenant-info',
@@ -23,16 +24,24 @@ export class MineTenantInfoComponent implements OnInit {
       icon: ''
     }
   };
+  public deleteTenant = {
+    identity: '',
+    roomCode: '',
+    userId: '',
+    verificationCode: ''
+  };
   public tenantInfo = [];
   public flag = 2;
   constructor(
     private router: Router,
     private mineTenantSrv: MineTenantService,
     private toptipSrv: ToptipsService,
+    private globalSrv: GlobalService
 
   ) { }
 
   ngOnInit() {
+    this.globalSrv.wxSessionRemove('roomList');
     this.mineTenantInfoInit(1);
   }
   public mineTenantInfoInit(page): void {
@@ -64,6 +73,11 @@ export class MineTenantInfoComponent implements OnInit {
   // delete deputyInfo
   public  mineTenantDeleteClick(item): void {
     console.log(item);
+    this.deleteTenant.identity = '3';
+    this.deleteTenant.roomCode = item.data[2].value;
+    this.deleteTenant.userId = item.userId;
+    this.globalSrv.wxSessionSetObject('addData', this.deleteTenant);
+    this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'delete',  value: '3'}});
     // this.mineTenantSrv.deleteMineTenantBindRoomCode({identity: 3, roomCode: item.data[2].value, userId: item.userId}).subscribe(
     //   value => {
     //     console.log(value);
@@ -89,5 +103,9 @@ export class MineTenantInfoComponent implements OnInit {
 
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
+  }
+
+  public  backHome(): void {
+    this.router.navigate(['/tab/mine']);
   }
 }

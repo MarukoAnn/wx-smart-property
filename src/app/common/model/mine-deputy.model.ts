@@ -7,8 +7,8 @@ export class ModeifyMineDeputy {
 }
 export class RoomCodeList {
   roomCode?: any;
-  startDate ?: any;
-  endDate ?: any;
+  startTime ?: any;
+  endTime ?: any;
   organizationName ?: any;
   organizationId ?: any;
 }

@@ -4,6 +4,7 @@ import {PTRComponent} from 'ngx-weui';
 import {timer} from 'rxjs';
 import {MinePersionalInfoService} from '../../common/services/mine-persional-info.service';
 import {MinePayInfoService} from '../../common/services/mine-pay-info.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mine-ower-pay-info',
@@ -25,7 +26,8 @@ export class MineOwerPayInfoComponent implements OnInit {
   public owerPayInfo = [];
   public flag = 2;
   constructor(
-    private minePayInfoSrv: MinePayInfoService
+    private minePayInfoSrv: MinePayInfoService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -53,5 +55,9 @@ export class MineOwerPayInfoComponent implements OnInit {
       this.flag = this.flag + 1;
       console.log(this.flag);
     });
+  }
+
+  public  backHome(): void {
+    window.history.back();
   }
 }

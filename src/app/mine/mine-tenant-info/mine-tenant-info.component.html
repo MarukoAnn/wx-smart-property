@@ -1,5 +1,5 @@
 <div class="mine-tenant-info">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <div class="mine-tenant-info-content">
     <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">
       <div class="weui-flex" *ngFor="let item of tenantInfo">

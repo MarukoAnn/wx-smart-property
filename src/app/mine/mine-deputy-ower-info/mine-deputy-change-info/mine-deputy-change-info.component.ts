@@ -45,7 +45,8 @@ export class MineDeputyChangeInfoComponent implements OnInit {
   ngOnInit() {
     // this.ModefyDeputy.userIdentityEntity.date = '';
     // this.ModefyDeputy.userIdentityEntity.identity = '2';
-    this.userIdentity.date = '';
+    this.userIdentity.date = new Date();
+    this.userIdentity.date = this.datePipe.transform(this.userIdentity.date, 'yyyy-MM-dd HH:MM:SS');
     this.userIdentity.identity = '2';
     this.getRouter.queryParams.subscribe((value) => {
       this.userId = value.value;
@@ -85,7 +86,7 @@ export class MineDeputyChangeInfoComponent implements OnInit {
         console.log(value);
         this.owerRoomCodeList = [];
         value.entity.forEach( (v, index) => {
-          this.owerRoomCodeList.push({text: v.roomCode, value: index + 1, organizationId: v.organizationId, organizationName: v.organizationName, startDate: '', endDate: ''});
+          this.owerRoomCodeList.push({text: v.roomCode, value: index + 1, organizationId: v.organizationId, organizationName: v.organizationName, startTime: '', endTime: ''});
         });
       }
     );
@@ -177,18 +178,21 @@ export class MineDeputyChangeInfoComponent implements OnInit {
     // }
     console.log(this.houseSelectData);
     this.houseSelectData.forEach( v => {
-      this.ModefyDeputy.roomList.push({startDate: '', endDate: '', roomCode: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
+      this.ModefyDeputy.roomList.push({startTime: '', endTime: '', roomCode: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
     });
     if (!listStatus) {
         this.ModefyDeputy.user = this.modefyDeputy;
         this.ModefyDeputy.userIdentityEntity  = this.userIdentity;
         this.globalSrv.wxSessionSetObject('addData', this.ModefyDeputy);
         // console.log(this.ModefyDeputy);
-        this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'modify'}});
+        this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'modify',  value: '2'}});
     }
   }
   // 显示提示信息
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
+  }
+  public  backHome(): void {
+    window.history.back();
   }
 }

@@ -53,4 +53,7 @@ export class ChargepayMonthComponent implements OnInit {
       console.log(e);
       this.router.navigate(['/pay/sure'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode, month: e.label}});
   }
+  public  backHome(): void {
+    window.history.back();
+  }
 }

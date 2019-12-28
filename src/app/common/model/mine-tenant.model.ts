@@ -1,8 +1,7 @@
 export class AddMineTenant {
-  roomCodes?: RoomData[] = [];
+  mobilePhone?: any;
+  realName?: any;
   sex?: any;
-  userName?: any;
-  userPhone?: any;
   verificationCode?: any;
 }
 export class RoomData {

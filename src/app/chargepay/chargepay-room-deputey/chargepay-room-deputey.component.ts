@@ -48,5 +48,7 @@ export class ChargepayRoomDeputeyComponent implements OnInit {
       }
     );
   }
-
+  public  backHome(): void {
+    window.history.back();
+  }
 }

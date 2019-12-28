@@ -150,5 +150,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.globalSrv.wxSessionRemove('couponCode');
   }
-
+  public  backHome(): void {
+    window.history.back();
+  }
 }

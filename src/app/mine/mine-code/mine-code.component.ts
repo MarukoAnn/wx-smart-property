@@ -26,6 +26,7 @@ export class MineCodeComponent implements OnInit {
   public verificationCode: any;
   public showData = '获取验证码';
   public type: any;
+  public value: any;
   constructor(
     private mineSrv: MineService,
     private toptipSrv: ToptipsService,
@@ -42,6 +43,7 @@ export class MineCodeComponent implements OnInit {
     this.getRouter.queryParams.subscribe(
       value => {
         this.type = value.type;
+        this.value = value.value;
       }
     );
   }
@@ -104,7 +106,11 @@ export class MineCodeComponent implements OnInit {
       if (value.code === '1000') {
         this.toastService.hide();
         this.setToast('success');
-        this.router.navigate(['/mine/deputyinfo']);
+        if (this.value === '2') {
+          this.router.navigate(['/mine/deputyinfo']);
+        } else {
+          this.router.navigate(['/mine/tenantinfo']);
+        }
       } else {
         this.onShow('warn', value.msg);
       }
@@ -118,7 +124,11 @@ export class MineCodeComponent implements OnInit {
           this.toastService.hide();
           this.setToast('success');
           this.onShow('success', '修改成功');
-          this.router.navigate(['/mine/deputyinfo']);
+          if (this.value === '2') {
+            this.router.navigate(['/mine/deputyinfo']);
+          } else {
+            this.router.navigate(['/mine/tenantinfo']);
+          }
         } else {
           this.onShow('warn', value.msg);
         }
@@ -133,11 +143,19 @@ export class MineCodeComponent implements OnInit {
           this.toastService.hide();
           this.setToast('success');
           this.onShow('success', '删除成功');
-          this.router.navigate(['/mine/deputyinfo']);
+          if (this.value === '2') {
+            this.router.navigate(['/mine/deputyinfo']);
+          } else {
+            this.router.navigate(['/mine/tenantinfo']);
+          }
         } else {
           this.onShow('warn', value.msg);
         }
       }
     );
+  }
+
+  public  backHome(): void {
+    window.history.back();
   }
 }

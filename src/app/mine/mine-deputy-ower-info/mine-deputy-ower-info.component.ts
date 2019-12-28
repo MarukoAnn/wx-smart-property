@@ -77,7 +77,7 @@ export class MineDeputyOwerInfoComponent implements OnInit {
     this.deleteDeputy.roomCode = item.data[2].value;
     this.deleteDeputy.userId = item.userId;
     this.globalSrv.wxSessionSetObject('addData', this.deleteDeputy);
-    this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'delete', value: '2'}});
+    this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'delete',  value: '2'}});
   }
   // modify deputyInfo
   public  mineDeputyModifyClick(e): void {
@@ -94,5 +94,8 @@ export class MineDeputyOwerInfoComponent implements OnInit {
 
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
+  }
+  public  backHome(): void {
+    this.router.navigate(['/tab/mine']);
   }
 }

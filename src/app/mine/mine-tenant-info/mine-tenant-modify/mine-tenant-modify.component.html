@@ -1,5 +1,5 @@
 <div class="mine-tenant-modify">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <!--<div class="jasmine-d"></div>-->
   <div class="mine-tenant-modify-content">
     <!--副业主信息-->
@@ -9,19 +9,8 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="modifyTenant.userName" value="" placeholder="请输入姓名"
+        <input id="name" class="weui-input" [(ngModel)]="modefyTenant.realName" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
-      </div>
-    </div>
-    <div class="weui-cell">
-      <div class="weui-cell__hd">
-        <label  class="weui-label" style="color: #000">性别</label>
-      </div>
-      <div class="weui-cell__bd">
-        <select class="weui-select"  [(ngModel)]="modifyTenant.sex" name="sex">
-          <option value="男">男</option>
-          <option value="女">女</option>
-        </select>
       </div>
     </div>
     <div class="weui-cell">
@@ -29,10 +18,25 @@
         <label for="newpsw" class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="newpsw" class="weui-input" [(ngModel)]="modifyTenant.userPhone" value="" placeholder="请输入手机号"
+        <input id="newpsw" class="weui-input" [(ngModel)]="modefyTenant.mobilePhone" value="" placeholder="请输入手机号"  (blur)="inputNumberFocus()"
                weui-input="newpsw" weui-required>
       </div>
+      <div class="weui-cell__ft" [hidden]="!hiddenWarn">
+        <i class="weui-icon-warn"></i>
+      </div>
     </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label  class="weui-label" style="color: #000">性别</label>
+      </div>
+      <div class="weui-cell__bd">
+        <select class="weui-select"  [(ngModel)]="modefyTenant.sex" name="sex">
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+    </div>
+
     <!--<div class="weui-cell" style="padding: 0"></div>-->
     <!--添加房屋按钮-->
     <div class="weui-cell">
@@ -51,17 +55,17 @@
     <!--<div class="weui-cells">-->
 
 
-    <div  style="margin-left: 3vw" *ngFor="let item of modifyTenant.roomCodes;let i = index">
+    <div  style="margin-left: 3vw" *ngFor="let item of houseSelectData;let i = index">
       <div class="weui-cell">
         <div class="weui-cell__hd"> <span>房间号：</span></div>
         <div class="weui-cell__bd"> <span>{{item.roomCode}}</span></div>
-        <button weui-button  [weui-type]="'warn'" style="height: 4vh;width: 20vw;font-size: 0.6rem;line-height: 4vh" (click)="houseDelectClick(i)">删除</button>
+        <button weui-button  [weui-type]="'warn'" style="height: 4vh;width: 20vw;font-size: 0.6rem;line-height: 4vh" (click)="houseDelectClick(item, index)">删除</button>
       </div>
       <div>
         <div class="weui-cell">
           <div class="weui-cell__hd"><label  class="weui-label" style="width: 40vw">租赁开始日期：</label></div>
           <div class="weui-cell__bd">
-            <weui-date-picker [placeholder]="modifyTenant.roomCodes[i].startDate" name="date" [(ngModel)]="modifyTenant.roomCodes[i].startDate"></weui-date-picker>
+            <weui-date-picker [placeholder]="houseSelectData[i].startTime" name="date" [(ngModel)]="houseSelectData[i].startTime"></weui-date-picker>
           </div>
         </div>
       </div>
@@ -69,7 +73,7 @@
         <div class="weui-cell">
           <div class="weui-cell__hd"><label  class="weui-label" style="width: 40vw">租赁截止日期：</label></div>
           <div class="weui-cell__bd">
-            <weui-date-picker [placeholder]="modifyTenant.roomCodes[i].endDate" name="date" [(ngModel)]="modifyTenant.roomCodes[i].endDate"></weui-date-picker>
+            <weui-date-picker [placeholder]="houseSelectData[i].endTime" name="date" [(ngModel)]="houseSelectData[i].endTime"></weui-date-picker>
           </div>
         </div>
       </div>
@@ -78,7 +82,7 @@
   </div>
   <div class="min-deputy-add-footer">
     <div class="weui-cell">
-      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantModifySureClick()">提交</button>
+      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantModifySureClick()">下一步</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>

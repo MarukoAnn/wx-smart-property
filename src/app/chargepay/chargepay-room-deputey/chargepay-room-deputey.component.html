@@ -1,4 +1,4 @@
-<div class="chargepay-room-tenant">
-  <app-header [option]="headerOption"></app-header>
+ <div class="chargepay-room-tenant">
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <app-list [data]="deputerListData" *ngIf="deputerListData.data !== []"></app-list>
 </div>

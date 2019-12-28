@@ -1,5 +1,5 @@
 <div class="pay-way">
-  <app-header [option]="headerOption" ></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
 <div class="pay-way-content" *ngIf="payDetailDta[payDetailDta.length-1].value !== ''">
   <div class="weui-cell weui-cell_access pay-way-text" *ngFor="let item of payDetailDta" (click)="paySelectCouponClick(item.label)">
     <div class="weui-cell__bd" >

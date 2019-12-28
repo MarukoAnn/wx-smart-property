@@ -1,5 +1,5 @@
 <div class="pay-detail">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
  <div class="pay-detail-content" *ngIf="basicData[basicData.length-1].value !== ''">
    <div class="weui-cells" style="margin-top: 2px; font-size: 0.9rem">
      <div class="weui-cell weui-cell_access" *ngFor="let item of basicData">

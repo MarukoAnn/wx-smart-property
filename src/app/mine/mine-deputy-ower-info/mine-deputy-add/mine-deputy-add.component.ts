@@ -47,7 +47,7 @@ export class MineDeputyAddComponent implements OnInit {
   ngOnInit() {
     // this.date = $filter('date')(new Date(),'MM/dd/yyyy');
     this.addUserIdentity.date = new Date();
-    this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyyMMdd');
+    this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyy-MM-dd HH:MM:SS');
     this.addUserIdentity.identity = 2;
     this.duputyData.sex = '男';
 
@@ -113,14 +113,14 @@ export class MineDeputyAddComponent implements OnInit {
               roomCode: v.text,
               organizationId: v.organizationId,
               organizationName: v.organizationName,
-              startDate: '',
-              endDate: '',
+              startTime: '',
+              endTime: '',
             });
           });
           this.addDeputy.user = this.duputyData;
           this.addDeputy.userIdentityEntity = this.addUserIdentity;
           this.globalSrv.wxSessionSetObject('addData', this.addDeputy);
-          this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'add'}});
+          this.router.navigate(['/mine/mineCode'], {queryParams: { type: 'add', value: '2'}});
         } else  {
           this.onShow('warn', '请选择房屋');
         }
@@ -140,5 +140,8 @@ export class MineDeputyAddComponent implements OnInit {
     } else {
       this.hiddenWarn = true;
     }
+  }
+  public  backHome(): void {
+    window.history.back();
   }
 }

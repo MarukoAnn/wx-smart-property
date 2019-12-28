@@ -175,6 +175,10 @@ export class MinePersonalInfoComponent implements OnInit {
     }
     window.alert('微信JS-SDK认证失败,请重试');
   }
+
+  public  backHome(): void {
+    this.router.navigate(['tab/mine']);
+  }
 }
 
 

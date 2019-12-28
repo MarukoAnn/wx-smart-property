@@ -60,4 +60,8 @@ export class ChargepayItemDetailComponent implements OnInit {
         this.router.navigate(['/pay/sure'], {queryParams: {chargeCode: e.chargeCode}});
       }
   }
+
+  public  backHome(): void {
+    window.history.back();
+  }
 }

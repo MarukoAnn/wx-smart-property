@@ -1,5 +1,5 @@
 <div class="mine-ower-pay-info">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <div class="mine-ower-pay-info-content">
     <weui-ptr (refresh)="onRefresh($event)"  style="height: 90vh; background: #ECECEC;margin-top: 2px">
     <div class="weui-cells" style="margin-top: 0;font-size: 0.9rem">

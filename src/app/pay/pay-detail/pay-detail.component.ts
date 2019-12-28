@@ -84,4 +84,7 @@ export class PayDetailComponent implements OnInit {
       console.log(e.userId);
       this.router.navigate(['/chargepay/userinfo'], {queryParams: {userId: e.userId}});
   }
+  public  backHome(): void {
+    window.history.back();
+  }
 }

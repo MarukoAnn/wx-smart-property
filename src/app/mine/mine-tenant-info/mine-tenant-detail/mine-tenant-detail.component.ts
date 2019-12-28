@@ -54,4 +54,7 @@ export class MineTenantDetailComponent implements OnInit {
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
   }
+  public  backHome(): void {
+    window.history.back();
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ToptipsService} from 'ngx-weui';
 import set = Reflect.set;
 
@@ -24,7 +24,8 @@ export class MinePersionChangePhoneComponent implements OnInit {
   public iphone: any;
   constructor(
     private getRouter: ActivatedRoute,
-    private toptipSrv: ToptipsService
+    private toptipSrv: ToptipsService,
+    private router: Router,
 
     // private router: Router,
   ) { }
@@ -44,5 +45,8 @@ export class MinePersionChangePhoneComponent implements OnInit {
   // toast
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
+  }
+  public  backHome(): void {
+    window.history.back();
   }
 }

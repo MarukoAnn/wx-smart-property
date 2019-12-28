@@ -36,7 +36,7 @@ export class MineImageCropperComponent implements OnInit{
     private globalSrv: GlobalService,
     private mineImgSrv: MineImageCropperService,
     private toptipSrv: ToptipsService,
-    // private router: Router
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -95,5 +95,7 @@ export class MineImageCropperComponent implements OnInit{
   //   theBlob.name = fileName;
   //   return theBlob;
   // }
-
+  public  backHome(): void {
+    window.history.back();
+  }
 }

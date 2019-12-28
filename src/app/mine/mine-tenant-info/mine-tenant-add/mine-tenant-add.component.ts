@@ -30,8 +30,9 @@ export class MineTenantAddComponent implements OnInit {
   public owerRoomCodeList: any[] = [];
   public houseSelectData: any[] = [];
   public date: any;
-  public addTenant: AddMineTenant = new AddMineTenant();
-  public loadHidden = true;
+  public addTenant: AddBasicDeputy = new AddBasicDeputy();
+  public AddTenantDeputy: AddMineDeputy = new AddMineDeputy();
+  public addUserIdentity: AddUserIdentity = new AddUserIdentity();
   public hiddenWarn: boolean;
   public verifyPhone: RegExp = /^1[37458]\d{9}$/;
   constructor(
@@ -48,18 +49,22 @@ export class MineTenantAddComponent implements OnInit {
     //   console.log(value);
     //   this.tenantData.name = value.value;
     // });
+    this.addUserIdentity.date = new Date();
+    this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyy-MM-dd HH:MM:SS');
+    this.addUserIdentity.identity = '3';
+    this.addTenant.sex = '男';
     this.mineDeputyInfoInit();
   }
   public mineDeputyInfoInit(): void {
     this.mineTenantSrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
+        console.log(value);
         value.entity.forEach( (v) => {
-          this.owerRoomCodeList.push(  {text: v});
+          this.owerRoomCodeList.push({text: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
         });
       }
     );
-    this.addTenant = new AddMineTenant();
-    this.addTenant.sex = '男';
+
   }
   public  houseSelectClick() {
     this.config = Object.assign({}, <DialogConfig>{
@@ -80,9 +85,9 @@ export class MineTenantAddComponent implements OnInit {
           this.onShow('warn', '请选择房屋');
         } else {
           if (res.text === '确认') {
-            this.addTenant.roomCodes.push({roomCode: res.result.text, startDate: '', endDate: ''});
+            console.log(res.result);
+            this.AddTenantDeputy.roomList.push({roomCode: res.result.text, startTime: '', endTime: '', organizationId: res.result.organizationId, organizationName: res.result.organizationName});
             this.houseSelectData.push(res.result);
-
           }
         }
       });
@@ -95,33 +100,33 @@ export class MineTenantAddComponent implements OnInit {
     const  listStatus = List.some(v => {
       return this.addTenant[v] === undefined || this.addTenant[v] === null;
     });
+    console.log(listStatus);
     if (!listStatus) {
-      if (this.addTenant.roomCodes.length > 0) {
+      if (this.AddTenantDeputy.roomList.length > 0) {
+        // console.log(this.AddTenantDeputy.roomList.some( val => {
+        //   return this.AddTenantDeputy.roomList[val] === undefined || this.AddTenantDeputy.roomList[val] === null;
+        // }));
         if (
-          this.addTenant.roomCodes.some( val => {
-            return val.startDate === undefined || val.endDate === undefined;
+          this.AddTenantDeputy.roomList.some( val => {
+            return val.startTime === '' || val.endTime === '';
           })
         ) {
           this.onShow('warn', '请选择房子的租赁日期或者结束日期');
         } else {
-          this.addTenant.roomCodes.forEach( v => {
-            v.endDate = this.datePipe.transform(v.endDate, 'yyyy-MM-dd');
-            v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd');
+          this.AddTenantDeputy.roomList.forEach( v => {
+            v.endTime = this.datePipe.transform(v.endTime, 'yyyy-MM-dd');
+            v.startTime = this.datePipe.transform(v.startTime, 'yyyy-MM-dd');
           });
+          this.AddTenantDeputy.user = this.addTenant;
+          this.AddTenantDeputy.userIdentityEntity = this.addUserIdentity;
+          this.globalSrv.wxSessionSetObject('addData', this.AddTenantDeputy);
+          this.router.navigate(['/mine/mineCode'], {queryParams: {type: 'add'}});
         }
       } else {
-        this.globalSrv.wxSessionSetObject('addData', this.addTenant);
-        this.router.navigate(['/mine/code'], {queryParams: {type: 'add', value: '3'}});
+        this.globalSrv.wxSessionSetObject('addData', this.AddTenantDeputy);
+        this.router.navigate(['/mine/mineCode'], {queryParams: {type: 'add'}});
       }
     }
-
-    // this.mineTenantSrv.addMineTennatInfo(this.addTenant).subscribe(
-    //   value => {
-    //     // console.log(value);
-    //     this.loadHidden = true;
-    //     this.onShow('success', '新增成功');
-    //   }
-    // );
   }
   // toast
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
@@ -130,12 +135,15 @@ export class MineTenantAddComponent implements OnInit {
   // 手机号验证
   public  inputNumberFocus(): void {
 
-    if (this.verifyPhone.test(this.addTenant.userPhone)) {
+    if (this.verifyPhone.test(this.addTenant.mobilePhone)) {
       this.hiddenWarn = false;
       console.log(123);
     } else {
       this.hiddenWarn = true;
       console.log(456);
     }
+  }
+  public  backHome(): void {
+    window.history.back();
   }
 }

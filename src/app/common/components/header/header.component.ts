@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   constructor() { }
   ngOnInit() {}
   public leftClick (): void {
-    window.history.back();
+    // window.history.back();
     this.headerLeftClick.emit({});
   }
   public centerClick (): void {

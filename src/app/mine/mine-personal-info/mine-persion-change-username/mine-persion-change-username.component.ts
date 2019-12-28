@@ -30,7 +30,7 @@ export class MinePersionChangeUsernameComponent implements OnInit {
     private getRouter: ActivatedRoute,
     private minePerSrv: MinePersionalInfoService,
     private toptipSrv: ToptipsService,
-    // private router: Router,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -51,5 +51,8 @@ export class MinePersionChangeUsernameComponent implements OnInit {
   }
   onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
     this.toptipSrv[type](text);
+  }
+  public  backHome(): void {
+    window.history.back();
   }
 }

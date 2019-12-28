@@ -47,5 +47,7 @@ export class ChargepayOwnerInfoComponent implements OnInit {
       }
     );
   }
-
+  public  backHome(): void {
+    window.history.back();
+  }
 }

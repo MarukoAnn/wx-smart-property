@@ -1,5 +1,5 @@
 <div class="mine-tenant-add">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
   <div class="mine-tenant-add-content">
     <!--副业主信息-->
     <div class="weui-cell" style="padding: 0;margin-top: 2px;"></div>
@@ -8,7 +8,7 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="addTenant.userName" value="" placeholder="请输入姓名"
+        <input id="name" class="weui-input" [(ngModel)]="addTenant.realName" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <label  class="weui-label" style="color: #000">手机号</label>
       </div>
       <div class="weui-cell__bd">
-        <input  class="weui-input" [(ngModel)]="addTenant.userPhone" [maxLength]="11" value="" placeholder="请输入手机号" (blur)="inputNumberFocus()" >
+        <input  class="weui-input" [(ngModel)]="addTenant.mobilePhone" [maxLength]="11" value="" placeholder="请输入手机号" (blur)="inputNumberFocus()" >
       </div>
       <div class="weui-cell__ft" [hidden]="!hiddenWarn">
         <i class="weui-icon-warn"></i>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <!--// 选择的房间-->
-    <div  style="margin-left: 3vw" *ngFor="let item of addTenant.roomCodes;let i = index">
+    <div  style="margin-left: 3vw" *ngFor="let item of this.AddTenantDeputy.roomList;let i = index">
       <div class="weui-cell">
         <div class="weui-cell__hd"> <span>房间号：</span></div>
         <div class="weui-cell__bd"> <span>{{item.roomCode}}</span></div>
@@ -50,7 +50,7 @@
         <div class="weui-cell">
           <div class="weui-cell__hd"><label  class="weui-label" style="width: 30vw">租赁开始日期</label></div>
           <div class="weui-cell__bd">
-            <weui-date-picker placeholder="请选租赁开始日期" name="date" [(ngModel)]="addTenant.roomCodes[i].startDate"></weui-date-picker>
+            <weui-date-picker placeholder="请选租赁开始日期" name="date" [(ngModel)]="AddTenantDeputy.roomList[i].startTime"></weui-date-picker>
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@
         <div class="weui-cell">
           <div class="weui-cell__hd"><label  class="weui-label" style="width: 30vw">租赁截止日期</label></div>
           <div class="weui-cell__bd">
-            <weui-date-picker placeholder="请选租赁截止日期"  name="date" [(ngModel)]="addTenant.roomCodes[i].endDate"></weui-date-picker>
+            <weui-date-picker placeholder="请选租赁截止日期"  name="date" [(ngModel)]="AddTenantDeputy.roomList[i].endTime"></weui-date-picker>
           </div>
         </div>
       </div>
