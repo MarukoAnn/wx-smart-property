@@ -33,6 +33,7 @@ export class ChargepayRoomInfoComponent implements OnInit {
     // {label: '二次加压下次缴费时间', value: '2019-06-17'},
   ];
   public roomCode: any;
+  public organizationId: any;
   constructor(
     private route: Router,
     private getRouter: ActivatedRoute,
@@ -42,11 +43,12 @@ export class ChargepayRoomInfoComponent implements OnInit {
 
   ngOnInit() {
     this.roomCode = this.globalSrv.wxGet('roomCode');
-    this.initializationRoomInfo(this.roomCode);
+    this.organizationId = this.globalSrv.wxGet('organizationId');
+    this.initializationRoomInfo(this.roomCode, this.organizationId);
   }
 
-  public  initializationRoomInfo(Code): void {
-      this.roomSrv.queryRoomInfo({roomCode: Code}).subscribe(
+  public  initializationRoomInfo(Code, id): void {
+      this.roomSrv.queryRoomInfo({roomCode: Code, organizationId: id}).subscribe(
         (value) => {
           this.basicData[0].value = value.entity.houseInfo.roomCode;
           this.basicData[1].value = value.entity.houseInfo.districtName + value.entity.houseInfo.villageName;

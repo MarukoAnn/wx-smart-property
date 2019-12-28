@@ -89,6 +89,7 @@ export class TabHomeComponent implements OnInit {
   public  tabPaymentClick(e): void {
     console.log(e);
     this.globalSrv.wxSet('roomCode', e.Content[2].value);
+    this.globalSrv.wxSet('organizationId', e.organizationId);
     this.router.navigate(['/chargepay/itemdetail']);
 
   }
@@ -98,6 +99,7 @@ export class TabHomeComponent implements OnInit {
     console.log(e);
       // console.log(e.Content[2].value);
     this.globalSrv.wxSet('roomCode', e.Content[2].value);
+    this.globalSrv.wxSet('organizationId', e.organizationId);
     this.router.navigate(['/chargepay/roominfo']);
   }
 

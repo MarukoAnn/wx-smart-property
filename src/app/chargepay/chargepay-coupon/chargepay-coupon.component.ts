@@ -30,6 +30,10 @@ export class ChargepayCouponComponent implements OnInit {
   ) { }
   public couponList = [];
   ngOnInit() {
+    this.code = this.globalSrv.wxGet('couponCode');
+    if (this.code === '1') {
+      this.color = '#08EA5F';
+    }
     this.getRouter.queryParams.subscribe(
       (val) => {
          this.chargeCouponSrv.getChargeCoupon({roomCode: val.roomCode, chargeCode: val.chargeCode}).subscribe(
@@ -52,7 +56,8 @@ export class ChargepayCouponComponent implements OnInit {
     } else {
        this.color = '#08EA5F';
     }
-    this.globalSrv.wxSet('couponCode', '1');
+    this.code = 1;
+    // this.globalSrv.wxSet('couponCode', '1');
   }
   public UserCouponClick (index): void {
     console.log(index);

@@ -22,6 +22,7 @@ export class ChargepayItemDetailComponent implements OnInit {
     }
   };
   public roomcode: any;
+  public organizationId: any;
   public chargeItemList = [];
   constructor(
     private router: Router,
@@ -38,8 +39,9 @@ export class ChargepayItemDetailComponent implements OnInit {
     //   }
     // );
     this.roomcode =  this.globalSrv.wxGet('roomCode');
+    this.organizationId =  this.globalSrv.wxGet('organizationId');
     if (this.roomcode) {
-      this.chargeItemSrv.getChargeItem({roomCode: this.roomcode}).subscribe(
+      this.chargeItemSrv.getChargeItem({roomCode: this.roomcode, organizationId: this.organizationId}).subscribe(
         (val) => {
           console.log(val);
           val.entity.forEach( v => {

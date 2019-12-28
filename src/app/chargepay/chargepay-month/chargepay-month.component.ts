@@ -23,6 +23,7 @@ export class ChargepayMonthComponent implements OnInit {
   };
   public monthDta = [];
   public roomCode: any;
+  public organizationId: any;
   public chargeCode: any;
   constructor(
     private getrouter: ActivatedRoute,
@@ -35,9 +36,10 @@ export class ChargepayMonthComponent implements OnInit {
     // this.router.snapshot.queryParams["item"];
     this.getrouter.queryParams.subscribe((value) => {
         this.roomCode = this.globalSrv.wxGet('roomCode');
+        this.organizationId = this.globalSrv.wxGet('organizationId');
         this.chargeCode = value.chargeCode;
         if (value) {
-          this.chargeMonthSrv.getMonthPayment({roomCode: this.roomCode, chargeCode: value.chargeCode}).subscribe(
+          this.chargeMonthSrv.getMonthPayment({roomCode: this.roomCode, chargeCode: value.chargeCode, organizationId: this.organizationId}).subscribe(
             (val) => {
               console.log(val);
               val.entity.forEach(v => {

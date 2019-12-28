@@ -65,10 +65,10 @@ export class PayWayComponent implements OnInit, OnDestroy {
               this.payMoneyData.couponId = -1;
             this.payDetailDta[0].value = value.entity.roomCode;
             this.payDetailDta[1].value = value.entity.datedif;
-            if (value.entity.couponMoney === 'null') {
-              this.payDetailDta[2].value = '选择优惠卷';
-            }else if(value.entity.couponMoney === '1'){
-              this.payDetailDta[2].value = '不使用优惠券';
+            if ( this.couponCode === '1') {
+              this.payDetailDta[2].value = '不使用优惠卷';
+            } else if (value.entity.couponMoney === 'null') {
+                this.payDetailDta[2].value = '请选择优惠卷';
             }
             this.payDetailDta[3].value = value.entity.money;
             this.payDetailDta[4].value = value.entity.returnMoney;
@@ -116,7 +116,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
   }
   // weixin pay
   public onBridgeReady(obj) {
-    console.log(obj);
+    this.globalSrv.wxSessionRemove('couponCode');
     const that = this;
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', obj,
@@ -148,9 +148,10 @@ export class PayWayComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    this.globalSrv.wxSessionRemove('couponCode');
+    // this.globalSrv.wxSessionRemove('couponCode');
   }
   public  backHome(): void {
+    this.globalSrv.wxSessionRemove('couponCode');
     window.history.back();
   }
 }

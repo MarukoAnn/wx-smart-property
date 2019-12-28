@@ -33,6 +33,7 @@ export class PayDetailComponent implements OnInit {
   ];
   public paydetail = [];
   public roomCode: any;
+  public organizationId: any;
   public flag = 2;
   constructor(
     private router: Router,
@@ -44,11 +45,12 @@ export class PayDetailComponent implements OnInit {
 
   ngOnInit() {
     this.roomCode = this.globalSrv.wxGet('roomCode');
-    this.initializationRoomInfo(this.roomCode);
+    this.organizationId = this.globalSrv.wxGet('organizationId');
+    this.initializationRoomInfo(this.roomCode, this.organizationId);
   }
-  public  initializationRoomInfo(Code): void {
+  public  initializationRoomInfo(Code, organizationId): void {
     this.getRoomChargeInfo(1, this.roomCode);
-    this.roomSrv.queryRoomInfo({roomCode: Code}).subscribe(
+    this.roomSrv.queryRoomInfo({roomCode: Code, organizationId: organizationId}).subscribe(
       (value) => {
         // this.basicData[0].valu
         console.log(value);
@@ -58,7 +60,6 @@ export class PayDetailComponent implements OnInit {
         this.basicData[3].value = value.entity.houseInfo.buildingName;
         this.basicData[4].value = value.entity.houseInfo.unitName;
         this.basicData[5].value = value.entity.houseInfo.roomSize;
-        this.basicData[6].value = value.entity.houseInfo.roomSize;
       }
     );
   }
