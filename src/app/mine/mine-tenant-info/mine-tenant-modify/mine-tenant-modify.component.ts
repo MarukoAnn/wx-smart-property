@@ -57,6 +57,7 @@ export class MineTenantModifyComponent implements OnInit {
     this.userIdentity.identity = '3';
     this.getRouter.queryParams.subscribe((value) => {
       this.userId = value.value;
+      this.modefyTenant.userId = value.value;
       if (this.globalSrv.wxSessionGetObject('roomList') === 0) {
         this.getRoomList(value.value);
       } else {
