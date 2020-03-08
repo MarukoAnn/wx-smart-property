@@ -1,59 +1,17 @@
 <div class="tab-home">
   <!--<app-header [option]="headerOption"></app-header>-->
-  <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">
+<!--  <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">-->
     <div class="weui-flex" *ngFor="let item of HouseItem">
-      <div class="weui-flex__item">
+      <div class="weui-flex__item" (click)="typeClick(item)">
         <div class="placeholder">
           <div class="tab-home-item">
             <img [src]="item.imgUrl" alt="">
-            <div class="tab-home-item-text">
-              <div class="weui-flex"  style="margin-top: 1.5vh" *ngFor=" let i of item.Content">
-                <div >
-                  <div class="placeholder">
-                    <span>{{i.label}}:</span>
-                  </div>
-                </div>
-                <div >
-                  <div class="placeholder">
-                    <span style="color: #fff">123</span>
-                  </div>
-                </div>
-                <div class="weui-flex__item" >
-                  <div class="placeholder" *ngIf="i.value === '已欠费'|| i.value === '欠费'">
-                    <span [ngStyle]="{'color': 'red'}">{{i.value}}</span>
-                  </div>
-                  <div class="placeholder" *ngIf="i.value !== '已欠费'|| i.value !== '欠费'">
-                    <span [ngStyle]="{'color': '#000'}">{{i.value}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tab-home-item-btn">
-              <div class="weui-flex">
-                <div>
-                  <div class="placeholder"></div>
-                </div>
-                <div class="weui-flex__item">
-                  <div class="placeholder">
-                    <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#A450DA,#F00639);" (click)="tabPaymentClick(item)">缴费</button>
-                  </div>
-                </div>
-                <div>
-                  <div class="placeholder"><span style="color: #FFFFFF">QWE</span></div>
-                </div>
-                <div class="weui-flex__item">
-                  <div class="placeholder">
-                    <button weui-button  style="margin-bottom: 2vh;background: linear-gradient(135deg,#86E4FD,#9D57F6);" (click)="tabRoomDetailClick(item)"> 详情</button>
-                  </div>
-                </div>
-                <div>
-                  <div class="placeholder"><span style="color: #FFFFFF">Q</span></div>
-                </div>
-              </div>
-            </div>
+            <span class="tab-home-title">
+              {{item.title}} <span style="font-size: 1.2rem;">入口</span>
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </weui-ptr>
+<!--  </weui-ptr>-->
 </div>

@@ -23,7 +23,10 @@ export class ChargepayItemDetailComponent implements OnInit {
   };
   public roomcode: any;
   public organizationId: any;
-  public chargeItemList = [];
+  public chargeItemList = [
+    {label: '月卡车位服务费', chargeCode: 'CWZLF' , note: '正常', color: 'red', status: 2, monthlyArrears: '', dueTime: '', amountOfArrears: ''},
+    // {label: '物业费', chargeCode: 12323, note: '正常', color: 'green', status: 1, monthlyArrears: '', dueTime: '', amountOfArrears: ''},
+  ];
   constructor(
     private router: Router,
     private chargeItemSrv: ChargeItemService,
@@ -43,22 +46,22 @@ export class ChargepayItemDetailComponent implements OnInit {
     if (this.roomcode) {
       this.chargeItemSrv.getChargeItem({roomCode: this.roomcode, organizationId: this.organizationId}).subscribe(
         (val) => {
-          console.log(val);
           val.entity.forEach( v => {
-            this.chargeItemList.push({label: v.chargeName, chargeCode: v.chargeCode, note: v.stateOfArrears, color: v.color, status: v.status});
+            this.chargeItemList.unshift(
+               {label: v.chargeName, chargeCode: v.chargeCode, note: v.stateOfArrears, color: v.color, status: v.status, amountOfArrears: v.amountOfArrears, dueTime: v.dueTime, monthlyArrears: v.monthlyArrears}
+              );
           });
         }
       );
-
     }
   }
 
   public  chargepayItemClick(e): void {
-      // console.log(e.status);
       if (e.status === 'true') {
-        console.log(e.status);
         this.router.navigate(['/chargepay/month'], {queryParams: {chargeCode: e.chargeCode}});
-      } else {
+      } else if (e.status === 2){
+        this.router.navigate(['/chargepay/editPark'], {queryParams: {status: e.status}});
+      }else {
         this.router.navigate(['/pay/sure'], {queryParams: {chargeCode: e.chargeCode}});
       }
   }

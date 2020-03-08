@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   env: '开发环境中.........................',
-  dev_test_url: 'http://192.168.28.207',
-  // dev_test_url: 'http://wy.gyrbi.com/cloud_house_wx-0.0.1-SNAPSHOT',
+  // dev_test_url: 'http://192.168.28.207',
+  dev_test_url: 'http://wy.gyrbi.com/cloud_house_wx-0.0.1-SNAPSHOT',
   dev_test_appkey: '1AB51BF5DF1B6705F861C6FD84A73EAB',
   // dev_test_url: 'www.e2jtv.com',
 };

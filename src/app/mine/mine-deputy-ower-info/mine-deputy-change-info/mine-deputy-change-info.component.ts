@@ -64,7 +64,6 @@ export class MineDeputyChangeInfoComponent implements OnInit {
   public  getRoomList(id): void {
     this.mineDeputySrv.queryMineDeputyBindRoomCode({userId: id, identity: 2}).subscribe(
       val => {
-        console.log(val);
         this.houseSelectData = [];
         val.entity.forEach(v => {
           this.houseSelectData.push({roomCode: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
@@ -78,12 +77,12 @@ export class MineDeputyChangeInfoComponent implements OnInit {
       value => {
         this.modefyDeputy.realName = value.entity.userName;
         this.modefyDeputy.sex = value.entity.sex;
+        this.modefyDeputy.idNumber = value.entity.idNumber;
         this.modefyDeputy.mobilePhone = value.entity.userPhone;
       }
     );
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
-        console.log(value);
         this.owerRoomCodeList = [];
         value.entity.forEach( (v, index) => {
           this.owerRoomCodeList.push({text: v.roomCode, value: index + 1, organizationId: v.organizationId, organizationName: v.organizationName, startTime: '', endTime: ''});
@@ -141,7 +140,7 @@ export class MineDeputyChangeInfoComponent implements OnInit {
         });
       }, 10);
     } else {
-      this.onShow('warn', '没有搜索到房屋');
+      this.onShow('warn', '没有搜索到房屋，请联系管理员');
     }
     return false;
   }
@@ -167,7 +166,7 @@ export class MineDeputyChangeInfoComponent implements OnInit {
   }
   // modify submit
   public  mineDeputyModifySureClick(): void {
-    const List = ['mobilePhone', 'realName', 'sex'];
+    const List = ['mobilePhone', 'realName', 'sex', 'idNumber'];
     const  listStatus = List.some(v => {
       return this.modefyDeputy[v] === undefined || this.modefyDeputy[v] === null;
     });

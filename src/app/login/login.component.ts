@@ -24,25 +24,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-    // this.url = 'http://wy.gyrbi.com/wx/index.html?code=001bgswl0Cpunp1LGLxl0J0qwl0bgswL&state=';
-    // this.globalSrv.wxSessionGetObject('ios_url')
-    // this.wxCode = '061FFeRV0fgv922oVgSV0e6YQV0FFeR8';
-    // this.getOpenid();
     this.url = this.globalSrv.wxSessionGetObject('ios_url');
     this.getrouter.queryParams.subscribe(
       (value) => {
-        // console.log(value.code);
-        if (value.code) {
-          this.wxCode = value.code;
-          this.globalSrv.wxSessionSetObject('code', this.wxCode);
-          this.getOpenid();
-        } else {
-          this.wxCode = this.url.split('?')[1].split('code=')[1].split('&')[0];
-          this.globalSrv.wxSessionSetObject('code', this.wxCode);
-          this.getOpenid();
+        // console.log(value);
+        if (value.status === '2'){
+          this.router.navigate(['/shop/shoplist']);
+        }else {
+          if (value.code) {
+            this.wxCode = value.code;
+            this.globalSrv.wxSessionSetObject('code', this.wxCode);
+            this.getOpenid();
+          } else {
+            this.wxCode = this.url.split('?')[1].split('code=')[1].split('&')[0];
+            this.globalSrv.wxSessionSetObject('code', this.wxCode);
+            this.getOpenid();
+          }
         }
+
       }
     );
+    // this.getLogin('o_Jhq1AqGCADdhWrZLMcrX5NYMnE')
   }
 
   // getOpenid
@@ -50,7 +52,6 @@ export class LoginComponent implements OnInit {
       if (this.wxCode) {
           this.loginSrv.getOpenid({code: this.wxCode}).subscribe(
             (value) => {
-              console.log(value);
               if (value.entity.openId) {
                 // value.entity.json()
                 this.wxOpenid = value.entity.openId;

@@ -8,6 +8,9 @@ import {ChargepayRoomTenantComponent} from './chargepay-room-tenant/chargepay-ro
 import {ChargepayRoomDeputeyComponent} from './chargepay-room-deputey/chargepay-room-deputey.component';
 import {ChargepayCouponComponent} from './chargepay-coupon/chargepay-coupon.component';
 import {ChargepayOwnerInfoComponent} from './chargepay-owner-info/chargepay-owner-info.component';
+import {ChargepayRoomListComponent} from './chargepay-room-list/chargepay-room-list.component';
+import {ChargepayParkspaceListComponent} from './chargepay-parkspace-list/chargepay-parkspace-list.component';
+import {ChargepayParkspaceEditComponent} from './chargepay-parkspace-edit/chargepay-parkspace-edit.component';
 
 const routes: Routes = [
   {path: 'itemdetail', component: ChargepayItemDetailComponent},
@@ -18,6 +21,9 @@ const routes: Routes = [
   {path: 'deputey', component: ChargepayRoomDeputeyComponent},
   {path: 'coupon', component: ChargepayCouponComponent},
   {path: 'owner', component: ChargepayOwnerInfoComponent},
+  {path: 'roomlist', component: ChargepayRoomListComponent},
+  {path: 'parklist', component: ChargepayParkspaceListComponent},
+  {path: 'editPark', component: ChargepayParkspaceEditComponent},
 ];
 
 @NgModule({

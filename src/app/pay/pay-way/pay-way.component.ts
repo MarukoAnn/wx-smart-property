@@ -26,6 +26,8 @@ export class PayWayComponent implements OnInit, OnDestroy {
   };
   public payDetailDta = [
     {label: '房间编号', value: '', symbol: 0},
+    {label: '开始时间', value: '', symbol: 0},
+    {label: '截至时间', value: '', symbol: 0},
     {label: '缴费月数', value: '', symbol: 0},
     {label: '优惠卷', value: '', symbol: 0},
     {label: '余额抵扣', value: '', symbol: 1},
@@ -59,22 +61,24 @@ export class PayWayComponent implements OnInit, OnDestroy {
         this.payMoneyData.roomCode =    this.roomCode;
         this.payMoneyData.datedif = val.month;
         if (this.couponCode === false || this.couponCode === 'null' ||  this.couponCode === '1') {
-          this.payWaySrv.getPayInfo({chargeCode: val.chargeCode, roomCode: this.roomCode, datedif: val.month}).subscribe(
+          this.payWaySrv.getPayInfo({chargeCode: val.chargeCode, roomCode: this.roomCode, datedif: val.month, organizationId: this.globalSrv.wxGet('organizationId')}).subscribe(
             (value) => {
               console.log(value);
-              this.payMoneyData.couponId = -1;
+            this.payMoneyData.couponId = -1;
             this.payDetailDta[0].value = value.entity.roomCode;
-            this.payDetailDta[1].value = value.entity.datedif;
+            this.payDetailDta[1].value = value.entity.startTime;
+            this.payDetailDta[2].value = value.entity.endTime;
+            this.payDetailDta[3].value = value.entity.datedif;
             if ( this.couponCode === '1') {
-              this.payDetailDta[2].value = '不使用优惠卷';
+              this.payDetailDta[4].value = '不使用优惠卷';
             } else if (value.entity.couponMoney === 'null') {
-                this.payDetailDta[2].value = '请选择优惠卷';
+                this.payDetailDta[4].value = '请选择优惠卷';
             }
-            this.payDetailDta[3].value = value.entity.money;
-            this.payDetailDta[4].value = value.entity.returnMoney;
-            this.payDetailDta[5].value = value.entity.threeWayFee;
-            this.payDetailDta[6].value = value.entity.oldMoney;
-            this.payDetailDta[7].value = value.entity.newMoney;
+            this.payDetailDta[5].value = value.entity.money;
+            this.payDetailDta[6].value = value.entity.returnMoney;
+            this.payDetailDta[7].value = value.entity.threeWayFee;
+            this.payDetailDta[8].value = value.entity.oldMoney;
+            this.payDetailDta[9].value = value.entity.newMoney;
             }
           );
         } else {
@@ -83,14 +87,16 @@ export class PayWayComponent implements OnInit, OnDestroy {
               console.log(value);
               this.payMoneyData.couponId =    this.couponCode;
               this.payDetailDta[0].value = value.entity.roomCode;
-              this.payDetailDta[1].value = value.entity.datedif;
-              this.payDetailDta[2].value = value.entity.couponMoney;
-              this.payDetailDta[2].symbol = 1;
-              this.payDetailDta[3].value = value.entity.money;
-              this.payDetailDta[4].value = value.entity.returnMoney;
-              this.payDetailDta[5].value = value.entity.threeWayFee;
-              this.payDetailDta[6].value = value.entity.oldMoney;
-              this.payDetailDta[7].value = value.entity.newMoney;
+              this.payDetailDta[1].value = value.entity.startTime;
+              this.payDetailDta[2].value = value.entity.endTime;
+              this.payDetailDta[3].value = value.entity.datedif;
+              this.payDetailDta[4].value = value.entity.couponMoney;
+              this.payDetailDta[4].symbol = 1;
+              this.payDetailDta[5].value = value.entity.money;
+              this.payDetailDta[6].value = value.entity.returnMoney;
+              this.payDetailDta[7].value = value.entity.threeWayFee;
+              this.payDetailDta[8].value = value.entity.oldMoney;
+              this.payDetailDta[9].value = value.entity.newMoney;
             }
           );
         }

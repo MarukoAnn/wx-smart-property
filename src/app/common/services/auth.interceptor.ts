@@ -36,8 +36,8 @@ export class AuthInterceptor implements HttpInterceptor {
         url:  req.url,
         headers: req.headers
           // .set('APPKEY', environment.dev_test_appkey)
-          // .set('APPKEY', this.globalSrv.wxSessionGetObject('appkey'))
-          .set('APPKEY', environment.dev_test_appkey)
+          .set('APPKEY', this.globalSrv.wxSessionGetObject('appkey'))
+          // .set('APPKEY', environment.dev_test_appkey)
       });
 
     } else {
@@ -45,7 +45,8 @@ export class AuthInterceptor implements HttpInterceptor {
         url:  req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
-          .set('APPKEY', environment.dev_test_appkey)
+          // .set('APPKEY', environment.dev_test_appkey)
+          .set('APPKEY', this.globalSrv.wxSessionGetObject('appkey'))
       });
     }
     return next.handle(this.clonedRequest).pipe(

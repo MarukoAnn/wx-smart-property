@@ -25,6 +25,14 @@
     </div>
     <div class="weui-cell">
       <div class="weui-cell__hd">
+        <label for="idnumber" class="weui-label" style="color: #000">身份证号</label>
+      </div>
+      <div class="weui-cell__bd">
+        <input id="idnumber" class="weui-input" [(ngModel)]="addTenant.idNumber"  value="" placeholder="请输入身份证号"  >
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
@@ -35,9 +43,18 @@
       </div>
     </div>
     <!--添加房屋按钮-->
+    <div class="weui-cell" (click)="houseSelectClick()">
+      <div class="weui-cell__hd"><img src="assets/images/ic_bind.png" style="width: 30px;"></div>
+      <div class="weui-cell__bd">
+        <p style="color: #5791AA">绑定房屋</p>
+      </div>
+      <div class="weui-cell__ft">
+        <img src="assets/images/ic_right.png" alt="" style="width: 15px">
+      </div>
+    </div>
     <div class="weui-cell">
       <div class="weui-cell__hd">
-        <button weui-button class="weui-btn-succes" style="height: 4vh;font-size: 0.8rem;line-height: 4vh" (click)="houseSelectClick()">绑定房屋</button>
+        <!--        <button weui-button class="weui-btn-succes" style="height: 4vh;font-size: 0.8rem;line-height: 4vh" (click)="houseSelectClick()" >绑定房屋</button>-->
       </div>
     </div>
     <!--// 选择的房间-->
@@ -50,7 +67,7 @@
         <div class="weui-cell">
           <div class="weui-cell__hd"><label  class="weui-label" style="width: 30vw">租赁开始日期</label></div>
           <div class="weui-cell__bd">
-            <weui-date-picker placeholder="请选租赁开始日期" name="date" [(ngModel)]="AddTenantDeputy.roomList[i].startTime"></weui-date-picker>
+            <weui-date-picker [placeholder]="item.startTime" name="date" [(ngModel)]="item.startTime"></weui-date-picker>
           </div>
         </div>
       </div>
@@ -58,7 +75,7 @@
         <div class="weui-cell">
           <div class="weui-cell__hd"><label  class="weui-label" style="width: 30vw">租赁截止日期</label></div>
           <div class="weui-cell__bd">
-            <weui-date-picker placeholder="请选租赁截止日期"  name="date" [(ngModel)]="AddTenantDeputy.roomList[i].endTime"></weui-date-picker>
+            <weui-date-picker [placeholder]="item.endTime"  name="date" [(ngModel)]="item.endTime"></weui-date-picker>
           </div>
         </div>
       </div>
@@ -77,7 +94,7 @@
   </div>
   <div class="mine-tenant-add-footer">
     <div class="weui-cell">
-      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantAddSureClick()">下一步</button>
+      <button weui-button class="weui-btn" style="background: linear-gradient(to right,#84C5F8,#367C99);font-size: 1rem;" (click)="mineTenantAddSureClick()">下一步</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>

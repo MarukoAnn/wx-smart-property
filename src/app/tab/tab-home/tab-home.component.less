@@ -2,18 +2,28 @@
   height: 100%;
 
   .tab-home-item{
-    border-radius: 10px;
-    background: #FFFFFF;
-    //background: linear-gradient(135deg,#F6BF2E,#FF5023);
-    width: 100vw;
+    //width: 100vw;
     margin-bottom: 0.5vh;
-    margin-top: 1vh;
+    margin-top: 1.5vh;
     font-size: 1rem;
-    //padding: 1vw;
+    position: relative;
+    padding: 0 3vw;
     img{
-      width: 100vw;
-      height: 12vh;
-      border-radius: 5px;
+      width: 100%;
+      border-radius: 10px;
+      //height: 22vh;
+      background: #FFFFFF;
+    }
+    .tab-home-title {
+        height: 4vh;
+        font-size: 1.6rem;
+        position: absolute;
+        font-weight: bold;
+        color: white;
+        display: inline-block;
+        z-index: 99999;
+        left: 9vw;
+        top: 10vh;
     }
     .tab-home-item-text{
       margin-left: 3vw;

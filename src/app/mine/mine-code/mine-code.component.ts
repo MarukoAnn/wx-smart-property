@@ -106,6 +106,7 @@ export class MineCodeComponent implements OnInit {
       if (value.code === '1000') {
         this.toastService.hide();
         this.setToast('success');
+        this.globalSrv.wxSessionRemove('addData');
         if (this.value === '2') {
           this.router.navigate(['/mine/deputyinfo']);
         } else {
@@ -124,6 +125,7 @@ export class MineCodeComponent implements OnInit {
           this.toastService.hide();
           this.setToast('success');
           this.onShow('success', '修改成功');
+          this.globalSrv.wxSessionRemove('addData');
           if (this.value === '2') {
             this.router.navigate(['/mine/deputyinfo']);
           } else {
@@ -143,6 +145,7 @@ export class MineCodeComponent implements OnInit {
           this.toastService.hide();
           this.setToast('success');
           this.onShow('success', '删除成功');
+          this.globalSrv.wxSessionRemove('addData');
           if (this.value === '2') {
             this.router.navigate(['/mine/deputyinfo']);
           } else {

@@ -24,8 +24,9 @@ export class MineDeputyOwerInfoComponent implements OnInit {
     }
   };
   public verifyPhone: RegExp = /^1[37458]\d{9}$/;
-  public deputyInfo = [];
-  public flag = 2;
+  public deputyInfo = [
+  ];
+  public flag = 1;
   public deleteDeputy = {
     identity: '',
     roomCode: '',
@@ -47,6 +48,7 @@ export class MineDeputyOwerInfoComponent implements OnInit {
   public mineDeputyInfoInit(page): void {
       this.mineDeputySrv.queryMineDeputyInfoList({pageNum: page, pageSize: 10, identity: 2}).subscribe(
         value => {
+          console.log(value);
           if (value.code === '1000') {
             value.entity.forEach( v => {
               this.deputyInfo.push( {data: [

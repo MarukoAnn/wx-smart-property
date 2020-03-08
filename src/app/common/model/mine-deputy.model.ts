@@ -20,6 +20,7 @@ export class AddMineDeputy {
 }
 export class AddBasicDeputy {
   mobilePhone?: any;
+  idNumber?: any;
   realName?: any;
   sex?: any;
   userId?: any;

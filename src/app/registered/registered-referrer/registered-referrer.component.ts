@@ -21,8 +21,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   // ActionSheet
   @ViewChild('toptips') toptips: ToptipsComponent;
   @ViewChild('user') userInput: any;
-  public surePsw: any;
-  public verificationCode: any;
   public loading_show = false;
   public showData = '获取验证码';
   public verifyPhone: RegExp = /^1[37458]\d{9}$/;
@@ -71,9 +69,8 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       } else {
         this.flag = 2;
         this.setToast('loading');
-        this.registeredSrv.bindingData({data: this.referrerData, openId: '12345678'}).subscribe(
+        this.registeredSrv.bindingData({data: this.referrerData, openId: this.globalSrv.wxSessionGetObject('openid')}).subscribe(
           (value) => {
-            console.log(value);
             this.toastService.hide();
             this.flag = 1;
             if (value.code === '1000') {
@@ -111,8 +108,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       // this.setToast('loading', true);
         this.registeredSrv.getPhoneNumber({userName: this.referrerData.surName, mobilePhone: this.referrerData.phone }).subscribe(
           value => {
-            // this.toastService.hide();
-            console.log(value);
             if (value.code === '1000') {
               this.calc();
             } else {
@@ -134,7 +129,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
        this.showData = '获取验证码';
      } else {
        this.showData = i + 's';
-       console.log(this.showData);
      }
      i--;
    }, 1000);

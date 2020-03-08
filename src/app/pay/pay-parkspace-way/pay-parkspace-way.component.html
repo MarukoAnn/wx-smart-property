@@ -1,0 +1,17 @@
+<div class="pay-parkspace-way">
+  <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
+  <div class="pay-parkspace-way-content">
+    <div class="weui-cell weui-cell_access pay-parkspace-way-text" *ngFor="let item of payDetailDta" (click)="paySelectCouponClick(item.label)">
+      <div class="weui-cell__bd" >
+        <span style="vertical-align: middle">{{item.label}}：</span>
+        <!--<span class="weui-badge" style="margin-left: 5px;">8</span>-->
+      </div>
+      <div class="weui-cell__left" *ngIf="item.value!== ''"><span *ngIf="item.symbol === 1">￥</span>{{item.value}} <span *ngIf="item.label === '缴费月数'">个月</span></div>
+      <!--<div class="weui-cell__left"><span *ngIf="item.symbol === 1">￥</span>{{item.value}}</div>-->
+      <div class="weui-cell__ft" *ngIf="item.label==='优惠卷'"></div>
+    </div>
+    <button weui-button style="background: #1C86D6;margin-top: 1vh" (click)="payMoneyClick()">支 付</button>
+    <!--<weui-toast #loading [type]="'loading'"></weui-toast>-->
+
+  </div>
+</div>

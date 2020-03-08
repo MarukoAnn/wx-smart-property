@@ -46,6 +46,15 @@ export class MineDeputyAddComponent implements OnInit {
 
   ngOnInit() {
     // this.date = $filter('date')(new Date(),'MM/dd/yyyy');
+    if (this.globalSrv.wxSessionGetObject('addData') !== 0) {
+      this.duputyData.idNumber = this.globalSrv.wxSessionGetObject('addData').user.idNumber;
+      this.duputyData.mobilePhone = this.globalSrv.wxSessionGetObject('addData').user.mobilePhone;
+      this.duputyData.sex = this.globalSrv.wxSessionGetObject('addData').user.sex;
+      this.duputyData.realName = this.globalSrv.wxSessionGetObject('addData').user.realName;
+      this.globalSrv.wxSessionGetObject('addData').roomList.forEach(v => {
+        this.houseSelectData.push({text: v.roomCode})
+      })
+    }
     this.addUserIdentity.date = new Date();
     this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyy-MM-dd HH:MM:SS');
     this.addUserIdentity.identity = 2;
@@ -56,7 +65,6 @@ export class MineDeputyAddComponent implements OnInit {
     this.owerRoomCodeList = [];
     this.mineDeputySrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
-        console.log(value);
         if (value.code === '1000') {
           if (value.entity.length !== 0) {
             value.entity.forEach( (v, index) => {
@@ -77,29 +85,32 @@ export class MineDeputyAddComponent implements OnInit {
     this.mineDeputyInfoInit();
   }
   public  showDialog(): void {
-    this.config = Object.assign({}, <DialogConfig> {
-      skin: 'auto',
-      type: 'prompt',
-      title: '请选择房间号',
-      confirm: '确认',
-      cancel: '取消',
-      input: 'checkbox',
-      backdrop: true,
-      inputOptions: this.owerRoomCodeList,
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-        if (res.text === '确认') {
-          console.log(res.result);
-          this.houseSelectData = res.result;
-        }
+    if (this.owerRoomCodeList.length !== 0) {
+      this.config = Object.assign({}, <DialogConfig> {
+        skin: 'auto',
+        type: 'prompt',
+        title: '请选择房间号',
+        confirm: '确认',
+        cancel: '取消',
+        input: 'checkbox',
+        backdrop: true,
+        inputOptions: this.owerRoomCodeList,
       });
-    }, 10);
+      setTimeout(() => {
+        (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
+          if (res.text === '确认') {
+            this.houseSelectData = res.result;
+          }
+        });
+      }, 10);
+    }else {
+      this.onShow('warn', '没有搜索到房屋，请联系管理员')
+    }
   }
   // deputy add submit
   public  mineDeputyAddSureClick(): void {
 
-      const List = ['mobilePhone', 'realName', 'sex'];
+      const List = ['mobilePhone', 'realName', 'sex', 'idNumber'];
       const  listStatus = List.some(v => {
         return this.duputyData[v] === undefined || this.duputyData[v] === null;
       });
@@ -142,6 +153,7 @@ export class MineDeputyAddComponent implements OnInit {
     }
   }
   public  backHome(): void {
+    this.globalSrv.wxSessionRemove('addData');
     window.history.back();
   }
 }

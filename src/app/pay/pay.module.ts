@@ -10,12 +10,14 @@ import {FormsModule} from '@angular/forms';
 import {LoadingModule} from '../common/components/loading/loading.module';
 import {WeUiModule} from 'ngx-weui';
 import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
+import { PayParkspaceWayComponent } from './pay-parkspace-way/pay-parkspace-way.component';
 
 @NgModule({
   declarations: [
     PaySuccessComponent,
     PayWayComponent,
-    PayDetailComponent
+    PayDetailComponent,
+    PayParkspaceWayComponent
   ],
   imports: [
     CommonModule,

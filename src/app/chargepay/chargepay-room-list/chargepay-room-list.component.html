@@ -1,0 +1,32 @@
+<div class="charge-room-list">
+  <app-header [option]="headerOption"  (headerLeftClick)="backHome()"></app-header>
+  <weui-ptr (refresh)="onRefresh($event)"  style="height: 85vh; background: #ECECEC;margin-top: 2px">
+    <div class="charge-room-list-image">
+      <img src="assets/images/ic_roomlist.png" alt="">
+      <span>房屋交费</span>
+    </div>
+    <div class="weui-flex" *ngFor="let item of HouseItem">
+      <div class="weui-flex__item">
+        <div class="placeholder">
+          <div class="charge-room-list-item">
+            <div  class="item-title">
+              <div >
+                <img src="assets/images/ic_room.png" alt="">
+                <span >{{item.title}}</span>
+              </div>
+              <div style="font-size: 16px;color: #40839E" (click)="tabRoomDetailClick(item)">详情</div>
+            </div>
+            <div class="charge-room-list-item-text">
+              <div *ngFor=" let i of item.Content">
+                {{i.label}}：{{i.value}}
+              </div>
+            </div>
+            <div class="charge-room-list-item-btn">
+              <button (click)="tabPaymentClick(item)">缴费</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </weui-ptr>
+</div>

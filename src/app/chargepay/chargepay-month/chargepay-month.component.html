@@ -1,14 +1,19 @@
 <div class="chargepay-month">
   <app-header [option]="headerOption" (headerLeftClick)="backHome()"></app-header>
-   <div class="weui-grids charge-month-grids">
-     <a class="weui-grid" (click)="monthSelectClick(item)" *ngFor="let item of monthDta">
-       <p class="weui-grid__label">{{item.label}}个月</p>
-       <!--<hr size=1 color="#EAE3E3"/>-->
-       <span class="weui-grid__label" style="font-size: 0.6rem;text-decoration: line-through;color: #716A6A">￥{{item.oldMoney}}</span>
-       <span style="width: 100%;height: 1px;background: #000"></span>
-       <p class="weui-grid__label" style="font-size: 1rem;color: green">￥{{item.newMoney}}</p>
-       <!--<hr size=1 color="#EAE3E3"/>-->
-       <p class="weui-grid__label" style="font-size: 0.6rem;">{{item.discount}}折</p>
-     </a>
-   </div>
+   <div class="charge-month-grids" style="padding-left: 0.3vw;padding-top: 1vh;">
+       <div style="box-sizing: border-box;margin: 0.5vh 0 ;padding-top: 2vh; border-radius: 5px;display: inline-block;margin-left: 2.3vw; width: 30vw;background: #fff;height: 18vh" (click)="monthSelectClick(item)" *ngFor="let item of monthDta">
+         <div>
+           <span style="font-size: 1.4rem;color: #367C99;">￥{{item.newMoney}}</span>
+           <p style="margin-left: 2vw; margin-bottom: -5px; font-size: 14px;text-decoration: line-through;color: #B9B9B9">￥{{item.oldMoney}}</p>
+         </div>
+         <div style="display: flex;justify-content: space-between;padding: 1vh 2vw 0 2vw">
+           <div style="margin-top: 1vh;font-size: 12px;background: #ECECEC;border-radius: 10px;color: #B8B8B8;padding: 0 4px">{{item.discount}}折</div>
+           <div style="color: #BDCFD9;position: relative;width: 12vw">
+             <span style="font-size: 18px;margin-bottom: 25px;position: absolute;top: 2px;right: 24px">{{item.label}}/</span>
+             <span style="font-size: 12px;position: absolute;right: 0;bottom: -2px">个月</span>
+           </div>
+         </div>
+       </div>
+     </div>
 </div>
+<!--*ngFor="let item of monthDta"-->

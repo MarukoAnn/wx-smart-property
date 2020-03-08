@@ -9,7 +9,7 @@
         <label for="name" class="weui-label" style="color: #000">姓名</label>
       </div>
       <div class="weui-cell__bd">
-        <input id="name" class="weui-input" [(ngModel)]="modefyTenant.realName" value="" placeholder="请输入姓名"
+        <input id="name" disabled class="weui-input" [(ngModel)]="modefyTenant.realName" value="" placeholder="请输入姓名"
                weui-input="newpsw" weui-required>
       </div>
     </div>
@@ -27,6 +27,14 @@
     </div>
     <div class="weui-cell">
       <div class="weui-cell__hd">
+        <label for="idnumber" class="weui-label" style="color: #000">身份证号</label>
+      </div>
+      <div class="weui-cell__bd">
+        <input id="idnumber" disabled class="weui-input" [(ngModel)]="modefyTenant.idNumber"  value="" placeholder="请输入身份证号"  >
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
         <label  class="weui-label" style="color: #000">性别</label>
       </div>
       <div class="weui-cell__bd">
@@ -39,27 +47,27 @@
 
     <!--<div class="weui-cell" style="padding: 0"></div>-->
     <!--添加房屋按钮-->
-    <div class="weui-cell">
-      <div class="weui-cell__hd">
-        <button weui-button class="weui-btn-succes" style="height: 4vh;font-size: 0.8rem;line-height: 4vh" (click)="houseSelectClick()">绑定房屋</button>
+    <div class="weui-cell" (click)="houseSelectClick()">
+      <div class="weui-cell__hd"><img src="assets/images/ic_bind.png" style="width: 30px;"></div>
+      <div class="weui-cell__bd">
+        <p style="color: #5791AA">绑定房屋</p>
+      </div>
+      <div class="weui-cell__ft">
+        <img src="assets/images/ic_right.png" alt="" style="width: 15px">
       </div>
     </div>
-    <!--<div class="weui-cells">-->
-    <!--<div class="weui-cell" style="text-align: center">-->
-    <!--<div class="weui-cell__hd">-->
-    <!--房间信息-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--// 选择的房间-->
-    <!--<div class="weui-cells">-->
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+<!--        <button weui-button class="weui-btn-succes" style="height: 4vh;font-size: 0.8rem;line-height: 4vh" >绑定房屋</button>-->
+      </div>
+    </div>
 
 
     <div  style="margin-left: 3vw" *ngFor="let item of houseSelectData;let i = index">
       <div class="weui-cell">
         <div class="weui-cell__hd"> <span>房间号：</span></div>
         <div class="weui-cell__bd"> <span>{{item.roomCode}}</span></div>
-        <button weui-button  [weui-type]="'warn'" style="height: 4vh;width: 20vw;font-size: 0.6rem;line-height: 4vh" (click)="houseDelectClick(item, index)">删除</button>
+        <button weui-button  [weui-type]="'warn'" style="height: 4vh;width: 20vw;font-size: 0.6rem;line-height: 4vh" (click)="houseDelectClick(item, i)">删除</button>
       </div>
       <div>
         <div class="weui-cell">
@@ -82,7 +90,7 @@
   </div>
   <div class="min-deputy-add-footer">
     <div class="weui-cell">
-      <button weui-button class="weui-btn" style="background: #1C86D6;font-size: 1rem;" (click)="mineTenantModifySureClick()">下一步</button>
+      <button weui-button class="weui-btn" style="background: linear-gradient(to right,#84C5F8,#367C99);font-size: 1rem;border-radius: 20px" (click)="mineTenantModifySureClick()">下一步</button>
     </div>
   </div>
   <weui-dialog #auto [config]="config"></weui-dialog>

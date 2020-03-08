@@ -2,15 +2,17 @@
   <app-header [option]="headerOption"  (headerLeftClick)="backHome()"></app-header>
   <div class="weui-cell weui-cell_access charge-item-detail-list" *ngFor="let item of chargeItemList" (click)="chargepayItemClick(item)">
     <div class="weui-cell__bd"   style="font-size: 1rem">
-      <span style="vertical-align: middle">缴费类型：{{item.label}}</span>
-      <!--<span class="weui-badge" style="margin-left: 5px;"></span>-->
+      <p style="vertical-align: middle">缴费类型：{{item.label}}</p>
+      <p style="vertical-align: middle" *ngIf="item.monthlyArrears">欠费月数：{{item.monthlyArrears}}</p>
+      <p style="vertical-align: middle" *ngIf="item.amountOfArrears">欠费金额：{{item.amountOfArrears}}</p>
+      <p style="vertical-align: middle" *ngIf="item.dueTime">到期时间：{{item.dueTime}}</p>
     </div>
     <!--<div class="weui-cell__ft"></div>-->
-    <div class="weui-cell__ft"  style="font-size: 0.8rem">
+    <div class="weui-cell__ft"  style="font-size: 0.9rem" *ngIf="item.status !== 2">
       <span [ngStyle]="{'color': item.color,'margin-right':'1vw'}">{{item.note}}</span>
-      <!--<span>￥</span>-->
-      <!--<span *ngIf="item.note === '欠费'">-</span>-->
-      <!--<span>{{item.Amount}}</span>-->
+<!--      <span>￥</span>-->
+<!--      <span *ngIf="item.note === '欠费'">-</span>-->
+<!--      <span>{{item.amountOfArrears}}</span>-->
     </div>
   </div>
   <!--<div class="weui-cell weui-cell_access"></div>-->

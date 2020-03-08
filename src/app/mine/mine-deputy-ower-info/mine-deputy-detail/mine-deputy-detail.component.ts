@@ -25,6 +25,7 @@ export class MineDeputyDetailComponent implements OnInit {
     {label: '姓名' , value: ''},
     {label: '性别' , value: ''},
     {label: '手机号' , value: ''},
+    {label: '身份证号' , value: ''},
   ];
   public userId: any;
   constructor(
@@ -48,6 +49,7 @@ export class MineDeputyDetailComponent implements OnInit {
         this.deputyDetailData[0].value = value.entity.userName;
         this.deputyDetailData[1].value = value.entity.sex;
         this.deputyDetailData[2].value = value.entity.userPhone;
+        this.deputyDetailData[3].value = value.entity.idNumber;
         this.onShow('success', '查询成功');
       }
     );

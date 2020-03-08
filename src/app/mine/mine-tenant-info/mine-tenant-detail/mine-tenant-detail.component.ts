@@ -25,6 +25,7 @@ export class MineTenantDetailComponent implements OnInit {
     {label: '姓名' , value: ''},
     {label: '性别' , value: ''},
     {label: '手机号' , value: ''},
+    {label: '身份证号' , value: ''},
   ];
   constructor(
     private getRouter: ActivatedRoute,
@@ -46,6 +47,7 @@ export class MineTenantDetailComponent implements OnInit {
         this.tenantDetailData[0].value = value.entity.userName;
         this.tenantDetailData[1].value = value.entity.sex;
         this.tenantDetailData[2].value = value.entity.userPhone;
+        this.tenantDetailData[3].value = value.entity.idNumber;
         this.onShow('success', '查询成功');
       }
     );

@@ -13,6 +13,10 @@ export class TabService {
   public tabGetHouseList(): Observable<any> {
     return this.http.post(environment.dev_test_url + `/indexroom`, {});
   }
+  // 车位信息
+  public tabGetParkSpaceList(): Observable<any> {
+    return this.http.post(environment.dev_test_url + `/parkingRate/getParkingSpaceCode`, {});
+  }
   // public tabDeleteClient(id): Observable<any> {
   //   return this.http.post(`/contacts/delete`, {id: id});
   // }

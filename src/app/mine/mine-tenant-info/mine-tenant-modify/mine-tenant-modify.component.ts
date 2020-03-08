@@ -80,6 +80,7 @@ export class MineTenantModifyComponent implements OnInit {
         this.modefyTenant.realName = value.entity.userName;
         this.modefyTenant.sex = value.entity.sex;
         this.modefyTenant.mobilePhone = value.entity.userPhone;
+        this.modefyTenant.idNumber = value.entity.idNumber;
       }
     );
   }
@@ -100,25 +101,26 @@ export class MineTenantModifyComponent implements OnInit {
   }
 
   public  houseSelectClick() {
-    this.config = Object.assign({}, <DialogConfig>{
-      skin: 'auto',
-      type: 'prompt',
-      title: '请选择房间号',
-      confirm: '确认',
-      cancel: '取消',
-      input: 'radio',
-      // inputValue: e,
-      backdrop: true,
-      inputOptions: this.owerRoomCodeList
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-        console.log(res);
-        if (res.result === '') {
-          this.onShow('warn', '操作错误,请选择房屋');
-        } else if (res.text === '确认') {
-          console.log(res.result);
-          // this.houseSelectData = res.result;
+    if (this.owerRoomCodeList.length !== 0) {
+      this.config = Object.assign({}, <DialogConfig>{
+        skin: 'auto',
+        type: 'prompt',
+        title: '请选择房间号',
+        confirm: '确认',
+        cancel: '取消',
+        input: 'radio',
+        // inputValue: e,
+        backdrop: true,
+        inputOptions: this.owerRoomCodeList
+      });
+      setTimeout(() => {
+        (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
+          console.log(res);
+          if (res.result === '') {
+            this.onShow('warn', '操作错误,请选择房屋');
+          } else if (res.text === '确认') {
+            console.log(res.result);
+            // this.houseSelectData = res.result;
             const result = this.houseSelectData.some(item => {
               return  item.roomCode === res.result.text;
             });
@@ -127,11 +129,15 @@ export class MineTenantModifyComponent implements OnInit {
             } else {
               this.onShow('warn', '该房屋已绑定');
             }
-          // this.houseSetDate('开始');
-        }
-      });
-    }, 10);
-    return false;
+            // this.houseSetDate('开始');
+          }
+        });
+      }, 10);
+      return false;
+    }else {
+      this.onShow('warn', '没有搜索到房屋，请联系管理员')
+    }
+
   }
   public  houseDelectClick(e, index): void {
     this.houseSelectData.splice(index, 1);
@@ -140,7 +146,7 @@ export class MineTenantModifyComponent implements OnInit {
   }
   // modify submit
   public  mineTenantModifySureClick(): void {
-    const List = ['mobilePhone', 'realName', 'sex'];
+    const List = ['mobilePhone', 'realName', 'sex', 'idNumber'];
     const  listStatus = List.some(v => {
       return this.modefyTenant[v] === undefined || this.modefyTenant[v] === null;
     });

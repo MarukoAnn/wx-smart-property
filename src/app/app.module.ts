@@ -8,7 +8,7 @@ import {AuthInterceptor} from './common/services/auth.interceptor';
 import { ErrorRemindComponent } from './error-remind/error-remind.component';
 import {LoadingModule} from './common/components/loading/loading.module';
 import { LoginComponent } from './login/login.component';
-
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +25,7 @@ import { LoginComponent } from './login/login.component';
   providers: [
     // 使用http拦截器
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    // {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
 
 ],
   bootstrap: [AppComponent]

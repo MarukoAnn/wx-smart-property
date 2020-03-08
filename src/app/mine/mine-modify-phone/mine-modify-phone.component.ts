@@ -27,7 +27,6 @@ export class MineModifyPhoneComponent implements OnInit {
   ngOnInit() {
   }
   public  onSendCode(): void {
-    console.log(123);
   }
   public  backHome(): void {
     window.history.back();

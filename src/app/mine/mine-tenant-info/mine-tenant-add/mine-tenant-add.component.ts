@@ -7,6 +7,7 @@ import {AddBasicDeputy, AddMineDeputy, AddUserIdentity} from '../../../common/mo
 import {DatePipe} from '@angular/common';
 import {AddMineTenant} from '../../../common/model/mine-tenant.model';
 import {GlobalService} from '../../../common/services/global.service';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-mine-tenant-add',
@@ -49,6 +50,13 @@ export class MineTenantAddComponent implements OnInit {
     //   console.log(value);
     //   this.tenantData.name = value.value;
     // });
+    if (this.globalSrv.wxSessionGetObject('addData') !== 0) {
+      this.addTenant.mobilePhone = this.globalSrv.wxSessionGetObject('addData').user.mobilePhone;
+      this.addTenant.idNumber = this.globalSrv.wxSessionGetObject('addData').user.idNumber;
+      this.addTenant.sex = this.globalSrv.wxSessionGetObject('addData').user.sex;
+      this.addTenant.realName = this.globalSrv.wxSessionGetObject('addData').user.realName;
+      this.AddTenantDeputy.roomList = this.globalSrv.wxSessionGetObject('addData').roomList;
+    }
     this.addUserIdentity.date = new Date();
     this.addUserIdentity.date = this.datePipe.transform(this.addUserIdentity.date, 'yyyy-MM-dd HH:MM:SS');
     this.addUserIdentity.identity = '3';
@@ -58,7 +66,6 @@ export class MineTenantAddComponent implements OnInit {
   public mineDeputyInfoInit(): void {
     this.mineTenantSrv.queryMineOwnerBindRoomCode().subscribe(
       (value) => {
-        console.log(value);
         value.entity.forEach( (v) => {
           this.owerRoomCodeList.push({text: v.roomCode, organizationId: v.organizationId, organizationName: v.organizationName});
         });
@@ -67,36 +74,46 @@ export class MineTenantAddComponent implements OnInit {
 
   }
   public  houseSelectClick() {
-    this.config = Object.assign({}, <DialogConfig>{
-      skin: 'auto',
-      type: 'prompt',
-      title: '请选择房间号',
-      confirm: '确认',
-      cancel: '取消',
-      input: 'radio',
-      // inputValue: e,
-      backdrop: true,
-      inputOptions: this.owerRoomCodeList,
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
-        console.log(res);
-        if (res.result === '') {
-          this.onShow('warn', '请选择房屋');
-        } else {
-          if (res.text === '确认') {
-            console.log(res.result);
-            this.AddTenantDeputy.roomList.push({roomCode: res.result.text, startTime: '', endTime: '', organizationId: res.result.organizationId, organizationName: res.result.organizationName});
-            this.houseSelectData.push(res.result);
-          }
-        }
+    if (this.owerRoomCodeList.length !== 0) {
+      this.config = Object.assign({}, <DialogConfig>{
+        skin: 'auto',
+        type: 'prompt',
+        title: '请选择房间号',
+        confirm: '确认',
+        cancel: '取消',
+        input: 'radio',
+        // inputValue: e,
+        backdrop: true,
+        inputOptions: this.owerRoomCodeList,
       });
-    }, 10);
-    return false;
+      setTimeout(() => {
+        (<DialogComponent>this[`autoAS`]).show().subscribe((res: any) => {
+          console.log(res);
+          if (res.result === '') {
+            this.onShow('warn', '请选择房屋');
+          } else {
+            if (res.text === '确认') {
+              console.log(res.result);
+              if (!this.AddTenantDeputy.roomList.some(v => {
+                return v.roomCode === res.result.text
+              })){
+                this.AddTenantDeputy.roomList.push({roomCode: res.result.text, startTime: '请选择租赁开始时间', endTime: '请选择租赁截止时间', organizationId: res.result.organizationId, organizationName: res.result.organizationName});
+                this.houseSelectData.push(res.result);
+              }else {
+                this.onShow('warn', '该房屋已选择');
+              }
+            }
+          }
+        });
+      }, 10);
+      return false;
+    }else {
+      this.onShow('warn', '没有搜索到房屋，请联系管理员')
+    }
   }
   // deputy add submit
   public  mineTenantAddSureClick(): void {
-    const List = ['mobilePhone', 'realName', 'sex'];
+    const List = ['mobilePhone', 'realName', 'sex', 'idNumber'];
     const  listStatus = List.some(v => {
       return this.addTenant[v] === undefined || this.addTenant[v] === null;
     });
@@ -144,6 +161,7 @@ export class MineTenantAddComponent implements OnInit {
     }
   }
   public  backHome(): void {
+    this.globalSrv.wxSessionRemove('addData');
     window.history.back();
   }
 }

@@ -30,7 +30,33 @@ export class MineTenantInfoComponent implements OnInit {
     userId: '',
     verificationCode: ''
   };
-  public tenantInfo = [];
+  // public tenantInfo = [];
+  public tenantInfo = [
+    // {data: [
+    //     {label: '姓名', value: '赵英俊'},
+    //     {label: '详细地址', value: '贵阳市观山湖区天空之城A1地块1栋1单元'},
+    //     {label: '房屋编号', value: 'TKZC-A1-D1-1DY-1001'},
+    //     {label: '关联时间', value: '2018-12-03'},
+    //   ], userId: '123'},
+    // {data: [
+    //     {label: '姓名', value: '赵美玲'},
+    //     {label: '详细地址', value: '贵阳市观山湖区天空之城A1地块1栋1单元'},
+    //     {label: '房屋编号', value: 'TKZC-A1-D1-1DY-1001'},
+    //     {label: '关联时间', value: '2018-12-03'},
+    //   ], userId: '123'},
+    // {data: [
+    //     {label: '姓名', value: '赵美玲'},
+    //     {label: '详细地址', value: '贵阳市观山湖区天空之城A1地块1栋1单元'},
+    //     {label: '房屋编号', value: 'TKZC-A1-D1-1DY-1001'},
+    //     {label: '关联时间', value: '2018-12-03'},
+    //   ], userId: '123'},
+    // {data: [
+    //     {label: '姓名', value: '赵美玲'},
+    //     {label: '详细地址', value: '贵阳市观山湖区天空之城A1地块1栋1单元'},
+    //     {label: '房屋编号', value: 'TKZC-A1-D1-1DY-1001'},
+    //     {label: '关联时间', value: '2018-12-03'},
+    //   ], userId: '123'}
+  ];
   public flag = 2;
   constructor(
     private router: Router,

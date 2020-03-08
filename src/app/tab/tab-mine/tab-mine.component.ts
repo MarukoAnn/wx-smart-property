@@ -3,6 +3,7 @@ import {MineService} from '../../common/services/mine.service';
 import {Router} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {GlobalService} from '../../common/services/global.service';
+import {ToptipsService} from 'ngx-weui';
 
 @Component({
   selector: 'app-tab-mine',
@@ -35,6 +36,7 @@ export class TabMineComponent implements OnInit {
     private mineSrv: MineService,
     private router: Router,
     private globalSrv: GlobalService,
+    private toptipSrv: ToptipsService,
 
   ) { }
 
@@ -42,21 +44,19 @@ export class TabMineComponent implements OnInit {
     if (this.globalSrv.wxSessionGetObject('imageUrl') !== undefined){
       this.imageUrl = this.globalSrv.wxSessionGetObject('imageUrl');
     }
-      this.mineSrv.mineGetUserInfo().subscribe(
+    this.mineSrv.mineGetUserInfo().subscribe(
         (value) => {
-          console.log(value);
           if (value.entity) {
             this.userName = value.entity.userName;
             this.mobilePhone = value.entity.mobilePhone;
             if (value.entity.maxIdentity === '2') {
               this.owerItemList[1].hide = false;
-              console.log(this.owerItemList);
             } else if (value.entity.maxIdentity === '3') {
               this.owerItemList[1].hide = false;
               this.owerItemList[2].hide = false;
             }
           } else {
-            console.log(123);
+            this.onShow('warn',value.msg)
           }
         }
       );
@@ -71,5 +71,8 @@ export class TabMineComponent implements OnInit {
        case '修改密码': this.router.navigate(['/mine/changepsw']); break;
        default: break;
      }
+  }
+  onShow(type: 'warn' | 'info' | 'primary' | 'success' | 'default', text) {
+    this.toptipSrv[type](text);
   }
 }
