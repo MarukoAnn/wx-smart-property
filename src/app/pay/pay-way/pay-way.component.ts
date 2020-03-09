@@ -29,7 +29,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
     {label: '开始时间', value: '', symbol: 0},
     {label: '截至时间', value: '', symbol: 0},
     {label: '缴费月数', value: '', symbol: 0},
-    {label: '优惠卷', value: '', symbol: 0},
+    {label: '优惠券', value: '', symbol: 0},
     {label: '余额抵扣', value: '', symbol: 1},
     {label: '退款金额', value: '', symbol: 1},
     {label: '三通费金额', value: '', symbol: 1},
@@ -70,9 +70,9 @@ export class PayWayComponent implements OnInit, OnDestroy {
             this.payDetailDta[2].value = value.entity.endTime;
             this.payDetailDta[3].value = value.entity.datedif;
             if ( this.couponCode === '1') {
-              this.payDetailDta[4].value = '不使用优惠卷';
+              this.payDetailDta[4].value = '不使用优惠券';
             } else if (value.entity.couponMoney === 'null') {
-                this.payDetailDta[4].value = '请选择优惠卷';
+                this.payDetailDta[4].value = '请选择优惠券';
             }
             this.payDetailDta[5].value = value.entity.money;
             this.payDetailDta[6].value = value.entity.returnMoney;
@@ -141,7 +141,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
       });
   }
   public  paySelectCouponClick(value): void {
-      if (value === '优惠卷') {
+      if (value === '优惠券') {
         this.router.navigate(['chargepay/coupon'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode}});
       }
   }

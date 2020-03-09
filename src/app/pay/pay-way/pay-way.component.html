@@ -8,7 +8,7 @@
     </div>
     <div class="weui-cell__left" *ngIf="item.value!== ''"><span *ngIf="item.symbol === 1">￥</span>{{item.value}} <span *ngIf="item.label === '缴费月数'">个月</span></div>
     <!--<div class="weui-cell__left"><span *ngIf="item.symbol === 1">￥</span>{{item.value}}</div>-->
-    <div class="weui-cell__ft" *ngIf="item.label==='优惠卷'"></div>
+    <div class="weui-cell__ft" *ngIf="item.label==='优惠券'"></div>
   </div>
   <button weui-button style="background: #1C86D6;margin-top: 1vh" (click)="payMoneyClick()">支 付</button>
   <!--<weui-toast #loading [type]="'loading'"></weui-toast>-->
