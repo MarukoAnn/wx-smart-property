@@ -52,7 +52,6 @@ export class ChargepayMonthComponent implements OnInit {
   }
 
   public  monthSelectClick(e): void {
-      console.log(e);
       this.router.navigate(['/pay/sure'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode, month: e.label}});
   }
   public  backHome(): void {

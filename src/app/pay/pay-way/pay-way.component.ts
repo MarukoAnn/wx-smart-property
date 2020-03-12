@@ -29,10 +29,10 @@ export class PayWayComponent implements OnInit, OnDestroy {
     {label: '开始时间', value: '', symbol: 0},
     {label: '截至时间', value: '', symbol: 0},
     {label: '缴费月数', value: '', symbol: 0},
-    {label: '优惠券', value: '', symbol: 0},
+
+    {label: '优惠券抵扣', value: '', symbol: 1},
     {label: '余额抵扣', value: '', symbol: 1},
-    {label: '退款金额', value: '', symbol: 1},
-    {label: '三通费金额', value: '', symbol: 1},
+    {label: '退款金额抵扣', value: '', symbol: 1},
     {label: '应交金额', value: '', symbol: 1},
     {label: '实缴金额', value: '', symbol: 1},
   ];
@@ -60,51 +60,27 @@ export class PayWayComponent implements OnInit, OnDestroy {
         this.payMoneyData.chargeCode =    this.chargeCode;
         this.payMoneyData.roomCode =    this.roomCode;
         this.payMoneyData.datedif = val.month;
-        if (this.couponCode === false || this.couponCode === 'null' ||  this.couponCode === '1') {
-          this.payWaySrv.getPayInfo({chargeCode: val.chargeCode, roomCode: this.roomCode, datedif: val.month, organizationId: this.globalSrv.wxGet('organizationId')}).subscribe(
-            (value) => {
-              console.log(value);
-            this.payMoneyData.couponId = -1;
+        this.payWaySrv.getPayInfo({chargeCode: val.chargeCode, roomCode: this.roomCode, datedif: val.month,  openId: this.globalSrv.wxSessionGetObject('openid'), organizationId: this.globalSrv.wxGet('organizationId')}).subscribe(
+          (value) => {
+            // this.payMoneyData.couponId =    this.couponCode;
             this.payDetailDta[0].value = value.entity.roomCode;
             this.payDetailDta[1].value = value.entity.startTime;
             this.payDetailDta[2].value = value.entity.endTime;
             this.payDetailDta[3].value = value.entity.datedif;
-            if ( this.couponCode === '1') {
-              this.payDetailDta[4].value = '不使用优惠券';
-            } else if (value.entity.couponMoney === 'null') {
-                this.payDetailDta[4].value = '请选择优惠券';
-            }
+
+            this.payDetailDta[4].value = value.entity.couponMoney;
             this.payDetailDta[5].value = value.entity.money;
             this.payDetailDta[6].value = value.entity.returnMoney;
-            this.payDetailDta[7].value = value.entity.threeWayFee;
-            this.payDetailDta[8].value = value.entity.oldMoney;
-            this.payDetailDta[9].value = value.entity.newMoney;
-            }
-          );
-        } else {
-          this.payWaySrv.getPayInfo({chargeCode: val.chargeCode, roomCode: this.roomCode, datedif: val.month, couponId: this.couponCode}).subscribe(
-            (value) => {
-              console.log(value);
-              this.payMoneyData.couponId =    this.couponCode;
-              this.payDetailDta[0].value = value.entity.roomCode;
-              this.payDetailDta[1].value = value.entity.startTime;
-              this.payDetailDta[2].value = value.entity.endTime;
-              this.payDetailDta[3].value = value.entity.datedif;
-              this.payDetailDta[4].value = value.entity.couponMoney;
-              this.payDetailDta[4].symbol = 1;
-              this.payDetailDta[5].value = value.entity.money;
-              this.payDetailDta[6].value = value.entity.returnMoney;
-              this.payDetailDta[7].value = value.entity.threeWayFee;
-              this.payDetailDta[8].value = value.entity.oldMoney;
-              this.payDetailDta[9].value = value.entity.newMoney;
-            }
-          );
-        }
+            this.payDetailDta[7].value = value.entity.oldMoney;
+            this.payDetailDta[8].value = value.entity.newMoney;
+          }
+        );
       }
     );
   }
   public  payMoneyClick(): void {
       this.payMoneyData.openId = this.globalSrv.wxSessionGetObject('openid');
+      this.payMoneyData.organizationId = this.globalSrv.wxGet('organizationId');
       this.onShowBySrv('loading', false);
       this.payWaySrv.getPayMoney(this.payMoneyData).subscribe(
         value => {
@@ -141,9 +117,9 @@ export class PayWayComponent implements OnInit, OnDestroy {
       });
   }
   public  paySelectCouponClick(value): void {
-      if (value === '优惠券') {
-        this.router.navigate(['chargepay/coupon'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode}});
-      }
+      // if (value === '优惠券') {
+      //   this.router.navigate(['chargepay/coupon'], {queryParams: {chargeCode: this.chargeCode, roomCode: this.roomCode}});
+      // }
   }
   onShowBySrv(type: 'success' | 'loading', forceHide: boolean = false) {
     this.toastSrv[type]();

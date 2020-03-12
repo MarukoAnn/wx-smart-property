@@ -37,7 +37,7 @@ export class PayParkspaceWayComponent implements OnInit {
   public payPreParkDetail=[
     {label: '车位编号', value: '', symbol: 0},
     {label: '车牌号', value: '', symbol: 0},
-    {label: '缴费项目', value: '转有车服务费', symbol: 0},
+    {label: '缴费项目', value: '专有车服务费', symbol: 0},
     {label: '开始日期', value: '', symbol: 0},
     {label: '截止日期', value: '', symbol: 0},
     {label: '缴费月数', value: '', symbol: 0},
@@ -61,6 +61,7 @@ export class PayParkspaceWayComponent implements OnInit {
   // 获取转有车位信息
   public preParkInfo = {
     organizationId:'',
+    openId:'',
     datedif: '',
     parkingSpaceCode: ''
   };
@@ -135,7 +136,7 @@ export class PayParkspaceWayComponent implements OnInit {
       );
     }else {
       // this.payMoneyData.organizationId = this.globalSrv.wxGet('organizationId');
-      // this.payMoneyData.openId = this.globalSrv.wxSessionGetObject('openid');
+      this.preParkInfo.openId = this.globalSrv.wxSessionGetObject('openid');
       // this.payMoneyData.openId = 'o_Jhq1AqGCADdhWrZLMcrX5NYMnE';
       this.onShowBySrv('loading', false);
       this.payWaySrv.payPreParkMoney(this.preParkInfo).subscribe(

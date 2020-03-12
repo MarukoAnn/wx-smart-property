@@ -1,9 +1,9 @@
 export class PayMoneyData {
   chargeCode?: any;
-  couponId?: any;
   datedif?: any;
   openId?: any;
   roomCode?: any;
+  organizationId?:any;
 }
 export class PayData {
   appId?: any;
