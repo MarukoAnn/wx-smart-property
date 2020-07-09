@@ -15,10 +15,10 @@
                     <!--                    <span style="margin-left: 2vw;font-size: 14px">先生</span>-->
                     <!--                    <span style="margin-left: 2vw;font-size: 14px">女士</span>-->
                   </div>
-                  <div (click)="mineTenantModifyClick(item)">
-                    <span style="margin-right: 2vw;color: #77A7BA;font-size: 18px">修改</span>
-                    <img src="assets/images/ic_modify.png" alt="" style="margin-bottom: -3px;width: 18px;">
-                  </div>
+<!--                  <div (click)="mineTenantModifyClick(item)">-->
+<!--                    <span style="margin-right: 2vw;color: #77A7BA;font-size: 18px">修改</span>-->
+<!--                    <img src="assets/images/ic_modify.png" alt="" style="margin-bottom: -3px;width: 18px;">-->
+<!--                  </div>-->
                 </div>
                 <div *ngFor=" let i of item.data.slice(1,item.data.length)" style="margin-top: 1vh;font-size: 16px">
                   {{i.label}}：{{i.value}}
@@ -27,21 +27,21 @@
               <div class="mine-tenant-owner-info-btn">
                 <div style="display: flex;justify-content: space-between">
                   <div></div>
-                  <div>
-                    <button  style="margin-bottom: 2vh;border-radius: 20px; border: 1px solid #CE4A44; background: #fff; width: 40vw; height: 5vh;color: #CE4A44; text-align: center;font-size: 1.1rem;margin-right: 2vw" (click)="mineTenantDeleteClick(item)">删除</button>
-                  </div>
+<!--                  <div>-->
+<!--                    <button  style="margin-bottom: 2vh;border-radius: 20px; border: 1px solid #CE4A44; background: #fff; width: 40vw; height: 5vh;color: #CE4A44; text-align: center;font-size: 1.1rem;margin-right: 2vw" (click)="mineTenantDeleteClick(item)">删除</button>-->
+<!--                  </div>-->
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="mine-tenant-owner-info-footer">
-        <div  style="height: 7vh;text-align: center;font-size: 1rem;line-height: 7vh" (click)="mineTenantAddClick()">
-          <img src="assets/images/ic_add.png" alt="" style="width: 20px;height: 20px;margin-bottom: -3px">
-          <span style="margin-left: 1vw">新增租客</span>
-        </div>
-      </div>
+<!--      <div class="mine-tenant-owner-info-footer">-->
+<!--        <div  style="height: 7vh;text-align: center;font-size: 1rem;line-height: 7vh" (click)="mineTenantAddClick()">-->
+<!--          <img src="assets/images/ic_add.png" alt="" style="width: 20px;height: 20px;margin-bottom: -3px">-->
+<!--          <span style="margin-left: 1vw">新增租客</span>-->
+<!--        </div>-->
+<!--      </div>-->
     </weui-ptr>
   </div>
 </div>

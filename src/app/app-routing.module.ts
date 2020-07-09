@@ -6,8 +6,8 @@ import {LoginComponent} from './login/login.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  // {path: '', redirectTo: '/chargepay/editPark', pathMatch: 'full'},
-  {path: 'tab', canActivate: [LoginGuard], loadChildren: './tab/tab.module#TabModule'},
+  // {path: '', redirectTo: '/tab/mine', pathMatch: 'full'},
+  {path: 'tab', canActivate: [LoginGuard], loadChildren:  './tab/tab.module#TabModule'},
   {path: 'login', canActivate: [LoginGuard], component: LoginComponent},
   {path: 'registered', canActivate: [LoginGuard], loadChildren: './registered/registered.module#RegisteredModule'},
   {path: 'pay', canActivate: [LoginGuard], loadChildren: './pay/pay.module#PayModule'},
